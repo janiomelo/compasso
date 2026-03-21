@@ -12,7 +12,7 @@ import {
 describe('Formatação de Dados', () => {
   describe('formatarData', () => {
     it('deve formatar data corretamente', () => {
-      const data = new Date('2026-03-21')
+      const data = new Date(2026, 2, 21)
       const resultado = formatarData(data)
       expect(resultado).toContain('21')
       expect(resultado).toContain('março')
@@ -20,7 +20,7 @@ describe('Formatação de Dados', () => {
     })
 
     it('deve aceitar timestamp', () => {
-      const timestamp = new Date('2026-03-21').getTime()
+      const timestamp = new Date(2026, 2, 21).getTime()
       const resultado = formatarData(timestamp)
       expect(resultado).toContain('21')
     })
@@ -86,7 +86,7 @@ describe('Formatação de Dados', () => {
       const str = 'a'.repeat(100)
       const resultado = truncarString(str, 50)
       expect(resultado.length).toBe(53) // 50 + '...'
-      expect(resultado).toEndWith('...')
+      expect(resultado.endsWith('...')).toBe(true)
     })
 
     it('não deve truncar string abaixo do limite', () => {

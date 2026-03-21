@@ -5,9 +5,10 @@ import path from 'path'
 export default defineConfig({
   plugins: [react()],
   test: {
+    include: ['**/*.{test,spec,teste}.?(c|m)[jt]s?(x)'],
     globals: true,
     environment: 'jsdom',
-    setupFiles: [],
+    setupFiles: ['./__testes__/setup/indexeddb.ts'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],

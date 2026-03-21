@@ -69,6 +69,29 @@
   }
 }
 
+.principal--bootstrapando {
+  justify-content: center;
+}
+
+.estado-bootstrap {
+  background-color: $cor-bg-secundaria;
+  border: 1px solid $cor-bg-terciaria;
+  border-radius: $raio-md;
+  box-shadow: $sombra-sm;
+  padding: $espaco-xl;
+  text-align: center;
+
+  h1 {
+    margin: 0 0 $espaco-md;
+    color: $cor-acento-principal;
+  }
+
+  p {
+    margin: 0;
+    color: $cor-texto-secundaria;
+  }
+}
+
 .pagina {
   h1,
   h2 {

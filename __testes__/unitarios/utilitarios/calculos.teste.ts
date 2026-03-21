@@ -99,7 +99,7 @@ describe('Cálculos', () => {
 
     it('não deve incluir pausas ativas', () => {
       const economia = calcularEconomiaAcumulada(pausasAmostra)
-      expect(economia).not.toContain(0) // Pausa ativa tem valorEconomia 0
+      expect(economia).toBe(300)
     })
 
     it('deve retornar 0 se não houver pausas', () => {

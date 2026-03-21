@@ -18,6 +18,24 @@ export interface Registro {
   duracao?: number;
 }
 
+export interface EntradaRegistro {
+  metodo: Registro['metodo'];
+  intencao: Registro['intencao'];
+  intensidade: Registro['intensidade'];
+  humorAntes?: number;
+  humorDepois?: number;
+  notas?: string;
+  localizacao?: string;
+  companhia?: string[];
+  duracao?: number;
+}
+
+export interface FiltroRegistro {
+  dataInicial?: number;
+  dataFinal?: number;
+  limite?: number;
+}
+
 // Pausa de compasso
 export interface Pausa {
   id: string;
@@ -28,6 +46,26 @@ export interface Pausa {
   valorEconomia: number;
   notas?: string;
   motivoEncerramento?: string;
+}
+
+export interface EntradaPausa {
+  duracaoPlanjada: number;
+  valorEconomia?: number;
+  notas?: string;
+}
+
+export interface ProgressoPausa {
+  decorridoMs: number;
+  restanteMs: number;
+  percentualConclusao: number;
+  concluida: boolean;
+}
+
+export interface EstatPausa {
+  duracaoPlanejada: number;
+  duracaoReal: number;
+  economiaAcumulada: number;
+  status: Pausa['status'];
 }
 
 // Dados de economia
@@ -90,6 +128,25 @@ export interface EstadoApp {
     versaoApp: string;
     criadoEm: number;
   };
+}
+
+export interface PersistenciaApp {
+  registros: Registro[];
+  pausas: Pausa[];
+  configuracoes: Configuracoes;
+  metadados: EstadoApp['metadados'];
+}
+
+export interface RegistroConfiguracao {
+  chave: 'principal';
+  valor: Configuracoes;
+}
+
+export interface BackupLocal {
+  id?: number;
+  criadoEm: number;
+  dados: PersistenciaApp;
+  versaoApp: string;
 }
 
 // Tipos para Ações do Redutor
