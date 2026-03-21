@@ -1,25 +1,9 @@
 import { Activity, CalendarDays, TrendingDown, TrendingUp } from 'lucide-react'
 import { useMemo } from 'react'
 import { useRegistro, useRitmo } from '../../ganchos'
-import { INTENCOES, METODOS } from '../../utilitarios/constantes'
+import { rotularMetodo, rotularIntencao, MAPA_INTENSIDADE, ROTULOS_TENDENCIA } from '../../utilitarios/apresentacao/rotulos'
 import { formatarDataHora } from '../../utilitarios/dados/formatacao'
-import type { Registro } from '../../tipos'
 import styles from './pagina-ritmo.module.scss'
-
-const MAPA_INTENSIDADE: Record<Registro['intensidade'], number> = {
-  leve: 3,
-  media: 5,
-  alta: 8,
-}
-
-const ROTULOS_TENDENCIA = {
-  aumentando: 'Aumentando',
-  diminuindo: 'Diminuindo',
-  estavel: 'Estável',
-} as const
-
-const rotularMetodo = (valor: string) => METODOS.find((item) => item.id === valor)?.nome ?? valor
-const rotularIntencao = (valor: string) => INTENCOES.find((item) => item.id === valor)?.nome ?? valor
 
 export const PaginaRitmo = () => {
   const { frequencia7Dias, tendencia, estatisticas } = useRitmo(7)

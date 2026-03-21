@@ -1,15 +1,9 @@
 import { ArrowRight, Clock3, PauseCircle, Sparkles, TrendingUp, Wallet } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { usePausa, useRegistro, useEconomia, useRitmo } from '../../ganchos'
-import { INTENCOES, METODOS } from '../../utilitarios/constantes'
+import { rotularMetodo, rotularIntencao, ROTULOS_TENDENCIA } from '../../utilitarios/apresentacao/rotulos'
 import { formatarDataHora, formatarMoeda, formatarDuracao } from '../../utilitarios/dados/formatacao'
 import styles from './pagina-principal.module.scss'
-
-const ROTULOS_TENDENCIA = {
-  aumentando: '↑ Aumentando',
-  diminuindo: '↓ Diminuindo',
-  estavel: '→ Estável',
-} as const
 
 export const PaginaPrincipal = () => {
   const { pausaAtiva, progresso } = usePausa()
@@ -18,9 +12,6 @@ export const PaginaPrincipal = () => {
   const { tendencia, estatisticas } = useRitmo(7)
   const recentes = registrosRecentes(4)
   const ultimoRegistro = recentes[0]
-
-  const rotularMetodo = (valor: string) => METODOS.find((item) => item.id === valor)?.nome ?? valor
-  const rotularIntencao = (valor: string) => INTENCOES.find((item) => item.id === valor)?.nome ?? valor
 
   return (
     <div className={styles.pagina}>
