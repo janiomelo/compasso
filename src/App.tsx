@@ -1,24 +1,8 @@
 import { BrowserRouter as Roteador, Routes, Route } from 'react-router-dom'
 import { useApp } from './ganchos'
 import { ProvedorApp } from './loja/ContextoApp'
+import { PaginaPrincipal, PaginaRegistro, PaginaPausa } from './paginas'
 import './App.scss'
-
-// Páginas (placeholder)
-const PaginaPrincipal = () => <div className="pagina">
-  <h1>🧭 Compasso — Bem-vindo</h1>
-  <p>Acompanhe seu ritmo, pausas e equilíbrio com privacidade radical.</p>
-  <p className="status-setup">Setup em progresso... Veja a Fase 1 no arquivo PROJETO WEB APP.md</p>
-</div>
-
-const PaginaRegistro = () => <div className="pagina">
-  <h2>Registrar Momento</h2>
-  <p>Formulário de registro em construção.</p>
-</div>
-
-const PaginaPausa = () => <div className="pagina">
-  <h2>Pausa de Compasso</h2>
-  <p>Tela de pausa em construção.</p>
-</div>
 
 const PaginaRitmo = () => <div className="pagina">
   <h2>Ritmo & Análise</h2>

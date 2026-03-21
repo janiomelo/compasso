@@ -1,0 +1,263 @@
+@use '../../estilos/variaveis' as *;
+
+.pagina {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-lg;
+}
+
+.topo {
+  padding-bottom: $espaco-md;
+  border-bottom: 1px solid $cor-bg-terciaria;
+}
+
+.titulo {
+  margin: 0 0 $espaco-xs;
+  font-size: $tamanho-h3;
+  color: $cor-acento-principal;
+}
+
+.subtitulo {
+  margin: 0;
+  color: $cor-texto-terciaria;
+  font-size: $tamanho-pequeno;
+}
+
+// ---- pausa ativa ----
+.pausaAtiva {
+  background-color: $cor-bg-secundaria;
+  border: 1px solid $cor-acento-principal;
+  border-radius: $raio-md;
+  padding: $espaco-xl;
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-lg;
+  align-items: center;
+  text-align: center;
+}
+
+.cronometro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cronometroValor {
+  font-size: $tamanho-h1;
+  font-weight: 600;
+  color: $cor-acento-principal;
+  font-variant-numeric: tabular-nums;
+}
+
+.cronometroRotulo {
+  font-size: $tamanho-pequeno;
+  color: $cor-texto-terciaria;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: $espaco-xs;
+}
+
+.barraContainer {
+  width: 100%;
+  background-color: $cor-bg-terciaria;
+  border-radius: $raio-sm;
+  height: 8px;
+  overflow: hidden;
+}
+
+.barra {
+  background-color: $cor-acento-principal;
+  height: 100%;
+  border-radius: $raio-sm;
+  transition: width 1s linear;
+}
+
+.pausaInfos {
+  display: flex;
+  gap: $espaco-xl;
+  justify-content: center;
+}
+
+.pausaInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $espaco-xs;
+}
+
+.pausaInfoRotulo {
+  font-size: $tamanho-pequeno;
+  color: $cor-texto-terciaria;
+  text-transform: uppercase;
+}
+
+.pausaInfoValor {
+  font-size: $tamanho-h6;
+  font-weight: 500;
+  color: $cor-texto-primaria;
+}
+
+// ---- iniciar ----
+.iniciar {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-md;
+}
+
+.secaoTitulo {
+  margin: 0;
+  font-size: $tamanho-h6;
+  color: $cor-texto-secundaria;
+}
+
+.opcoesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $espaco-sm;
+
+  @include media-tablet {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.opcaoDuracao {
+  background-color: $cor-bg-secundaria;
+  border: 1px solid $cor-bg-terciaria;
+  border-radius: $raio-sm;
+  padding: $espaco-md;
+  color: $cor-texto-secundaria;
+  font-size: $tamanho-corpo;
+  cursor: pointer;
+  transition: border-color $transicao-rapida, color $transicao-rapida;
+
+  &:hover {
+    border-color: $cor-acento-secundaria;
+    color: $cor-texto-primaria;
+  }
+
+  &--ativa {
+    border-color: $cor-acento-principal;
+    color: $cor-acento-principal;
+    font-weight: 500;
+  }
+}
+
+// ---- botões ----
+.acoes {
+  display: flex;
+  gap: $espaco-sm;
+  width: 100%;
+  justify-content: center;
+}
+
+.botaoPrimario {
+  background-color: $cor-acento-principal;
+  border: none;
+  border-radius: $raio-sm;
+  padding: $espaco-sm $espaco-lg;
+  color: #fff;
+  font-size: $tamanho-corpo;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity $transicao-rapida;
+
+  &:hover:not(:disabled) {
+    opacity: 0.88;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.botaoIniciar {
+  width: 100%;
+  padding: $espaco-md;
+  font-size: $tamanho-h6;
+}
+
+.botaoSecundario {
+  background-color: transparent;
+  border: 1px solid $cor-bg-terciaria;
+  border-radius: $raio-sm;
+  padding: $espaco-sm $espaco-lg;
+  color: $cor-texto-secundaria;
+  font-size: $tamanho-corpo;
+  cursor: pointer;
+  transition: border-color $transicao-rapida, color $transicao-rapida;
+
+  &:hover:not(:disabled) {
+    border-color: $cor-texto-secundaria;
+    color: $cor-texto-primaria;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.erro {
+  color: #e57373;
+  font-size: $tamanho-pequeno;
+  margin: 0;
+}
+
+// ---- histórico ----
+.historico {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-sm;
+}
+
+.lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-xs;
+}
+
+.itemHistorico {
+  display: flex;
+  align-items: center;
+  gap: $espaco-sm;
+  padding: $espaco-sm $espaco-md;
+  background-color: $cor-bg-secundaria;
+  border-radius: $raio-sm;
+  font-size: $tamanho-pequeno;
+}
+
+.itemStatus {
+  text-transform: capitalize;
+  padding: 2px $espaco-xs;
+  border-radius: $raio-xs;
+  font-size: $tamanho-pequeno;
+
+  &--concluida {
+    background-color: rgba(74, 155, 111, 0.15);
+    color: $cor-acento-principal;
+  }
+
+  &--interrompida {
+    background-color: rgba(255, 183, 77, 0.12);
+    color: #ffb74d;
+  }
+
+  &--ativa {
+    background-color: rgba(74, 155, 111, 0.25);
+    color: $cor-acento-secundaria;
+  }
+}
+
+.itemDuracao {
+  color: $cor-texto-secundaria;
+  flex: 1;
+}
+
+.itemEconomia {
+  color: $cor-acento-principal;
+  margin-left: auto;
+}

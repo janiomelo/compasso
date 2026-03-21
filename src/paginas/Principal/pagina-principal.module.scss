@@ -1,0 +1,158 @@
+@use '../../estilos/variaveis' as *;
+
+.pagina {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-lg;
+}
+
+.topo {
+  padding-bottom: $espaco-md;
+  border-bottom: 1px solid $cor-bg-terciaria;
+}
+
+.titulo {
+  margin: 0 0 $espaco-xs;
+  font-size: $tamanho-h3;
+  color: $cor-acento-principal;
+}
+
+.subtitulo {
+  margin: 0;
+  color: $cor-texto-terciaria;
+  font-size: $tamanho-pequeno;
+}
+
+// ---- cartão genérico ----
+.cartao {
+  background-color: $cor-bg-secundaria;
+  border: 1px solid $cor-bg-terciaria;
+  border-radius: $raio-md;
+  padding: $espaco-md;
+}
+
+.cartaoLabel {
+  font-size: $tamanho-pequeno;
+  color: $cor-texto-terciaria;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: $espaco-xs;
+}
+
+.cartaoValor {
+  font-size: $tamanho-h4;
+  font-weight: 600;
+  color: $cor-texto-primaria;
+
+  &--tendencia {
+    font-size: $tamanho-corpo;
+    font-weight: 500;
+    color: $cor-acento-principal;
+  }
+}
+
+.cartaoUnidade {
+  font-size: $tamanho-pequeno;
+  color: $cor-texto-terciaria;
+  margin-top: $espaco-xs;
+}
+
+// ---- pausa ativa ----
+.cartaoPausa {
+  border-color: $cor-acento-principal;
+}
+
+.pausaProgresso {
+  background-color: $cor-bg-terciaria;
+  border-radius: $raio-sm;
+  height: 6px;
+  overflow: hidden;
+  margin: $espaco-sm 0;
+}
+
+.pausaBarra {
+  background-color: $cor-acento-principal;
+  height: 100%;
+  border-radius: $raio-sm;
+  transition: width 1s linear;
+}
+
+.pausaDetalhes {
+  display: flex;
+  justify-content: space-between;
+  font-size: $tamanho-pequeno;
+  color: $cor-texto-terciaria;
+}
+
+// ---- resumo ----
+.resumo {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $espaco-sm;
+
+  @include media-tablet {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+// ---- seções ----
+.secao {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-sm;
+}
+
+.secaoTitulo {
+  margin: 0;
+  font-size: $tamanho-h6;
+  color: $cor-texto-secundaria;
+}
+
+.vazio {
+  color: $cor-texto-terciaria;
+  font-size: $tamanho-pequeno;
+  font-style: italic;
+}
+
+// ---- lista de registros ----
+.listaRegistros {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-xs;
+}
+
+.itemRegistro {
+  display: flex;
+  align-items: center;
+  gap: $espaco-sm;
+  padding: $espaco-sm $espaco-md;
+  background-color: $cor-bg-secundaria;
+  border-radius: $raio-sm;
+  font-size: $tamanho-pequeno;
+}
+
+.itemRegistroMetodo {
+  color: $cor-acento-principal;
+  font-weight: 500;
+  text-transform: capitalize;
+  min-width: 60px;
+}
+
+.itemRegistroIntencao {
+  color: $cor-texto-secundaria;
+  text-transform: capitalize;
+  flex: 1;
+}
+
+.itemRegistroIntensidade {
+  color: $cor-texto-terciaria;
+  text-transform: capitalize;
+}
+
+.itemRegistroHora {
+  color: $cor-texto-terciaria;
+  margin-left: auto;
+}

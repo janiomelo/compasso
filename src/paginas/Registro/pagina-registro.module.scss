@@ -1,0 +1,162 @@
+@use '../../estilos/variaveis' as *;
+
+.pagina {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-lg;
+}
+
+.topo {
+  padding-bottom: $espaco-md;
+  border-bottom: 1px solid $cor-bg-terciaria;
+}
+
+.titulo {
+  margin: 0 0 $espaco-xs;
+  font-size: $tamanho-h3;
+  color: $cor-acento-principal;
+}
+
+.subtitulo {
+  margin: 0;
+  color: $cor-texto-terciaria;
+  font-size: $tamanho-pequeno;
+}
+
+// ---- formulário ----
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-lg;
+}
+
+.fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-sm;
+}
+
+.legenda {
+  font-size: $tamanho-pequeno;
+  color: $cor-texto-terciaria;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: $espaco-xs;
+  padding: 0;
+}
+
+.opcoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $espaco-xs;
+}
+
+// ---- chips ----
+.chip {
+  background-color: $cor-bg-secundaria;
+  border: 1px solid $cor-bg-terciaria;
+  border-radius: $raio-pill;
+  padding: $espaco-xs $espaco-md;
+  color: $cor-texto-secundaria;
+  font-size: $tamanho-pequeno;
+  cursor: pointer;
+  transition: border-color $transicao-rapida, color $transicao-rapida;
+
+  &:hover {
+    border-color: $cor-acento-secundaria;
+    color: $cor-texto-primaria;
+  }
+
+  &--ativo {
+    border-color: $cor-acento-principal;
+    color: $cor-acento-principal;
+    font-weight: 500;
+  }
+}
+
+// ---- humor ----
+.humoresGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 140px);
+  gap: $espaco-md;
+}
+
+.campoLabel {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-xs;
+  font-size: $tamanho-pequeno;
+  color: $cor-texto-terciaria;
+}
+
+.campoNumero,
+.textarea {
+  background-color: $cor-bg-secundaria;
+  border: 1px solid $cor-bg-terciaria;
+  border-radius: $raio-sm;
+  padding: $espaco-sm;
+  color: $cor-texto-primaria;
+  font-size: $tamanho-corpo;
+  transition: border-color $transicao-rapida;
+
+  &:focus {
+    outline: none;
+    border-color: $cor-acento-principal;
+  }
+}
+
+.campoNumero {
+  width: 100%;
+}
+
+.textarea {
+  width: 100%;
+  resize: vertical;
+  font-family: inherit;
+  line-height: 1.5;
+}
+
+.contador {
+  font-size: $tamanho-pequeno;
+  color: $cor-texto-terciaria;
+  align-self: flex-end;
+}
+
+// ---- feedback ----
+.mensagemSucesso {
+  margin: 0;
+  color: $cor-acento-principal;
+  font-size: $tamanho-pequeno;
+}
+
+.mensagemErro {
+  margin: 0;
+  color: #e57373;
+  font-size: $tamanho-pequeno;
+}
+
+// ---- botão salvar ----
+.botaoSalvar {
+  background-color: $cor-acento-principal;
+  border: none;
+  border-radius: $raio-sm;
+  padding: $espaco-md;
+  color: #fff;
+  font-size: $tamanho-h6;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity $transicao-rapida;
+  width: 100%;
+
+  &:hover:not(:disabled) {
+    opacity: 0.88;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
