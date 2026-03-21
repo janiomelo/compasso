@@ -23,7 +23,7 @@ export const PaginaPausa = () => {
     setAguardando(true)
 
     try {
-      await iniciar({ duracaoPlanjada: duracaoSelecionada })
+      await iniciar({ duracaoPlanejada: duracaoSelecionada })
     } catch (e) {
       setErro(e instanceof Error ? e.message : 'Falha ao iniciar pausa')
     } finally {
@@ -97,7 +97,7 @@ export const PaginaPausa = () => {
             </div>
             <div className={styles.pausaInfo}>
               <span className={styles.pausaInfoRotulo}>Meta</span>
-              <span className={styles.pausaInfoValor}>{formatarDuracao(pausaAtiva.duracaoPlanjada)}</span>
+              <span className={styles.pausaInfoValor}>{formatarDuracao(pausaAtiva.duracaoPlanejada)}</span>
             </div>
             <div className={styles.pausaInfo}>
               <span className={styles.pausaInfoRotulo}>Economia</span>
@@ -178,7 +178,7 @@ export const PaginaPausa = () => {
                   {pausa.status}
                 </span>
                 <span className={styles.itemDuracao}>
-                  {formatarDuracao(pausa.duracaoReal ?? pausa.duracaoPlanjada)}
+                  {formatarDuracao(pausa.duracaoReal ?? pausa.duracaoPlanejada)}
                 </span>
                 <span className={styles.itemEconomia}>{formatarMoeda(pausa.valorEconomia)}</span>
               </li>

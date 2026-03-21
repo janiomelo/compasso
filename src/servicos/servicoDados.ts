@@ -10,7 +10,7 @@ export async function hidratarEstado(): Promise<EstadoApp> {
     ...estadoInicial,
     registros,
     pausaAtiva,
-    historioPausa: pausas,
+    historicoPausa: pausas,
     configuracoes: configuracoes ?? estadoInicial.configuracoes,
     metadados: {
       ...estadoInicial.metadados,
@@ -29,7 +29,7 @@ export async function fazerBackupLocal(): Promise<void> {
 
   const dados: PersistenciaApp = {
     registros: estado.registros,
-    pausas: estado.historioPausa,
+    pausas: estado.historicoPausa,
     configuracoes: estado.configuracoes,
     metadados: estado.metadados,
   }

@@ -57,7 +57,7 @@ export const PaginaPrincipal = () => {
               </div>
 
               <div className={styles.hero__metricas}>
-                <span>{formatarDuracao(pausaAtiva.duracaoPlanjada)} de meta</span>
+                <span>{formatarDuracao(pausaAtiva.duracaoPlanejada)} de meta</span>
                 <span>{formatarMoeda(pausaAtiva.valorEconomia)} em economia prevista</span>
               </div>
             </>

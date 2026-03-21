@@ -19,7 +19,7 @@ export async function iniciarPausa(dados: EntradaPausa): Promise<Pausa> {
   const pausa: Pausa = {
     id: criarId(),
     iniciadoEm: Date.now(),
-    duracaoPlanjada: dados.duracaoPlanjada,
+    duracaoPlanejada: dados.duracaoPlanejada,
     status: 'ativa',
     valorEconomia: dados.valorEconomia ?? 0,
     notas: dados.notas,
@@ -68,7 +68,7 @@ export async function obterPausaAtiva(): Promise<Pausa | null> {
   return consultasBD.obterPausaAtiva()
 }
 
-export async function obterHistorioPausa(limite?: number): Promise<Pausa[]> {
+export async function obterHistoricoPausa(limite?: number): Promise<Pausa[]> {
   return consultasBD.obterHistoricoPausa(limite)
 }
 
@@ -81,8 +81,8 @@ export async function calcularProgressoPausa(idPausa: string): Promise<Progresso
 
   const fim = pausa.duracaoReal ?? Date.now() - pausa.iniciadoEm
   const decorridoMs = fim
-  const restanteMs = Math.max(pausa.duracaoPlanjada - decorridoMs, 0)
-  const percentualBruto = (decorridoMs / pausa.duracaoPlanjada) * 100
+  const restanteMs = Math.max(pausa.duracaoPlanejada - decorridoMs, 0)
+  const percentualBruto = (decorridoMs / pausa.duracaoPlanejada) * 100
 
   return {
     decorridoMs,
@@ -100,7 +100,7 @@ export async function obterEstatPausa(idPausa: string): Promise<EstatPausa> {
   }
 
   return {
-    duracaoPlanejada: pausa.duracaoPlanjada,
+    duracaoPlanejada: pausa.duracaoPlanejada,
     duracaoReal: pausa.duracaoReal ?? Date.now() - pausa.iniciadoEm,
     economiaAcumulada: pausa.valorEconomia,
     status: pausa.status,

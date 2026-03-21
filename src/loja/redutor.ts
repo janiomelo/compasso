@@ -4,7 +4,7 @@ import { EstadoApp, AcaoApp, Configuracoes, EstadoUI } from '../tipos'
 export const estadoInicial: EstadoApp = {
   registros: [],
   pausaAtiva: null,
-  historioPausa: [],
+  historicoPausa: [],
   configuracoes: {
     valorEconomia: 100, // R$ 100 por consumo típico
     moedaEconomia: 'BRL',
@@ -68,7 +68,7 @@ export const redutor = (estado: EstadoApp, acao: AcaoApp): EstadoApp => {
       return {
         ...estado,
         pausaAtiva: null,
-        historioPausa: [acao.payload, ...estado.historioPausa],
+        historicoPausa: [acao.payload, ...estado.historicoPausa],
       }
 
     case 'DEFINIR_CONFIGURACAO':

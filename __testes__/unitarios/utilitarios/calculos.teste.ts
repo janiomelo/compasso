@@ -48,7 +48,7 @@ describe('Cálculos', () => {
       {
         id: '1',
         iniciadoEm: agora - 1000 * 60 * 60 * 24 * 5,
-        duracaoPlanjada: 1000 * 60 * 60 * 24,
+        duracaoPlanejada: 1000 * 60 * 60 * 24,
         duracaoReal: 1000 * 60 * 60 * 24,
         status: 'concluida' as const,
         valorEconomia: 100,
@@ -56,7 +56,7 @@ describe('Cálculos', () => {
       {
         id: '2',
         iniciadoEm: agora - 1000 * 60 * 60 * 24 * 3,
-        duracaoPlanjada: 1000 * 60 * 60 * 48,
+        duracaoPlanejada: 1000 * 60 * 60 * 48,
         duracaoReal: 1000 * 60 * 60 * 48,
         status: 'concluida' as const,
         valorEconomia: 200,
@@ -64,7 +64,7 @@ describe('Cálculos', () => {
       {
         id: '3',
         iniciadoEm: agora - 1000 * 60 * 60 * 2,
-        duracaoPlanjada: 1000 * 60 * 60 * 24,
+        duracaoPlanejada: 1000 * 60 * 60 * 24,
         status: 'ativa' as const,
         valorEconomia: 0,
       },

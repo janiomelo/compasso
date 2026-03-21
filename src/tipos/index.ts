@@ -40,7 +40,7 @@ export interface FiltroRegistro {
 export interface Pausa {
   id: string;
   iniciadoEm: number;
-  duracaoPlanjada: number;
+  duracaoPlanejada: number;
   duracaoReal?: number;
   status: 'ativa' | 'concluida' | 'interrompida';
   valorEconomia: number;
@@ -49,7 +49,7 @@ export interface Pausa {
 }
 
 export interface EntradaPausa {
-  duracaoPlanjada: number;
+  duracaoPlanejada: number;
   valorEconomia?: number;
   notas?: string;
 }
@@ -120,7 +120,7 @@ export interface Aviso {
 export interface EstadoApp {
   registros: Registro[];
   pausaAtiva: Pausa | null;
-  historioPausa: Pausa[];
+  historicoPausa: Pausa[];
   configuracoes: Configuracoes;
   ui: EstadoUI;
   metadados: {

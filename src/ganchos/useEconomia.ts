@@ -7,22 +7,22 @@ import {
 
 export const useEconomia = () => {
   const { estado } = useApp()
-  const { historioPausa, configuracoes } = estado
+  const { historicoPausa, configuracoes } = estado
 
   const totalAcumulado = useMemo(
-    () => calcularEconomiaAcumulada(historioPausa),
-    [historioPausa],
+    () => calcularEconomiaAcumulada(historicoPausa),
+    [historicoPausa],
   )
 
   const taxaDiaria = useMemo(
-    () => calcularEconomiaDiaria(historioPausa, 30),
-    [historioPausa],
+    () => calcularEconomiaDiaria(historicoPausa, 30),
+    [historicoPausa],
   )
 
   const economiaUltimaPausa = useMemo(() => {
-    const ultima = historioPausa.find((p) => p.status === 'concluida')
+    const ultima = historicoPausa.find((p) => p.status === 'concluida')
     return ultima?.valorEconomia ?? 0
-  }, [historioPausa])
+  }, [historicoPausa])
 
   const projecao30Dias = useMemo(
     () => taxaDiaria * 30,

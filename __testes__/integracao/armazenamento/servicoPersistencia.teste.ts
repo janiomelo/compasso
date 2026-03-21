@@ -48,9 +48,9 @@ describe('persistencia com Dexie', () => {
 
   it('mantem somente uma pausa ativa e calcula progresso', async () => {
     agoraMock = new Date('2024-03-01T08:00:00.000Z').getTime()
-    const pausa = await iniciarPausa({ duracaoPlanjada: 24 * 60 * 60 * 1000, valorEconomia: 45 })
+    const pausa = await iniciarPausa({ duracaoPlanejada: 24 * 60 * 60 * 1000, valorEconomia: 45 })
 
-    await expect(iniciarPausa({ duracaoPlanjada: 60 * 60 * 1000 })).rejects.toThrow('Já existe uma pausa ativa')
+    await expect(iniciarPausa({ duracaoPlanejada: 60 * 60 * 1000 })).rejects.toThrow('Já existe uma pausa ativa')
 
     agoraMock = new Date('2024-03-01T14:00:00.000Z').getTime()
     const progresso = await calcularProgressoPausa(pausa.id)
@@ -74,7 +74,7 @@ describe('persistencia com Dexie', () => {
     })
 
     agoraMock = new Date('2024-04-01T10:00:00.000Z').getTime()
-    const pausa = await iniciarPausa({ duracaoPlanjada: 2 * 60 * 60 * 1000, valorEconomia: 30 })
+    const pausa = await iniciarPausa({ duracaoPlanejada: 2 * 60 * 60 * 1000, valorEconomia: 30 })
     await encerrarPausa(pausa.id, 'Encerrada para teste')
 
     for (let indice = 0; indice < 7; indice += 1) {
@@ -97,7 +97,7 @@ describe('persistencia com Dexie', () => {
 
     expect(restaurado).toBe(true)
     expect(estado.registros).toHaveLength(1)
-    expect(estado.historioPausa).toHaveLength(1)
+    expect(estado.historicoPausa).toHaveLength(1)
     expect(estado.configuracoes.valorEconomia).toBe(120)
   })
 

@@ -32,7 +32,7 @@ describe('fluxo de pausa', () => {
     await waitFor(() => expect(result.current.pausaAtiva).toBeNull())
 
     await act(async () => {
-      await result.current.iniciar({ duracaoPlanjada: 24 * 60 * 60 * 1000, valorEconomia: 50 })
+      await result.current.iniciar({ duracaoPlanejada: 24 * 60 * 60 * 1000, valorEconomia: 50 })
     })
 
     expect(result.current.pausaAtiva).not.toBeNull()
@@ -45,12 +45,12 @@ describe('fluxo de pausa', () => {
     await waitFor(() => expect(result.current.pausaAtiva).toBeNull())
 
     await act(async () => {
-      await result.current.iniciar({ duracaoPlanjada: 24 * 60 * 60 * 1000 })
+      await result.current.iniciar({ duracaoPlanejada: 24 * 60 * 60 * 1000 })
     })
 
     await expect(
       act(async () => {
-        await result.current.iniciar({ duracaoPlanjada: 12 * 60 * 60 * 1000 })
+        await result.current.iniciar({ duracaoPlanejada: 12 * 60 * 60 * 1000 })
       }),
     ).rejects.toThrow('Já existe uma pausa ativa')
   })
@@ -60,7 +60,7 @@ describe('fluxo de pausa', () => {
     await waitFor(() => expect(result.current.pausaAtiva).toBeNull())
 
     await act(async () => {
-      await result.current.iniciar({ duracaoPlanjada: 24 * 60 * 60 * 1000, valorEconomia: 30 })
+      await result.current.iniciar({ duracaoPlanejada: 24 * 60 * 60 * 1000, valorEconomia: 30 })
     })
 
     // avança 12 horas
@@ -81,7 +81,7 @@ describe('fluxo de pausa', () => {
     await waitFor(() => expect(result.current.pausaAtiva).toBeNull())
 
     await act(async () => {
-      await result.current.iniciar({ duracaoPlanjada: 48 * 60 * 60 * 1000 })
+      await result.current.iniciar({ duracaoPlanejada: 48 * 60 * 60 * 1000 })
     })
 
     await act(async () => {

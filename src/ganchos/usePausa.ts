@@ -19,8 +19,8 @@ export const usePausa = () => {
   // --- cronômetro ---
   const calcularProgresso = useCallback((pausa: Pausa): ProgressoPausa => {
     const decorridoMs = Date.now() - pausa.iniciadoEm
-    const restanteMs = Math.max(pausa.duracaoPlanjada - decorridoMs, 0)
-    const percentualBruto = (decorridoMs / pausa.duracaoPlanjada) * 100
+    const restanteMs = Math.max(pausa.duracaoPlanejada - decorridoMs, 0)
+    const percentualBruto = (decorridoMs / pausa.duracaoPlanejada) * 100
 
     return {
       decorridoMs,
@@ -95,7 +95,7 @@ export const usePausa = () => {
 
   return {
     pausaAtiva,
-    historico: estado.historioPausa,
+    historico: estado.historicoPausa,
     progresso,
     iniciar,
     encerrar,

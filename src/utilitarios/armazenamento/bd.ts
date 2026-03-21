@@ -29,6 +29,20 @@ class BancoCompasso extends Dexie {
 
 export const bd = new BancoCompasso()
 
+type PausaLegada = Omit<Pausa, 'duracaoPlanejada'> & {
+  duracaoPlanejada?: number
+  duracaoPlanjada?: number
+}
+
+const normalizarPausa = (pausa: PausaLegada): Pausa => {
+  const { duracaoPlanjada, duracaoPlanejada, ...restante } = pausa
+
+  return {
+    ...restante,
+    duracaoPlanejada: duracaoPlanejada ?? duracaoPlanjada ?? 0,
+  }
+}
+
 export const consultasBD = {
   async obterRegistros() {
     return bd.registros.orderBy('timestamp').reverse().toArray()
@@ -61,7 +75,8 @@ export const consultasBD = {
   },
 
   async obterHistoricoPausa(limite?: number) {
-    const pausas = await bd.pausas.orderBy('iniciadoEm').reverse().toArray()
+    const pausasPersistidas = await bd.pausas.orderBy('iniciadoEm').reverse().toArray() as PausaLegada[]
+    const pausas = pausasPersistidas.map(normalizarPausa)
     return typeof limite === 'number' ? pausas.slice(0, limite) : pausas
   },
 
@@ -130,7 +145,7 @@ export const consultasBD = {
       await bd.configuracoes.clear()
 
       await bd.registros.bulkPut(dados.registros)
-      await bd.pausas.bulkPut(dados.pausas)
+      await bd.pausas.bulkPut(dados.pausas.map((pausa) => normalizarPausa(pausa as PausaLegada)))
       await bd.configuracoes.put({ chave: 'principal', valor: dados.configuracoes })
     })
   },
