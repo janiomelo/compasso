@@ -103,10 +103,8 @@ export interface Configuracoes {
 // Estado da UI
 export interface EstadoUI {
   carregando: boolean;
-  paginaAtual: 'principal' | 'registro' | 'pausa' | 'ritmo' | 'config';
   modal: { aberto: boolean; tipo?: string; dados?: unknown };
   avisos: Aviso[];
-  barraAberta: boolean;
 }
 
 export interface Aviso {
@@ -154,12 +152,8 @@ export type AcaoApp =
   | { tipo: 'ADICIONAR_REGISTRO'; payload: Registro }
   | { tipo: 'ATUALIZAR_REGISTRO'; payload: Registro }
   | { tipo: 'DELETAR_REGISTRO'; payload: string }
-  | { tipo: 'LISTAR_REGISTROS'; payload: Registro[] }
   | { tipo: 'INICIAR_PAUSA'; payload: Pausa }
   | { tipo: 'ENCERRAR_PAUSA'; payload: Pausa }
   | { tipo: 'DEFINIR_CONFIGURACAO'; payload: Partial<Configuracoes> }
-  | { tipo: 'ALTERNAR_TEMA' }
-  | { tipo: 'MOSTRAR_AVISO'; payload: Aviso }
-  | { tipo: 'ESCONDER_AVISO'; payload: string }
   | { tipo: 'DEFINIR_CARREGANDO'; payload: boolean }
   | { tipo: 'REIDRATAR_ESTADO'; payload: EstadoApp };

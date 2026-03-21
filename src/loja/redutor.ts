@@ -17,10 +17,8 @@ export const estadoInicial: EstadoApp = {
   } as Configuracoes,
   ui: {
     carregando: false,
-    paginaAtual: 'principal',
     modal: { aberto: false },
     avisos: [],
-    barraAberta: false,
   } as EstadoUI,
   metadados: {
     ultimaSincronizacao: 0,
@@ -52,12 +50,6 @@ export const redutor = (estado: EstadoApp, acao: AcaoApp): EstadoApp => {
         registros: estado.registros.filter((r) => r.id !== acao.payload),
       }
 
-    case 'LISTAR_REGISTROS':
-      return {
-        ...estado,
-        registros: acao.payload,
-      }
-
     case 'INICIAR_PAUSA':
       return {
         ...estado,
@@ -77,33 +69,6 @@ export const redutor = (estado: EstadoApp, acao: AcaoApp): EstadoApp => {
         configuracoes: {
           ...estado.configuracoes,
           ...acao.payload,
-        },
-      }
-
-    case 'ALTERNAR_TEMA':
-      return {
-        ...estado,
-        configuracoes: {
-          ...estado.configuracoes,
-          tema: estado.configuracoes.tema === 'escuro' ? 'claro' : 'escuro',
-        },
-      }
-
-    case 'MOSTRAR_AVISO':
-      return {
-        ...estado,
-        ui: {
-          ...estado.ui,
-          avisos: [...estado.ui.avisos, acao.payload],
-        },
-      }
-
-    case 'ESCONDER_AVISO':
-      return {
-        ...estado,
-        ui: {
-          ...estado.ui,
-          avisos: estado.ui.avisos.filter((a) => a.id !== acao.payload),
         },
       }
 
