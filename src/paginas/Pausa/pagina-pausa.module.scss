@@ -7,33 +7,86 @@
 }
 
 .topo {
-  padding-bottom: $espaco-md;
-  border-bottom: 1px solid $cor-bg-terciaria;
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-xs;
 }
 
 .titulo {
-  margin: 0 0 $espaco-xs;
-  font-size: $tamanho-h3;
-  color: $cor-acento-principal;
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3rem);
+  letter-spacing: -0.04em;
+  color: $cor-texto-primaria;
 }
 
 .subtitulo {
   margin: 0;
-  color: $cor-texto-terciaria;
-  font-size: $tamanho-pequeno;
+  color: $cor-texto-secundaria;
+  max-width: 44rem;
 }
 
-// ---- pausa ativa ----
-.pausaAtiva {
-  background-color: $cor-bg-secundaria;
-  border: 1px solid $cor-acento-principal;
-  border-radius: $raio-md;
-  padding: $espaco-xl;
+.eyebrow {
+  color: $cor-acento-principal;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: $tamanho-pequeno;
+  font-weight: $peso-semibold;
+}
+
+.hero {
+  background: linear-gradient(180deg, rgba($cor-bg-secundaria, 0.98), rgba($cor-bg-primaria, 0.98));
+  border: 1px solid rgba($cor-acento-principal, 0.35);
+  border-radius: 1.75rem;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  box-shadow: $sombra-md;
   display: flex;
   flex-direction: column;
   gap: $espaco-lg;
   align-items: center;
   text-align: center;
+}
+
+.hero--ativa {
+  border-color: rgba($cor-acento-principal, 0.42);
+}
+
+.hero__icone {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: $cor-info;
+  background: rgba($cor-acento-principal, 0.12);
+  border: 1px solid rgba($cor-acento-principal, 0.22);
+}
+
+.hero__texto {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-xs;
+  max-width: 42rem;
+}
+
+.hero__titulo {
+  margin: 0;
+  color: $cor-texto-primaria;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  letter-spacing: -0.04em;
+}
+
+.hero__descricao {
+  margin: 0;
+  color: $cor-texto-secundaria;
+}
+
+.hero__nota {
+  display: inline-flex;
+  align-items: center;
+  gap: $espaco-xs;
+  color: $cor-texto-secundaria;
+  font-size: $tamanho-pequeno;
 }
 
 .cronometro {
@@ -43,9 +96,9 @@
 }
 
 .cronometroValor {
-  font-size: $tamanho-h1;
-  font-weight: 600;
-  color: $cor-acento-principal;
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  font-weight: 700;
+  color: $cor-texto-primaria;
   font-variant-numeric: tabular-nums;
 }
 
@@ -59,30 +112,38 @@
 
 .barraContainer {
   width: 100%;
-  background-color: $cor-bg-terciaria;
-  border-radius: $raio-sm;
-  height: 8px;
+  background-color: rgba(255, 255, 255, 0.08);
+  border-radius: $raio-pill;
+  height: 10px;
   overflow: hidden;
 }
 
 .barra {
-  background-color: $cor-acento-principal;
+  background: linear-gradient(90deg, $cor-acento-principal, $cor-acento-secundaria);
   height: 100%;
-  border-radius: $raio-sm;
+  border-radius: $raio-pill;
   transition: width 1s linear;
 }
 
 .pausaInfos {
-  display: flex;
-  gap: $espaco-xl;
-  justify-content: center;
+  display: grid;
+  width: 100%;
+  gap: $espaco-sm;
+
+  @include media-tablet {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 .pausaInfo {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: $espaco-xs;
+  padding: 1rem 1.1rem;
+  border-radius: 1.15rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .pausaInfoRotulo {
@@ -92,27 +153,21 @@
 }
 
 .pausaInfoValor {
-  font-size: $tamanho-h6;
+  font-size: $tamanho-h5;
   font-weight: 500;
   color: $cor-texto-primaria;
 }
 
-// ---- iniciar ----
-.iniciar {
-  display: flex;
-  flex-direction: column;
-  gap: $espaco-md;
-}
-
 .secaoTitulo {
   margin: 0;
-  font-size: $tamanho-h6;
-  color: $cor-texto-secundaria;
+  font-size: $tamanho-h5;
+  color: $cor-texto-primaria;
 }
 
 .opcoesGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: $espaco-sm;
 
   @include media-tablet {
@@ -121,45 +176,60 @@
 }
 
 .opcaoDuracao {
-  background-color: $cor-bg-secundaria;
-  border: 1px solid $cor-bg-terciaria;
-  border-radius: $raio-sm;
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.25rem;
   padding: $espaco-md;
   color: $cor-texto-secundaria;
-  font-size: $tamanho-corpo;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
   cursor: pointer;
-  transition: border-color $transicao-rapida, color $transicao-rapida;
+  transition: border-color $transicao-rapida, color $transicao-rapida, background-color $transicao-rapida;
 
   &:hover {
-    border-color: $cor-acento-secundaria;
+    border-color: rgba($cor-acento-principal, 0.35);
     color: $cor-texto-primaria;
   }
 
   &--ativa {
-    border-color: $cor-acento-principal;
-    color: $cor-acento-principal;
+    border-color: rgba($cor-acento-principal, 0.45);
+    background: rgba($cor-acento-principal, 0.1);
+    color: $cor-texto-primaria;
     font-weight: 500;
   }
 }
 
-// ---- botões ----
+.opcaoDuracao__titulo {
+  font-size: $tamanho-h6;
+  font-weight: $peso-semibold;
+}
+
+.opcaoDuracao__subtitulo {
+  font-size: $tamanho-pequeno;
+  color: $cor-texto-terciaria;
+}
+
 .acoes {
   display: flex;
+  flex-wrap: wrap;
   gap: $espaco-sm;
   width: 100%;
   justify-content: center;
 }
 
 .botaoPrimario {
-  background-color: $cor-acento-principal;
+  background: linear-gradient(135deg, $cor-acento-principal 0%, $cor-acento-secundaria 100%);
   border: none;
-  border-radius: $raio-sm;
+  border-radius: 1rem;
   padding: $espaco-sm $espaco-lg;
   color: #fff;
   font-size: $tamanho-corpo;
   font-weight: 500;
   cursor: pointer;
   transition: opacity $transicao-rapida;
+  box-shadow: 0 18px 30px rgba($cor-acento-principal, 0.24);
 
   &:hover:not(:disabled) {
     opacity: 0.88;
@@ -172,15 +242,15 @@
 }
 
 .botaoIniciar {
-  width: 100%;
+  min-width: 16rem;
   padding: $espaco-md;
   font-size: $tamanho-h6;
 }
 
 .botaoSecundario {
-  background-color: transparent;
-  border: 1px solid $cor-bg-terciaria;
-  border-radius: $raio-sm;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
   padding: $espaco-sm $espaco-lg;
   color: $cor-texto-secundaria;
   font-size: $tamanho-corpo;
@@ -211,6 +281,13 @@
   gap: $espaco-sm;
 }
 
+.historico__topo {
+  display: inline-flex;
+  align-items: center;
+  gap: $espaco-xs;
+  color: $cor-texto-primaria;
+}
+
 .lista {
   list-style: none;
   padding: 0;
@@ -224,9 +301,10 @@
   display: flex;
   align-items: center;
   gap: $espaco-sm;
-  padding: $espaco-sm $espaco-md;
-  background-color: $cor-bg-secundaria;
-  border-radius: $raio-sm;
+  padding: 1rem 1.15rem;
+  background-color: rgba($cor-bg-secundaria, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.2rem;
   font-size: $tamanho-pequeno;
 }
 
@@ -260,4 +338,16 @@
 .itemEconomia {
   color: $cor-acento-principal;
   margin-left: auto;
+}
+
+@media (max-width: $ponto-corte-tablet - 1px) {
+  .acoes,
+  .itemHistorico {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .itemEconomia {
+    margin-left: 0;
+  }
 }

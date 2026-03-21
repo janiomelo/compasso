@@ -1183,6 +1183,22 @@ Features do MVP integradas.
 
 ---
 
+### **Fase 3.5: Revisão de Layout & UX Responsiva**
+Consolidar uma linguagem mais próxima de app mobile, mas com execução sólida em telas desktop.
+
+**Entregáveis:**
+- [ ] Revisar shell principal de navegação
+- [ ] Redesenhar Home com hierarquia mais clara de blocos
+- [ ] Redesenhar fluxo de Registro em etapas
+- [ ] Redesenhar dobra inicial da tela de Pausa
+- [ ] Definir gramática visual da tela de Ritmo
+- [ ] Especificar responsividade por comportamento, não só por breakpoint
+- [ ] Inventariar componentes visuais e estados ativos
+
+**Saída:** Direção visual revisada, pronta para implementação incremental ✅
+
+---
+
 ### **Fase 4: Data Management (Export/Import) + Tests**
 Backup e restauração de dados.
 
@@ -1296,6 +1312,7 @@ Aumentar cobertura e polir edges.
 ```
 Fase 1-2: 100% de confiança nos cálculos e storage
 Fase 3: Confiança nos fluxos (UI é testada via integração)
+Fase 3.5: Clareza visual antes de acelerar novas superfícies de UI
 Fase 4-7: Refinamento seguro com regressão evitada
 ```
 
@@ -1324,6 +1341,7 @@ Sempre assim: **tipo → serviço → hook → componente → teste**.
 | 1 | App roda, componentes funcionam | `npm run dev` → funciona |
 | 2 | Dados persistem corretamente | Testes de integração ✅ |
 | 3 | MVP funcional end-to-end | Fluxo completo testado |
+| 3.5 | Direção visual consolidada | Layout pronto para implementação |
 | 4 | Export/import íntegro | Round-trip data intacta |
 | 5 | Polido visualmente | Parece produção |
 | 6 | Dashboards informativos | Insights geram valor |

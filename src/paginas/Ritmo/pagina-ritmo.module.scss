@@ -1,0 +1,202 @@
+@use '../../estilos/variaveis' as *;
+
+.pagina {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-lg;
+}
+
+.topo {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-xs;
+}
+
+.eyebrow {
+  color: $cor-acento-principal;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: $tamanho-pequeno;
+  font-weight: $peso-semibold;
+}
+
+.titulo {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: $cor-texto-primaria;
+  letter-spacing: -0.04em;
+}
+
+.subtitulo {
+  margin: 0;
+  color: $cor-texto-secundaria;
+  max-width: 44rem;
+}
+
+.metricas {
+  display: grid;
+  gap: $espaco-md;
+
+  @include media-tablet {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.cartaoMetrica,
+.bloco,
+.itemRegistro {
+  background: rgba($cor-bg-secundaria, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.5rem;
+  box-shadow: $sombra-sm;
+}
+
+.cartaoMetrica {
+  padding: 1.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-xs;
+}
+
+.cartaoMetrica__topo {
+  display: inline-flex;
+  align-items: center;
+  gap: $espaco-xs;
+  color: $cor-texto-terciaria;
+}
+
+.cartaoMetrica__numero {
+  font-size: clamp(1.9rem, 5vw, 2.7rem);
+  color: $cor-texto-primaria;
+  line-height: 1;
+}
+
+.cartaoMetrica__texto {
+  color: $cor-texto-secundaria;
+}
+
+.bloco {
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-md;
+}
+
+.bloco__titulo {
+  margin: 0;
+  color: $cor-texto-primaria;
+  font-size: $tamanho-h4;
+}
+
+.semana {
+  display: grid;
+  gap: $espaco-sm;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  @include media-tablet {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+}
+
+.dia {
+  min-height: 8rem;
+  border-radius: 1.15rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba($cor-bg-primaria, 0.34);
+  padding: 1rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.dia--hoje {
+  border-color: rgba($cor-acento-principal, 0.48);
+  background: rgba($cor-acento-principal, 0.1);
+}
+
+.dia__semana,
+.dia__quantidade {
+  color: $cor-texto-terciaria;
+  font-size: $tamanho-pequeno;
+}
+
+.dia__numero {
+  font-size: $tamanho-h4;
+  color: $cor-texto-primaria;
+}
+
+.barras {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-md;
+}
+
+.barraLinha {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-xs;
+}
+
+.barraLinha__rotulo {
+  display: flex;
+  justify-content: space-between;
+  gap: $espaco-md;
+  color: $cor-texto-primaria;
+}
+
+.barraLinha__trilho,
+.itemRegistro__trilho {
+  width: 100%;
+  height: 0.45rem;
+  border-radius: $raio-pill;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.barraLinha__valor,
+.itemRegistro__valor {
+  height: 100%;
+  border-radius: $raio-pill;
+  background: linear-gradient(90deg, $cor-acento-principal 0%, $cor-acento-secundaria 100%);
+}
+
+.listaRegistros {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-sm;
+}
+
+.itemRegistro {
+  padding: 1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-xs;
+}
+
+.itemRegistro__topo {
+  display: flex;
+  justify-content: space-between;
+  gap: $espaco-sm;
+  color: $cor-texto-primaria;
+
+  span {
+    color: $cor-texto-secundaria;
+  }
+}
+
+.itemRegistro__data,
+.itemRegistro__rodape,
+.vazio {
+  color: $cor-texto-terciaria;
+}
+
+@media (max-width: $ponto-corte-tablet - 1px) {
+  .itemRegistro__topo,
+  .barraLinha__rotulo {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

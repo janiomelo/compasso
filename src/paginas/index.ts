@@ -1,3 +1,4 @@
 export { PaginaPrincipal } from './Principal/PaginaPrincipal'
 export { PaginaRegistro } from './Registro/PaginaRegistro'
 export { PaginaPausa } from './Pausa/PaginaPausa'
+export { PaginaRitmo } from './Ritmo/PaginaRitmo'

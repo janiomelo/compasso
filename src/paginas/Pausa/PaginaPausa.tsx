@@ -1,3 +1,4 @@
+import { History, PauseCircle, PlayCircle, Sparkles } from 'lucide-react'
 import { useState } from 'react'
 import { usePausa } from '../../ganchos'
 import { formatarDuracao, formatarMoeda } from '../../utilitarios/dados/formatacao'
@@ -55,12 +56,22 @@ export const PaginaPausa = () => {
   return (
     <div className={styles.pagina}>
       <header className={styles.topo}>
+        <span className={styles.eyebrow}>Pausa</span>
         <h1 className={styles.titulo}>Pausa de Compasso</h1>
-        <p className={styles.subtitulo}>Períodos de clareza intencional.</p>
+        <p className={styles.subtitulo}>Uma pausa programada deixa o ritmo mais legível sem transformar a experiência em planilha.</p>
       </header>
 
       {pausaAtiva && progresso ? (
-        <section className={styles.pausaAtiva}>
+        <section className={styles.hero + ' ' + styles['hero--ativa']}>
+          <div className={styles.hero__icone}>
+            <PauseCircle size={28} strokeWidth={2.2} />
+          </div>
+
+          <div className={styles.hero__texto}>
+            <h2 className={styles.hero__titulo}>Sua pausa está em andamento</h2>
+            <p className={styles.hero__descricao}>Acompanhe o progresso e decida se quer concluir ou interromper manualmente.</p>
+          </div>
+
           <div className={styles.cronometro}>
             <div className={styles.cronometroValor}>
               {formatarDuracao(progresso.decorridoMs)}
@@ -112,8 +123,14 @@ export const PaginaPausa = () => {
           </div>
         </section>
       ) : (
-        <section className={styles.iniciar}>
-          <h2 className={styles.secaoTitulo}>Iniciar nova pausa</h2>
+        <section className={styles.hero}>
+          <div className={styles.hero__icone}>
+            <PlayCircle size={28} strokeWidth={2.2} />
+          </div>
+          <div className={styles.hero__texto}>
+            <h2 className={styles.hero__titulo}>Começar uma pausa</h2>
+            <p className={styles.hero__descricao}>Uma pausa curta já ajuda a observar padrões, clarear rotina e ganhar contraste para decidir melhor.</p>
+          </div>
 
           <div className={styles.opcoesGrid}>
             {OPCOES_DURACAO.map((opcao) => (
@@ -125,7 +142,8 @@ export const PaginaPausa = () => {
                 }
                 onClick={() => setDuracaoSelecionada(opcao.ms)}
               >
-                {opcao.rotulo}
+                <span className={styles.opcaoDuracao__titulo}>{opcao.rotulo}</span>
+                <span className={styles.opcaoDuracao__subtitulo}>pausa guiada</span>
               </button>
             ))}
           </div>
@@ -139,12 +157,20 @@ export const PaginaPausa = () => {
           >
             {aguardando ? 'Iniciando...' : 'Iniciar pausa'}
           </button>
+
+          <div className={styles.hero__nota}>
+            <Sparkles size={16} />
+            <span>Você pode encerrar manualmente a qualquer momento.</span>
+          </div>
         </section>
       )}
 
       {ultimasCinco.length > 0 && (
         <section className={styles.historico}>
-          <h2 className={styles.secaoTitulo}>Histórico recente</h2>
+          <div className={styles.historico__topo}>
+            <History size={18} />
+            <h2 className={styles.secaoTitulo}>Histórico recente</h2>
+          </div>
           <ul className={styles.lista}>
             {ultimasCinco.map((pausa) => (
               <li key={pausa.id} className={styles.itemHistorico}>
