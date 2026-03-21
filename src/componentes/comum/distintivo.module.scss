@@ -1,0 +1,35 @@
+@use '../../estilos/variaveis' as *;
+
+.distintivo {
+  display: inline-block;
+  padding: $espaco-xs $espaco-sm;
+  border-radius: $raio-sm;
+  font-size: $tamanho-pequeno;
+  font-weight: $peso-semibold;
+  white-space: nowrap;
+
+  &--padrao {
+    background-color: $cor-bg-terciaria;
+    color: $cor-texto-primaria;
+  }
+
+  &--sucesso {
+    background-color: rgba($cor-sucesso, 0.2);
+    color: $cor-sucesso;
+  }
+
+  &--aviso {
+    background-color: rgba($cor-aviso, 0.2);
+    color: $cor-aviso;
+  }
+
+  &--erro {
+    background-color: rgba($cor-erro, 0.2);
+    color: $cor-erro;
+  }
+
+  &--info {
+    background-color: rgba($cor-info, 0.2);
+    color: $cor-info;
+  }
+}

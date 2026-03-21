@@ -1,0 +1,215 @@
+@use './variaveis' as *;
+
+// ============================================================
+// RESET & NORMALIZAÇÕES
+// ============================================================
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: $cor-bg-primaria;
+  color: $cor-texto-primaria;
+  font-family: $fonte-principal;
+  font-size: $tamanho-corpo;
+  font-weight: $peso-regular;
+  line-height: 1.6;
+  transition: background-color $transicao-normal, color $transicao-normal;
+}
+
+// ============================================================
+// TIPOGRAFIA
+// ============================================================
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: $peso-bold;
+  line-height: 1.2;
+  margin-bottom: $espaco-md;
+}
+
+h1 {
+  font-size: $tamanho-h1;
+}
+
+h2 {
+  font-size: $tamanho-h2;
+}
+
+h3 {
+  font-size: $tamanho-h3;
+}
+
+h4 {
+  font-size: $tamanho-h4;
+}
+
+h5 {
+  font-size: $tamanho-h5;
+}
+
+h6 {
+  font-size: $tamanho-h6;
+}
+
+p {
+  margin-bottom: $espaco-md;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// ============================================================
+// LINKS
+// ============================================================
+
+a {
+  color: $cor-acento-principal;
+  text-decoration: none;
+  transition: color $transicao-rapida;
+
+  &:hover {
+    color: $cor-acento-secundaria;
+    text-decoration: underline;
+  }
+
+  &:active {
+    color: $cor-acento-principal;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $cor-acento-principal;
+    outline-offset: 2px;
+  }
+}
+
+// ============================================================
+// LISTAS
+// ============================================================
+
+ul,
+ol {
+  margin-bottom: $espaco-md;
+  padding-left: $espaco-lg;
+}
+
+li {
+  margin-bottom: $espaco-sm;
+}
+
+// ============================================================
+// FORMULÁRIOS
+// ============================================================
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+// ============================================================
+// CÓDIGO
+// ============================================================
+
+code,
+pre {
+  background-color: $cor-bg-terciaria;
+  border-radius: $raio-sm;
+  font-family: $fonte-mono;
+  font-size: 0.875em;
+  overflow-x: auto;
+}
+
+code {
+  padding: 2px 4px;
+}
+
+pre {
+  padding: $espaco-md;
+  margin-bottom: $espaco-md;
+
+  code {
+    background: none;
+    padding: 0;
+  }
+}
+
+// ============================================================
+// TABELAS
+// ============================================================
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: $espaco-lg;
+}
+
+thead {
+  background-color: $cor-bg-secundaria;
+}
+
+th,
+td {
+  padding: $espaco-md;
+  text-align: left;
+  border-bottom: 1px solid $cor-bg-terciaria;
+}
+
+// ============================================================
+// SCROLL
+// ============================================================
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: $cor-bg-secundaria;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $cor-texto-terciaria;
+  border-radius: $raio-sm;
+
+  &:hover {
+    background: $cor-texto-secundaria;
+  }
+}
+
+// ============================================================
+// SELEÇÃO DE TEXTO
+// ============================================================
+
+::selection {
+  background-color: $cor-acento-principal;
+  color: $cor-bg-primaria;
+}
+
+::-moz-selection {
+  background-color: $cor-acento-principal;
+  color: $cor-bg-primaria;
+}

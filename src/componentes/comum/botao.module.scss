@@ -1,0 +1,88 @@
+@use '../../estilos/variaveis' as *;
+
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $espaco-sm;
+  font-family: inherit;
+  font-weight: $peso-semibold;
+  border: none;
+  border-radius: $raio-md;
+  cursor: pointer;
+  transition: all $transicao-rapida;
+  white-space: nowrap;
+
+  // TAMANHOS
+  &--pequeno {
+    padding: $espaco-sm $espaco-md;
+    font-size: $tamanho-pequeno;
+  }
+
+  &--medio {
+    padding: $espaco-md $espaco-lg;
+    font-size: $tamanho-corpo;
+  }
+
+  &--grande {
+    padding: $espaco-lg $espaco-xl;
+    font-size: $tamanho-h6;
+  }
+
+  // VARIANTES
+  &--primaria {
+    background-color: $cor-acento-principal;
+    color: $cor-bg-primaria;
+
+    &:hover:not(.botao--desativado) {
+      background-color: $cor-acento-secundaria;
+      transform: translateY(-2px);
+      box-shadow: $sombra-md;
+    }
+
+    &:active:not(.botao--desativado) {
+      transform: translateY(0);
+    }
+  }
+
+  &--secundaria {
+    background-color: transparent;
+    color: $cor-acento-principal;
+    border: 2px solid $cor-acento-principal;
+
+    &:hover:not(.botao--desativado) {
+      background-color: rgba($cor-acento-principal, 0.1);
+    }
+  }
+
+  &--vazia {
+    background-color: transparent;
+    color: $cor-texto-primaria;
+    border: none;
+
+    &:hover:not(.botao--desativado) {
+      color: $cor-acento-principal;
+    }
+  }
+
+  &--perigosa {
+    background-color: $cor-erro;
+    color: $cor-texto-primaria;
+
+    &:hover:not(.botao--desativado) {
+      opacity: 0.9;
+      box-shadow: $sombra-md;
+    }
+  }
+
+  // ESTADO
+  &--desativado {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $cor-acento-principal;
+    outline-offset: 2px;
+  }
+}

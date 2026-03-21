@@ -1,0 +1,135 @@
+@use './estilos/variaveis' as *;
+
+// ============================================================
+// LAYOUT PRINCIPAL
+// ============================================================
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: $cor-bg-primaria;
+  color: $cor-texto-primaria;
+}
+
+// ============================================================
+// CABEÇALHO
+// ============================================================
+
+.cabecalho {
+  background-color: $cor-bg-secundaria;
+  border-bottom: 1px solid $cor-bg-terciaria;
+  padding: $espaco-md;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: $sombra-sm;
+
+  h1 {
+    margin: 0;
+    font-size: $tamanho-h5;
+    color: $cor-acento-principal;
+  }
+
+  .nav-desktop {
+    display: none;
+
+    @include media-tablet {
+      display: flex;
+      gap: $espaco-lg;
+
+      a {
+        color: $cor-texto-secundaria;
+        transition: color $transicao-rapida;
+
+        &:hover {
+          color: $cor-acento-principal;
+        }
+      }
+    }
+  }
+}
+
+// ============================================================
+// CONTEÚDO PRINCIPAL
+// ============================================================
+
+.principal {
+  flex: 1;
+  padding: $espaco-lg;
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-lg;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+
+  @include media-tablet {
+    padding: $espaco-2xl;
+  }
+}
+
+.pagina {
+  h1,
+  h2 {
+    color: $cor-acento-principal;
+    margin-bottom: $espaco-lg;
+  }
+
+  p {
+    color: $cor-texto-secundaria;
+
+    &.status-setup {
+      background-color: $cor-bg-secundaria;
+      padding: $espaco-md;
+      border-left: 4px solid $cor-acento-principal;
+      border-radius: $raio-sm;
+      margin-top: $espaco-lg;
+      font-size: $tamanho-pequeno;
+    }
+  }
+}
+
+// ============================================================
+// NAVEGAÇÃO MÓVEL (Bottom Nav)
+// ============================================================
+
+.nav-movel {
+  display: flex;
+  gap: $espaco-sm;
+  justify-content: space-around;
+  align-items: center;
+  background-color: $cor-bg-secundaria;
+  border-top: 1px solid $cor-bg-terciaria;
+  padding: $espaco-sm;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+
+  @include media-tablet {
+    position: static;
+    display: none;
+  }
+
+  a {
+    flex: 1;
+    text-align: center;
+    padding: $espaco-sm;
+    color: $cor-texto-secundaria;
+    font-size: $tamanho-pequeno;
+    transition: color $transicao-rapida;
+
+    &:hover {
+      color: $cor-acento-principal;
+    }
+  }
+}
+
+// Compensar padding do nav-movel em mobile
+@media (max-width: $ponto-corte-tablet - 1px) {
+  .principal {
+    padding-bottom: calc($espaco-lg + 60px); // Altura estimada do nav-movel
+  }
+}

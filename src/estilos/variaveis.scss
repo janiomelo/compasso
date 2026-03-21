@@ -1,0 +1,96 @@
+// ============================================================
+// VARIÁVEIS GLOBAIS — Compasso Design System
+// ============================================================
+
+// CORES — Tema Escuro (padrão)
+$cor-bg-primaria: #0f0f0f;
+$cor-bg-secundaria: #1a1a1a;
+$cor-bg-terciaria: #2a2a2a;
+$cor-texto-primaria: #ffffff;
+$cor-texto-secundaria: #b0b0b0;
+$cor-texto-terciaria: #808080;
+
+// Cores de Acentuação
+$cor-acento-principal: #4a9b6f; // Verde "compasso"
+$cor-acento-secundaria: #6bb582;
+$cor-sucesso: #2daa4f;
+$cor-aviso: #d4a574;
+$cor-erro: #c75454;
+$cor-info: #5b8fc4;
+
+// TIPOGRAFIA
+$fonte-principal: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+$fonte-mono: 'Fira Code', 'Courier New', monospace;
+
+// Tamanhos de Fonte
+$tamanho-h1: 2rem; // 32px
+$tamanho-h2: 1.75rem; // 28px
+$tamanho-h3: 1.5rem; // 24px
+$tamanho-h4: 1.25rem; // 20px
+$tamanho-h5: 1.125rem; // 18px
+$tamanho-h6: 1rem; // 16px
+$tamanho-corpo: 0.875rem; // 14px
+$tamanho-pequeno: 0.75rem; // 12px
+
+// Pesos de Fonte
+$peso-regular: 400;
+$peso-semibold: 600;
+$peso-bold: 700;
+
+// ESPAÇAMENTO (Grid 8px)
+$espaco-xs: 0.25rem; // 4px
+$espaco-sm: 0.5rem; // 8px
+$espaco-md: 1rem; // 16px
+$espaco-lg: 1.5rem; // 24px
+$espaco-xl: 2rem; // 32px
+$espaco-2xl: 2.5rem; // 40px
+$espaco-3xl: 3rem; // 48px
+
+// BREAKPOINTS (Mobile-first)
+$ponto-corte-movel: 320px;
+$ponto-corte-tablet: 768px;
+$ponto-corte-desktop: 1024px;
+
+// SOMBRAS
+$sombra-sm: 0 1px 2px rgba(0, 0, 0, 0.12);
+$sombra-md: 0 4px 6px rgba(0, 0, 0, 0.16);
+$sombra-lg: 0 10px 24px rgba(0, 0, 0, 0.2);
+
+// BORDAS
+$raio-sm: 4px;
+$raio-md: 8px;
+$raio-lg: 12px;
+
+// TRANSIÇÕES
+$transicao-rapida: 150ms ease-in-out;
+$transicao-normal: 300ms ease-in-out;
+$transicao-lenta: 500ms ease-in-out;
+
+// ============================================================
+// MIXINS — Media Queries
+// ============================================================
+
+@mixin media-tablet {
+  @media (min-width: $ponto-corte-tablet) {
+    @content;
+  }
+}
+
+@mixin media-desktop {
+  @media (min-width: $ponto-corte-desktop) {
+    @content;
+  }
+}
+
+// ============================================================
+// TEMA CLARO (alternativa)
+// ============================================================
+
+body.tema-claro {
+  --bg-primaria: #ffffff;
+  --bg-secundaria: #f8f8f8;
+  --bg-terciaria: #f0f0f0;
+  --texto-primaria: #0f0f0f;
+  --texto-secundaria: #4a4a4a;
+  --texto-terciaria: #7a7a7a;
+}

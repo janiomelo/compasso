@@ -1,0 +1,89 @@
+@use '../../estilos/variaveis' as *;
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: $espaco-sm;
+  padding: $espaco-sm $espaco-md;
+  background-color: $cor-bg-terciaria;
+  border: 1px solid $cor-bg-terciaria;
+  color: $cor-texto-primaria;
+  border-radius: 20px;
+  font-size: $tamanho-pequeno;
+  font-weight: $peso-semibold;
+  cursor: pointer;
+  transition: all $transicao-rapida;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: $cor-acento-principal;
+    border-color: $cor-acento-principal;
+    color: $cor-bg-primaria;
+  }
+
+  &--selecionado {
+    background-color: $cor-acento-principal;
+    border-color: $cor-acento-principal;
+    color: $cor-bg-primaria;
+  }
+
+  // VARIANTES
+  &--sucesso {
+    background-color: rgba($cor-sucesso, 0.1);
+    border-color: $cor-sucesso;
+    color: $cor-sucesso;
+
+    &:hover,
+    &.chip--selecionado {
+      background-color: $cor-sucesso;
+      color: $cor-bg-primaria;
+    }
+  }
+
+  &--aviso {
+    background-color: rgba($cor-aviso, 0.1);
+    border-color: $cor-aviso;
+    color: $cor-aviso;
+
+    &:hover,
+    &.chip--selecionado {
+      background-color: $cor-aviso;
+      color: $cor-bg-primaria;
+    }
+  }
+
+  &--erro {
+    background-color: rgba($cor-erro, 0.1);
+    border-color: $cor-erro;
+    color: $cor-erro;
+
+    &:hover,
+    &.chip--selecionado {
+      background-color: $cor-erro;
+      color: $cor-bg-primaria;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid $cor-acento-principal;
+    outline-offset: 2px;
+  }
+}
+
+.chip-remover {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $tamanho-corpo;
+  opacity: 0.7;
+  transition: opacity $transicao-rapida;
+
+  &:hover {
+    opacity: 1;
+  }
+}

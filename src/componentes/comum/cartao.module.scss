@@ -1,0 +1,23 @@
+@use '../../estilos/variaveis' as *;
+
+.cartao {
+  background-color: $cor-bg-secundaria;
+  border: 1px solid $cor-bg-terciaria;
+  border-radius: $raio-lg;
+  padding: $espaco-lg;
+  box-shadow: $sombra-sm;
+  transition: all $transicao-normal;
+
+  &--clicavel {
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: $sombra-md;
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
