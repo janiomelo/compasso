@@ -117,4 +117,41 @@ describe('persistencia com Dexie', () => {
     expect(resultado.valido).toBe(true)
     expect(resultado.erros).toHaveLength(0)
   })
+
+  it('aplica retencao por origem de backup e prioriza restauracao manual', async () => {
+    await salvarConfiguracoes(configuracoesBase)
+
+    agoraMock = new Date('2024-05-01T09:00:00.000Z').getTime()
+    await criarRegistro({ metodo: 'vapor', intencao: 'foco', intensidade: 'media' })
+
+    for (let indice = 0; indice < 6; indice += 1) {
+      agoraMock = new Date(`2024-05-0${indice + 2}T10:00:00.000Z`).getTime()
+      await fazerBackupLocal({ origem: 'automatico', limite: 3 })
+    }
+
+    for (let indice = 0; indice < 4; indice += 1) {
+      agoraMock = new Date(`2024-05-${indice + 10}T11:00:00.000Z`).getTime()
+      await fazerBackupLocal({ origem: 'manual', limite: 2 })
+    }
+
+    const backups = await bd.backups.orderBy('criadoEm').reverse().toArray()
+    const automaticos = backups.filter((backup) => backup.origem === 'automatico')
+    const manuais = backups.filter((backup) => backup.origem === 'manual')
+
+    expect(automaticos).toHaveLength(3)
+    expect(manuais).toHaveLength(2)
+
+    await bd.transaction('rw', bd.registros, bd.pausas, bd.configuracoes, async () => {
+      await bd.registros.clear()
+      await bd.pausas.clear()
+      await bd.configuracoes.clear()
+    })
+
+    const restaurado = await restaurarBackupLocal({ origemPreferencial: 'manual' })
+    expect(restaurado).toBe(true)
+
+    const estado = await hidratarEstado()
+    expect(estado.registros).toHaveLength(1)
+    expect(estado.configuracoes.valorEconomia).toBe(120)
+  })
 })

@@ -1,5 +1,5 @@
 import { estadoInicial } from '../loja/redutor'
-import type { Configuracoes, EstadoApp, PersistenciaApp } from '../tipos'
+import type { Configuracoes, EstadoApp, OrigemBackup, PersistenciaApp } from '../tipos'
 import { consultasBD } from '../utilitarios/armazenamento/bd'
 import pako from 'pako'
 import { VERSAO_APP } from '../utilitarios/constantes'
@@ -8,6 +8,11 @@ interface PacoteExportacao {
   versao: string
   exportadoEm: string
   dados: PersistenciaApp
+}
+
+const LIMITES_BACKUP: Record<OrigemBackup, number> = {
+  automatico: 5,
+  manual: 20,
 }
 
 const obterVersaoMajor = (versao: string): number | null => {
@@ -183,7 +188,12 @@ export async function salvarConfiguracoes(configuracoes: Configuracoes): Promise
   return configuracoes
 }
 
-export async function fazerBackupLocal(): Promise<void> {
+export async function fazerBackupLocal(opcoes?: {
+  origem?: OrigemBackup
+  limite?: number
+}): Promise<void> {
+  const origem = opcoes?.origem ?? 'automatico'
+  const limite = opcoes?.limite ?? LIMITES_BACKUP[origem]
   const estado = await hidratarEstado()
 
   const dados: PersistenciaApp = {
@@ -193,12 +203,18 @@ export async function fazerBackupLocal(): Promise<void> {
     metadados: estado.metadados,
   }
 
-  await consultasBD.salvarBackup(dados)
-  await consultasBD.limparBackupsAntigos()
+  await consultasBD.salvarBackup(dados, origem)
+  await consultasBD.limparBackupsAntigos(limite, origem)
 }
 
-export async function restaurarBackupLocal(): Promise<boolean> {
-  const backup = await consultasBD.obterBackupMaisRecente()
+export async function restaurarBackupLocal(opcoes?: {
+  origemPreferencial?: OrigemBackup
+}): Promise<boolean> {
+  const origemPreferencial = opcoes?.origemPreferencial ?? 'manual'
+  const origemAlternativa: OrigemBackup = origemPreferencial === 'manual' ? 'automatico' : 'manual'
+
+  const backupPreferencial = await consultasBD.obterBackupMaisRecente(origemPreferencial)
+  const backup = backupPreferencial ?? await consultasBD.obterBackupMaisRecente(origemAlternativa)
 
   if (!backup) {
     return false

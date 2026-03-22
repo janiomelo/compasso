@@ -17,12 +17,13 @@
 - Pacote E: testes de UI comportamental para Registro, Pausa e Principal.
 - Fase 4 (parcial): exportacao/importacao de dados com compressao gzip e teste de round-trip.
 - Fase 4 (parcial): validacao de compatibilidade de versao no import e migracao de pausa legada (`duracaoPlanjada` -> `duracaoPlanejada`).
+- Fase 4 (parcial): politica de retencao por origem de backup (`automatico` e `manual`) com restauracao preferencial.
 
 ### 0.2. Estado atual validado
 
 - `npm run type-check`: OK.
 - `npm run build`: OK.
-- `npx vitest run`: 61/61 testes passando.
+- `npx vitest run`: 62/62 testes passando.
 - CI automatizada com gate de qualidade (`type-check + lint + testes + build`).
 - Commits de referencia:
   - `a95676f` (Pacote A)

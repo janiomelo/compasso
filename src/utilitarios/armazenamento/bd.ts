@@ -2,6 +2,7 @@ import Dexie, { Table } from 'dexie'
 import type {
   BackupLocal,
   Configuracoes,
+  OrigemBackup,
   Pausa,
   PersistenciaApp,
   Registro,
@@ -23,6 +24,13 @@ class BancoCompasso extends Dexie {
       pausas: 'id, iniciadoEm, status',
       configuracoes: 'chave',
       backups: '++id, criadoEm',
+    })
+
+    this.version(2).stores({
+      registros: 'id, timestamp, metodo, intencao',
+      pausas: 'id, iniciadoEm, status',
+      configuracoes: 'chave',
+      backups: '++id, criadoEm, origem',
     })
   }
 }
@@ -100,24 +108,32 @@ export const consultasBD = {
     return registro?.valor
   },
 
-  async salvarBackup(dados: PersistenciaApp) {
+  async salvarBackup(dados: PersistenciaApp, origem: OrigemBackup = 'automatico') {
     const backup: BackupLocal = {
       criadoEm: Date.now(),
       dados,
       versaoApp: VERSAO_APP,
+      origem,
     }
 
     const id = await bd.backups.add(backup)
     return { ...backup, id }
   },
 
-  async obterBackupMaisRecente() {
-    return bd.backups.orderBy('criadoEm').reverse().first()
+  async obterBackupMaisRecente(origem?: OrigemBackup) {
+    const backups = await bd.backups.orderBy('criadoEm').reverse().toArray()
+
+    if (!origem) {
+      return backups[0]
+    }
+
+    return backups.find((backup) => (backup.origem ?? 'automatico') === origem)
   },
 
-  async limparBackupsAntigos(maximo = 5) {
+  async limparBackupsAntigos(maximo = 5, origem: OrigemBackup = 'automatico') {
     const backups = await bd.backups.orderBy('criadoEm').reverse().toArray()
-    const excedentes = backups.slice(maximo)
+    const backupsDaOrigem = backups.filter((backup) => (backup.origem ?? 'automatico') === origem)
+    const excedentes = backupsDaOrigem.slice(maximo)
 
     await Promise.all(excedentes.map((backup) => backup.id ? bd.backups.delete(backup.id) : Promise.resolve()))
 

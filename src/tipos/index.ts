@@ -140,11 +140,14 @@ export interface RegistroConfiguracao {
   valor: Configuracoes;
 }
 
+export type OrigemBackup = 'automatico' | 'manual';
+
 export interface BackupLocal {
   id?: number;
   criadoEm: number;
   dados: PersistenciaApp;
   versaoApp: string;
+  origem: OrigemBackup;
 }
 
 // Tipos para Ações do Redutor
