@@ -166,7 +166,20 @@ O texto indica que a home está forte, mas ainda existe uma dúvida estrutural i
 - quanto deve ficar reservado para a tela de pausa;
     
 - qual é a fronteira exata entre **resumo e ação** na home e **imersão e controle** na tela de pausa.
-    
+
+Este ponto deve ser resolvido pela definição clara do papel de cada tela.
+
+- a home será tratada como tela de **resumo, contexto e ação**;
+- a tela de pausa será tratada como espaço de **acompanhamento, progresso e controle**;
+- a home deve mostrar apenas uma versão resumida da pausa, suficiente para orientar o usuário e levá-lo à próxima ação;
+- a tela de pausa deve concentrar a experiência mais detalhada, com progresso, meta, tempo decorrido, ganho estimado e ações relacionadas à pausa.
+
+Na prática:
+
+- a home responde à pergunta **“como estou agora e o que faço em seguida?”**;
+- a pausa responde à pergunta **“como está minha pausa e o que posso fazer com ela?”**.
+
+Com isso, a home não deve competir com a pausa em profundidade, e a pausa não deve assumir o papel de painel geral do produto.
 
 ### X.4. Intensidade no fluxo de registro
 
