@@ -11,13 +11,15 @@
 
   <rect width="512" height="512" rx="116" fill="url(#compassoBrand)"/>
 
-  <g transform="translate(128 118)" stroke="#F7FFFB" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="128" cy="44" r="18" stroke-width="14"/>
-    <circle cx="128" cy="82" r="8" fill="#F7FFFB" stroke="none"/>
-    <path d="M128 82 L96 194" stroke-width="14"/>
-    <path d="M128 82 L160 194" stroke-width="14"/>
-    <path d="M118 70 L128 82 L138 70" stroke-width="12"/>
-    <path d="M92 194 L100 194" stroke-width="14"/>
-    <path d="M158 194 L166 210" stroke-width="14"/>
+  <g transform="translate(128 118)">
+    <g transform="translate(128 128) scale(1.18) translate(-128 -128)" stroke="#F7FFFB" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="128" cy="44" r="18" stroke-width="14"/>
+      <circle cx="128" cy="82" r="8" fill="#F7FFFB" stroke="none"/>
+      <path d="M128 82 L96 194" stroke-width="14"/>
+      <path d="M128 82 L160 194" stroke-width="14"/>
+      <path d="M118 70 L128 82 L138 70" stroke-width="12"/>
+      <path d="M92 194 L100 194" stroke-width="14"/>
+      <path d="M158 194 L166 210" stroke-width="14"/>
+    </g>
   </g>
 </svg>
