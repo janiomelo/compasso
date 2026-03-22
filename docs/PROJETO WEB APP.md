@@ -30,8 +30,8 @@
 
 ### 0.3. O que falta (lacunas objetivas)
 
-- Pipeline de qualidade incompleto: `npm run lint` existe, mas o projeto ainda nao possui configuracao do ESLint (`.eslintrc*`).
 - Cobertura ainda nao esta sendo usada como criterio de gate no fluxo (meta declarada de ~80% ainda sem enforce automatizado).
+- Ausencia de automacao em CI para executar `type-check + lint + testes` a cada PR/push.
 - Fases futuras do plano (4 a 7) ainda pendentes:
   - dados (import/export + backup com testes dedicados),
   - polimento visual/PWA,
@@ -40,7 +40,7 @@
 
 ### 0.4. Proximos passos recomendados
 
-1. Fechar base de engenharia: criar configuracao ESLint minima e deixar `type-check + lint + test` como gate obrigatorio local/CI.
+1. Fechar gate de engenharia: adicionar CI com `type-check + lint + test` como bloqueio de regressao.
 2. Fase 4 (dados): consolidar `exportar/importar/backup` com round-trip testado e estrategia de migracao de schema.
 3. Fase 5 (PWA e UX final): service worker, instalabilidade, estados offline e refinamento visual final.
 4. Fase 6 (analytics): entregar painel de ritmo/economia com metrica de valor percebido.
