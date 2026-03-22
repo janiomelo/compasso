@@ -48,9 +48,8 @@ describe('fluxo de registros', () => {
   })
 
   it('registrosHoje filtra apenas registros do dia corrente', async () => {
-    const inicioDia = new Date(2026, 2, 21, 0, 0, 0).getTime()
-    const fimDia = new Date(2026, 2, 21, 23, 59, 59).getTime()
-    const ontem = new Date(2026, 2, 20, 12, 0, 0).getTime()
+    const agoraReal = Date.now()
+    const ontem = agoraReal - 24 * 60 * 60 * 1000
 
     // registro de ontem
     agoraMock = ontem
@@ -62,15 +61,16 @@ describe('fluxo de registros', () => {
     })
 
     // registro de hoje
-    agoraMock = (inicioDia + fimDia) / 2
+    agoraMock = agoraReal
     await act(async () => {
       await result.current.criar({ metodo: 'vapor', intencao: 'foco', intensidade: 'media' })
     })
 
     // hoje: deve ter apenas 1
-    agoraMock = fimDia
-    expect(result.current.registrosHoje).toHaveLength(1)
-    expect(result.current.registrosHoje[0].metodo).toBe('vapor')
+    await waitFor(() => {
+      expect(result.current.registrosHoje).toHaveLength(1)
+      expect(result.current.registrosHoje[0].metodo).toBe('vapor')
+    })
   })
 
   it('deleta registro e remove do estado', async () => {
