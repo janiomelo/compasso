@@ -125,6 +125,51 @@ As decisões pendentes são:
 
 A questão aqui não é se essas telas estão boas, mas se o escopo delas já está calibrado para a primeira versão.
 
+**Decisão**
+
+Este ponto continua realmente em aberto, mas com pesos diferentes entre as duas áreas.
+
+#### Pausa
+
+A tela de pausa já está suficientemente coerente com o MVP e com a proposta do produto. Ela cumpre bem o papel de acompanhamento, progresso e controle, sem excesso de complexidade.
+
+As pendências aqui passam a ser de refinamento, e não de escopo:
+
+- ajustar a microcopy das ações principais, remover informação sem necessidade ou repetida;
+- revisar a hierarquia entre ação principal e secundária;
+- decidir se algum detalhe adicional entra agora ou fica para depois.
+
+#### Ritmo
+
+A tela de ritmo ainda precisa ser reduzida e reorganizada para o MVP.
+
+Hoje ela reúne elementos demais ao mesmo tempo, misturando:
+
+- métricas de frequência;
+- resumos semanais;
+- economia;
+- listas de registros;
+- interpretações narrativas;
+- dicas;
+- resumos de períodos maiores.
+
+Para a primeira versão, a recomendação é manter apenas o núcleo mais claro e útil:
+
+- resumo curto do período recente;
+- leitura visual da semana;
+- formas mais usadas;
+- últimos registros.
+
+Ficam fora do MVP, por enquanto:
+
+- blocos interpretativos como “O que o período revela”;
+- “Dica desta semana”;
+- “Resumo dos últimos 30 dias”;
+- economia detalhada em múltiplos blocos;
+- qualquer camada de aconselhamento ou interpretação mais forte do comportamento.
+
+A direção recomendada é que a tela de ritmo funcione mais como espelho do hábito recente do que como painel analítico ou camada de aconselhamento.
+
 ### X.6. Sistema visual formalizado
 
 A interface já demonstra direção consistente, mas ainda falta transformar isso em sistema oficial.
