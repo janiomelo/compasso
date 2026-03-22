@@ -1,324 +1,149 @@
-## X. Pontos que Ainda Precisam de Decisão ou Clareza
+## X. Pontos que Ainda Estão Realmente Pendentes
 
-Esta seção resume apenas o que, a partir do texto-base, ainda não está suficientemente fechado ou ainda depende de decisão explícita. O objetivo é registrar os pontos em aberto sem misturar com recomendações já consolidadas.
+Esta versão substitui a lista anterior de pontos em aberto e considera o estágio atual do projeto, as decisões já tomadas e a coerência que o Compasso precisa manter. O objetivo aqui não é repetir dúvidas já resolvidas, mas registrar apenas o que ainda exige fechamento real.
 
-### X.1. Direção visual que precisa ser oficialmente congelada
+### X.1. Intensidade no fluxo de registro
 
-**Status: fechado em 22/03/2026 (Fase 8.1).**
+Este ainda é um ponto de decisão real.
 
-Referência oficial: `docs/DIRETRIZES-TEMAS-E-CORES.md`
+Hoje o fluxo já funciona visualmente, mas ainda falta definir qual será o modelo oficial de intensidade no MVP:
 
-Embora a análise já aponte uma direção forte, ainda falta transformar essa percepção em decisão formal de sistema:
+- manter escala contínua de 1 a 10;
+- simplificar a experiência para três estados: leve, média e alta;
+- ou adotar uma solução híbrida, em que a pessoa escolhe uma categoria principal e o valor detalhado fica secundário.
 
-- o produto não terá dark mode como direção principal exclusiva;
-    
-- o comportamento inicial deve respeitar a preferência do navegador ou do sistema operacional;
-    
-- dark mode e light mode serão tratados como temas oficiais do produto e ambos precisam ser igualmente bem resolvidos;
-    
-- deve existir botão de alternância manual de tema;
-    
-- o sistema deve permitir escolha explícita do tema padrão pelo usuário.
-    
+O ponto central não é mais visual, e sim de produto:
 
-**Verde sálvia/menta como acento principal**
+- o registro precisa continuar rápido;
+- a intensidade não pode transformar o check-in em uma mini planilha;
+- o modelo escolhido precisa conversar com os resumos, listas e análises posteriores.
 
-- verde sálvia/menta será o acento principal da identidade-base do produto;
-    
-- o sistema visual, porém, deve ser preparado para suportar temas;
-    
-- isso significa que o verde será a referência inicial, sem impedir futuras variações controladas.X.2. Escopo exato do estilo visual
-    
+### X.2. Linguagem visual dos elementos gráficos
 
-### Regra de uso de glow
+Este ponto ainda não está fechado porque a interface ainda mistura linguagens visuais diferentes.
 
-- glow é um recurso de destaque;
-    
-- não deve ser usado como estilo padrão de todos os componentes;
-    
-- deve aparecer apenas em elementos de maior prioridade visual.
-    
+O principal pendente é definir:
 
-### Limite por tela
+- se o produto usará ícones padronizados como linguagem principal;
+- se emojis continuarão existindo em algum contexto;
+- ou se tudo será unificado numa única biblioteca visual.
 
-- idealmente, **1 elemento principal com glow por tela**;
-    
-- excepcionalmente, **2 elementos**, desde que um deles seja claramente secundário;
-    
-- evitar glow simultâneo em múltiplos cards e controles.
-    
+Hoje o que mais pede decisão é:
 
-### Onde pode usar
+- as telas de intenção;
+- as telas de método;
+- a representação visual de “Outro”.
 
-- CTA principal
-    
-- card hero principal
-    
-- estado especial de foco ou destaque muito controlado
-    
+A necessidade aqui não é redesenhar tudo, mas decidir uma regra e aplicá-la com consistência.
 
-### Onde evitar
+### X.3. Vocabulário central da interface
 
-- navegação padrão
-    
-- cards secundários
-    
-- listas
-    
-- inputs comuns
-    
-- tags
-    
-- múltiplos elementos concorrentes
-    
+O produto já tem um tom forte, mas ainda falta fechar o vocabulário principal com precisão.
 
-### X.2. Escopo exato do estilo visual
+Os pontos que ainda pedem decisão objetiva são:
 
-**Status: fechado em 22/03/2026 (Fase 8.1).**
-
-Referência oficial: `docs/DIRETRIZES-TEMAS-E-CORES.md`
-
-Ainda falta decidir, de forma explícita, qual será a dominância final da linguagem visual:
-
-- se o produto será assumido formalmente como **mais utilitário do que editorial**;
-    
-- se a proporção sugerida de **60% utilitário / 40% editorial elegante** será adotada como regra;
-    
-- até que ponto a interface pode manter clima sofisticado sem perder objetividade funcional.
-    
-
-O Compasso pode e deve ser sofisticado, mas a função dele não é encantar primeiro; é **ser útil, claro e recorrente**.
-
-Então a ordem de prioridade fica:
-
-1. entender rápido;
-    
-2. usar sem esforço;
-    
-3. manter coerência;
-    
-4. só depois encantar visualmente.
-    
-
-Em termos práticos:
-
-- a interface não deve parecer revista, manifesto ou landing page expandida;
-    
-- deve parecer **produto real de uso recorrente**;
-    
-- a beleza entra como refinamento da utilidade.
-    
-
-**60% utilitário / 40% editorial elegante**
-
-Quando houver dúvida entre duas soluções:
-
-- a mais funcional vence;
-    
-- a mais clara vence;
-    
-- a mais repetível vence;
-    
-- a mais manutenível vence.
-    
-
-E o “40% editorial elegante” continua vivo em:
-
-- ritmo dos espaços;
-    
-- tipografia;
-    
-- escolha de cor;
-    
-- acabamento dos cards;
-    
-- tom da interface;
-    
-- hero blocks bem controlados.
-    
-
-Mas ele não deve dominar:
-
-- navegação;
-    
-- formulários;
-    
-- densidade de informação;
-    
-- leitura das ações;
-    
-- arquitetura de tela.
-    
-
-Então eu diria:
-
-- **sim, adote essa proporção como regra de orientação**;
-    
-- **não trate como conta exata**.
-    
-
-### X.3. Home versus Pausa
-
-**Status: fechado em 22/03/2026 (Fase 8.2).**
-
-Referência oficial: `docs/DIRETRIZES-HOME-PAUSA.md`
-
-O texto indicava que a home estava forte, mas ainda existia uma dúvida estrutural importante:
-
-- quanto da experiência de pausa deve aparecer na home;
-    
-- quanto deve ficar reservado para a tela de pausa;
-    
-- qual é a fronteira exata entre **resumo e ação** na home e **imersão e controle** na tela de pausa.
-
-Este ponto deve ser resolvido pela definição clara do papel de cada tela.
-
-- a home será tratada como tela de **resumo, contexto e ação**;
-- a tela de pausa será tratada como espaço de **acompanhamento, progresso e controle**;
-- a home deve mostrar apenas uma versão resumida da pausa, suficiente para orientar o usuário e levá-lo à próxima ação;
-- a tela de pausa deve concentrar a experiência mais detalhada, com progresso, meta, tempo decorrido, ganho estimado e ações relacionadas à pausa.
-
-Na prática:
-
-- a home responde à pergunta **“como estou agora e o que faço em seguida?”**;
-- a pausa responde à pergunta **“como está minha pausa e o que posso fazer com ela?”**.
-
-Com isso, a home não deve competir com a pausa em profundidade, e a pausa não deve assumir o papel de painel geral do produto.
-
-### X.4. Intensidade no fluxo de registro
-
-Este é um dos pontos mais claramente em aberto no texto:
-
-- manter escala de **1 a 10**;
-    
-- simplificar para **leve, média e alta**;
-    
-- decidir se o controle contínuo ficará fora do MVP e entrará apenas depois.
-    
-
-Também falta clareza sobre o quanto essa etapa precisa ser técnica ou rápida.
-
-### X.5. Linguagem visual dos elementos gráficos
-
-Ainda precisa ser decidido:
-
-- se o produto usará **ícones padronizados** como linguagem principal;
-    
-- se haverá uso de **emojis**;
-    
-- se haverá mistura entre os dois;
-    
-- em caso de mistura, em quais contextos isso será permitido sem comprometer a sofisticação da interface.
-    
-
-### X.6. Textos e nomenclaturas ainda não fechados
-
-Algumas expressões ainda aparecem como candidatas, e não como decisão final:
-
-- “Abrir pausa” versus “Ver pausa” versus “Acompanhar pausa”;
-    
 - “Como foi?” versus “Qual foi o método?”;
-    
-- “Concluir pausa” versus “Encerrar agora” ou “Finalizar pausa”;
-    
-- “Estável” versus “Ritmo estável”.
-    
+- “Concluir pausa” versus “Encerrar pausa” ou “Finalizar pausa”;
+- “Estável” versus “Ritmo estável”;
+- nomes e verbos que aparecem nas telas principais e precisam soar consistentes entre si.
 
-Falta, portanto, um fechamento oficial do vocabulário central da interface.
+A pendência aqui não é de estilo geral, mas de padronização final de microcopy.
 
-### X.7. Sistema visual ainda não formalizado
+### X.4. Paridade real entre dark mode e light mode
 
-A análise aponta a necessidade de fechar sistema, mas isso ainda não está resolvido. Faltam decisões objetivas sobre:
+O light mode deixou de ser hipótese e já está suficientemente maduro para entrar no sistema. Portanto, o ponto em aberto não é mais “criar um tema claro”, e sim garantir paridade real entre os dois temas.
 
-- design tokens;
-    
-- regras de borda e raio;
-    
-- escala de espaçamento;
-    
-- tamanhos tipográficos;
-    
-- largura máxima de conteúdo;
-    
-- grid oficial;
-    
-- intensidade de sombras e glows;
-    
-- padrões visuais por tipo de componente.
-    
+Ainda falta validar e fechar:
 
-### X.8. Sistema de componentes ainda não fechado
+- se os dois temas têm o mesmo nível de hierarquia visual;
+- se o contraste está igualmente bom nos dois modos;
+- se o acento principal funciona com a mesma qualidade;
+- se glow, bordas, superfícies e estados mantêm comportamento previsível.
 
-A lista de componentes já foi identificada, mas ainda não foi transformada em biblioteca oficial. Falta decidir:
+Ou seja: a pendência aqui é de refinamento e regra, não mais de direção.
 
-- quais componentes entram no núcleo do sistema agora;
-    
-- quais podem esperar;
-    
+### X.5. Escopo real do MVP nas telas de Ritmo e Pausa
+
+Este é um ponto importante e hoje parece mais aberto do que antes.
+
+O app já tem material para uma visão rica de ritmo, incluindo:
+
+- métricas de frequência;
+- formas mais usadas;
+- últimos registros;
+- resumos do período;
+- dicas;
+- blocos de economia.
+
+Isso é bom, mas ainda falta decidir o que realmente entra na primeira versão utilizável.
+
+As decisões pendentes são:
+
+- quanto da leitura de ritmo entra no MVP;
+- se blocos como “O que o período revela”, “Dica desta semana” e “Resumo dos últimos 30 dias” entram já agora ou ficam para depois;
+- qual é o grau de detalhe mínimo necessário para a tela de pausa;
+- quão forte a economia será no MVP: resumo simples ou área mais desenvolvida.
+
+A questão aqui não é se essas telas estão boas, mas se o escopo delas já está calibrado para a primeira versão.
+
+### X.6. Sistema visual formalizado
+
+A interface já demonstra direção consistente, mas ainda falta transformar isso em sistema oficial.
+
+As pendências reais aqui são:
+
+- consolidar design tokens;
+- fechar regras de raio, borda, glow e espaçamento;
+- definir largura máxima de conteúdo;
+- fechar grid e comportamento em telas maiores;
+- transformar decisões visuais em referência reutilizável.
+
+Este ponto não pede novas telas. Pede formalização.
+
+### X.7. Sistema de componentes
+
+O projeto já mostra padrões recorrentes, mas ainda falta declarar isso como biblioteca oficial do produto.
+
+Ainda precisa ser fechado:
+
+- quais componentes entram no núcleo do sistema;
 - quais estados cada componente precisa cobrir;
-    
-- o que será considerado componente oficial e reutilizável desde já.
-    
+- quais peças já podem ser tratadas como definitivas;
+- o que ainda é apenas solução de tela e o que já é componente reutilizável.
 
-### X.9. Light mode
+A necessidade aqui é sair do “parece consistente” e entrar no “está sistematizado”.
 
-O texto deixa claro que esse ponto está aberto:
+### X.8. Regra oficial de copy e tom
 
-- o light mode ainda não foi resolvido com a mesma maturidade do dark mode;
-    
-- ainda falta decidir como será sua personalidade própria;
-    
-- ainda falta garantir que ele não seja apenas adaptação tardia da versão escura.
-    
+O tom geral do Compasso já existe, mas ainda falta uma regra curta, objetiva e documentada para sustentar futuras decisões.
 
-### X.10. Regras de copy
+Ainda precisa ser fechado:
 
-Há direções boas, mas ainda não háu um conjunto oficialmente fechado de regras de linguagem. Ainda precisa ser decidido:
+- quais verbos o produto usa como padrão;
+- quais termos devem ser evitados;
+- o nível de tecnicidade aceitável;
+- o padrão de subtítulo, rótulo e microcopy.
 
-- quais verbos e estruturas o produto vai usar com consistência;
-    
-- quais termos ficam proibidos;
-    
-- qual é o grau de tecnicidade aceitável;
-    
-- qual é o padrão de subtítulo, rótulo e microcopy para a interface.
-    
+Isso é importante para que a linguagem continue coerente conforme o projeto crescer.
 
-### X.11. Estrutura definitiva do MVP
+### X.9. Limites de originalidade e origem dos assets
 
-O texto já sugere um caminho, mas ainda faltam decisões práticas sobre o que entra e o que não entra agora:
+Não há sinal evidente de plágio direto na interface atual, mas continuam em aberto alguns cuidados operacionais:
 
-- intensidade em 3 níveis ou 10 níveis;
-    
-- economia como card ou como seção mais forte;
-    
-- observação livre no MVP ou não;
-    
-- grau de detalhe da tela de pausa;
-    
-- quantidade de informação que o ritmo recente deve mostrar na primeira versão.
-    
+- definir origem oficial dos ícones e demais assets;
+- revisar licenças de qualquer recurso de terceiros;
+- manter atenção à microcopy para evitar proximidade excessiva com concorrentes;
+- revisar o símbolo da marca quando ele for fechado.
 
-### X.12. Limites de originalidade que ainda exigem cuidado
+Este ponto não bloqueia o produto visualmente agora, mas precisa permanecer na lista de fechamento.
 
-A análise conclui que não há sinal evidente de plágio direto, mas ainda faltam definições preventivas sobre:
+### X.10. Decisão operacional de consolidação
 
-- origem oficial dos ícones e assets;
-    
-- revisão de licenças do que vier de terceiros;
-    
-- revisão futura do símbolo da marca;
-    
-- cuidado com microcopy para evitar proximidade excessiva com concorrentes.
-    
+O ponto mais importante que continua em aberto não é visual, e sim de processo.
 
-### X.13. Decisão operacional mais importante
+Ainda precisa ser assumido explicitamente que o projeto vai:
 
-O ponto mais importante que ainda precisa ser assumido de forma explícita é este:
+- sair do modo de exploração de telas isoladas;
+- e entrar de vez no modo de sistema, consistência e manutenção.
 
-- se o projeto vai realmente sair do modo de exploração de telas isoladas;
-    
-- e entrar no modo de **sistema, consistência e manutenção**.
-    
-
-Sem essa decisão, mesmo uma direção visual boa corre risco de dispersão.
+Sem essa virada, mesmo com uma base muito boa, o projeto corre risco de voltar à dispersão.
