@@ -119,6 +119,21 @@
   background: var(--superficie-cartao);
 }
 
+.painelOnboarding {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-sm;
+  border: 1px solid var(--borda-suave);
+  border-radius: $raio-lg;
+  padding: $espaco-md;
+  background: var(--superficie-cartao);
+}
+
+.onboardingMeta {
+  margin: 0;
+  color: var(--cor-texto-secundaria);
+}
+
 .painelLinksTopo {
   display: inline-flex;
   align-items: center;

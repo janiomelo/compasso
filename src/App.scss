@@ -154,6 +154,11 @@
   padding: $espaco-lg 0 $espaco-3xl;
 }
 
+.principal--onboarding {
+  width: min(100%, calc(100% - 1.5rem));
+  padding-top: clamp(1rem, 4vw, 2rem);
+}
+
 .aviso-offline {
   width: min(1040px, calc(100% - 2rem));
   margin: $espaco-sm auto 0;
@@ -278,5 +283,10 @@ body.tema-claro {
   .principal {
     width: min(100%, calc(100% - 1.25rem));
     padding-top: $espaco-md;
+  }
+
+  .principal--onboarding {
+    width: min(100%, calc(100% - 1rem));
+    padding-top: $espaco-sm;
   }
 }

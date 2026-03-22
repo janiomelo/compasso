@@ -1,5 +1,5 @@
 import { estadoInicial } from '../loja/redutor'
-import type { Configuracoes, EstadoApp, OrigemBackup, PersistenciaApp } from '../tipos'
+import type { Configuracoes, EstadoApp, EstadoOnboarding, OrigemBackup, PersistenciaApp } from '../tipos'
 import { consultasBD } from '../utilitarios/armazenamento/bd'
 import pako from 'pako'
 import { VERSAO_APP } from '../utilitarios/constantes'
@@ -13,6 +13,44 @@ interface PacoteExportacao {
 const LIMITES_BACKUP: Record<OrigemBackup, number> = {
   automatico: 5,
   manual: 20,
+}
+
+const normalizarOnboarding = (onboarding: unknown): EstadoOnboarding | undefined => {
+  if (!onboarding || typeof onboarding !== 'object') {
+    return undefined
+  }
+
+  const candidato = onboarding as Partial<EstadoOnboarding>
+
+  if (
+    typeof candidato.concluidoEm !== 'number' ||
+    typeof candidato.confirmouMaioridadeEm !== 'number' ||
+    typeof candidato.aceitouTermosPrivacidadeEm !== 'number' ||
+    typeof candidato.versaoTermos !== 'string' ||
+    typeof candidato.versaoPolitica !== 'string'
+  ) {
+    return undefined
+  }
+
+  return {
+    concluidoEm: candidato.concluidoEm,
+    confirmouMaioridadeEm: candidato.confirmouMaioridadeEm,
+    aceitouTermosPrivacidadeEm: candidato.aceitouTermosPrivacidadeEm,
+    versaoTermos: candidato.versaoTermos,
+    versaoPolitica: candidato.versaoPolitica,
+  }
+}
+
+const normalizarConfiguracoes = (configuracoes?: Configuracoes): Configuracoes => {
+  if (!configuracoes) {
+    return estadoInicial.configuracoes
+  }
+
+  return {
+    ...estadoInicial.configuracoes,
+    ...configuracoes,
+    onboarding: normalizarOnboarding(configuracoes.onboarding),
+  }
 }
 
 const obterVersaoMajor = (versao: string): number | null => {
@@ -175,7 +213,7 @@ export async function hidratarEstado(): Promise<EstadoApp> {
     registros,
     pausaAtiva,
     historicoPausa: pausas,
-    configuracoes: configuracoes ?? estadoInicial.configuracoes,
+    configuracoes: normalizarConfiguracoes(configuracoes),
     metadados: {
       ...estadoInicial.metadados,
       ultimaSincronizacao: Date.now(),

@@ -45,6 +45,10 @@ export const TEMAS = ['escuro', 'claro'] as const
 // Versão da aplicação
 export const VERSAO_APP = '0.1.0'
 
+// Versões públicas de referência para aceite no onboarding.
+export const VERSAO_TERMOS_USO = '2026-03'
+export const VERSAO_POLITICA_PRIVACIDADE = '2026-03'
+
 // Versão do banco de dados
 export const VERSAO_BD = 1
 

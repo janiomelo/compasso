@@ -52,6 +52,19 @@ export const PaginaConfig = () => {
     return window.matchMedia('(prefers-color-scheme: light)').matches ? 'claro' : 'escuro'
   }, [estado.configuracoes.tema, estado.configuracoes.temaAuto])
 
+  const aceiteLocalFormatado = useMemo(() => {
+    const timestampAceite = estado.configuracoes.onboarding?.aceitouTermosPrivacidadeEm
+
+    if (!timestampAceite) {
+      return 'Ainda não registrado neste dispositivo.'
+    }
+
+    return new Date(timestampAceite).toLocaleString('pt-BR', {
+      dateStyle: 'long',
+      timeStyle: 'short',
+    })
+  }, [estado.configuracoes.onboarding?.aceitouTermosPrivacidadeEm])
+
   return (
     <div className={styles.pagina}>
       <header className={styles.topo}>
@@ -155,6 +168,31 @@ export const PaginaConfig = () => {
           </span>
         </Link>
         </div>
+      </section>
+
+      <section className={styles.painelOnboarding}>
+        <div className={styles.painelLinksTopo}>
+          <ShieldCheck size={18} />
+          <h2>Onboarding e consentimento</h2>
+        </div>
+
+        <p className={styles.painelLinksResumo}>
+          Confira quando o aceite local foi registrado e revise o fluxo inicial quando quiser.
+        </p>
+
+        <p className={styles.onboardingMeta}>
+          Aceite local registrado: <strong>{aceiteLocalFormatado}</strong>
+        </p>
+
+        <Link to="/onboarding?revisar=1" className={styles.itemNavegacao}>
+          <span className={styles.itemNavegacaoIcone}>
+            <Info size={18} />
+          </span>
+          <span className={styles.itemNavegacaoTexto}>
+            <strong>Revisar onboarding</strong>
+            <small>Reabra o resumo de proposta, privacidade, maioridade e aceite.</small>
+          </span>
+        </Link>
       </section>
 
       {mensagem && <p className={styles.mensagemSucesso}>{mensagem}</p>}

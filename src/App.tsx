@@ -1,6 +1,6 @@
 import { Activity, Home, PauseCircle, PlusCircle, Settings2 } from 'lucide-react'
 import { lazy, Suspense, useEffect } from 'react'
-import { BrowserRouter as Roteador, NavLink, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Roteador, NavLink, Routes, Route, Link, Navigate, useLocation } from 'react-router-dom'
 import { useApp } from './ganchos'
 import { ProvedorApp } from './loja/ContextoApp'
 import { AvisoOffline } from './componentes/comum/AvisoOffline'
@@ -48,6 +48,10 @@ const PaginaSobreProjeto = lazy(async () => {
   const { PaginaSobreProjeto: P } = await import('./paginas/SobreProjeto/PaginaSobreProjeto')
   return { default: P }
 })
+const PaginaOnboarding = lazy(async () => {
+  const { PaginaOnboarding: P } = await import('./paginas/Onboarding/PaginaOnboarding')
+  return { default: P }
+})
 
 type ItemNavegacao = {
   para: string
@@ -63,45 +67,23 @@ const NAVEGACAO: ItemNavegacao[] = [
   { para: '/ritmo', rotulo: 'Ritmo', icone: Activity },
 ]
 
-const ConteudoApp = () => {
-  const { estado } = useApp()
+const RotasAplicacao = ({ onboardingConcluido }: { onboardingConcluido: boolean }) => {
+  const localizacao = useLocation()
+  const emOnboarding = localizacao.pathname === '/onboarding'
+  const emModoRevisaoOnboarding =
+    emOnboarding && new URLSearchParams(localizacao.search).get('revisar') === '1'
 
-  useEffect(() => {
-    const mediaTema = window.matchMedia('(prefers-color-scheme: light)')
-
-    const aplicarTema = () => {
-      const temaPreferidoSistema = mediaTema.matches ? 'claro' : 'escuro'
-      const temaAtivo = estado.configuracoes.temaAuto ? temaPreferidoSistema : estado.configuracoes.tema
-
-      document.body.classList.toggle('tema-claro', temaAtivo === 'claro')
-      document.body.setAttribute('data-tema-ativo', temaAtivo)
+  const protegerRota = (elemento: JSX.Element) => {
+    if (!onboardingConcluido) {
+      return <Navigate to="/onboarding" replace />
     }
 
-    aplicarTema()
-
-    mediaTema.addEventListener('change', aplicarTema)
-
-    return () => {
-      mediaTema.removeEventListener('change', aplicarTema)
-    }
-  }, [estado.configuracoes.tema, estado.configuracoes.temaAuto])
-
-  if (estado.ui.carregando) {
-    return (
-      <div className="app app--bootstrapando">
-        <main className="principal principal--bootstrapando">
-          <section className="estado-bootstrap">
-            <h1>Carregando seu Compasso</h1>
-            <p>Reidratando registros, pausas e configurações salvas neste dispositivo.</p>
-          </section>
-        </main>
-      </div>
-    )
+    return elemento
   }
 
   return (
-    <Roteador>
-      <div className="app">
+    <div className="app">
+      {!emOnboarding && (
         <header className="app-header">
           <div className="app-header__linha">
             <Link to="/" className="marca" aria-label="Ir para a página inicial do Compasso">
@@ -142,31 +124,95 @@ const ConteudoApp = () => {
             </NavLink>
           </div>
         </header>
+      )}
 
-        <AvisoOffline />
+      {!emOnboarding && <AvisoOffline />}
 
-        <main className="principal">
-          <Suspense fallback={<div className="principal principal--carregando" aria-live="polite" aria-label="Carregando página" />}>
-            <Routes>
-              <Route path="/" element={<PaginaPrincipal />} />
-              <Route path="/registro" element={<PaginaRegistro />} />
-              <Route path="/pausa" element={<PaginaPausa />} />
-              <Route path="/ritmo" element={<PaginaRitmo />} />
-              <Route path="/config" element={<PaginaConfig />} />
-              <Route
-                path="/config/privacidade-transparencia"
-                element={<PaginaPrivacidadeTransparencia />}
-              />
-              <Route
-                path="/config/dados-locais-seguranca"
-                element={<PaginaDadosLocaisSeguranca />}
-              />
-              <Route path="/config/licencas-creditos" element={<PaginaLicencasCreditos />} />
-              <Route path="/config/sobre-projeto" element={<PaginaSobreProjeto />} />
-            </Routes>
-          </Suspense>
+      <main className={emOnboarding ? 'principal principal--onboarding' : 'principal'}>
+        <Suspense
+          fallback={
+            <div className="principal principal--carregando" aria-live="polite" aria-label="Carregando página" />
+          }
+        >
+          <Routes>
+            <Route
+              path="/onboarding"
+              element={
+                onboardingConcluido && !emModoRevisaoOnboarding
+                  ? <Navigate to="/" replace />
+                  : <PaginaOnboarding modoRevisao={emModoRevisaoOnboarding} />
+              }
+            />
+
+            <Route path="/" element={protegerRota(<PaginaPrincipal />)} />
+            <Route path="/registro" element={protegerRota(<PaginaRegistro />)} />
+            <Route path="/pausa" element={protegerRota(<PaginaPausa />)} />
+            <Route path="/ritmo" element={protegerRota(<PaginaRitmo />)} />
+            <Route path="/config" element={protegerRota(<PaginaConfig />)} />
+            <Route
+              path="/config/privacidade-transparencia"
+              element={protegerRota(<PaginaPrivacidadeTransparencia />)}
+            />
+            <Route
+              path="/config/dados-locais-seguranca"
+              element={protegerRota(<PaginaDadosLocaisSeguranca />)}
+            />
+            <Route
+              path="/config/licencas-creditos"
+              element={protegerRota(<PaginaLicencasCreditos />)}
+            />
+            <Route path="/config/sobre-projeto" element={protegerRota(<PaginaSobreProjeto />)} />
+            <Route
+              path="*"
+              element={<Navigate to={onboardingConcluido ? '/' : '/onboarding'} replace />}
+            />
+          </Routes>
+        </Suspense>
+      </main>
+    </div>
+  )
+}
+
+const ConteudoApp = () => {
+  const { estado } = useApp()
+  const onboardingConcluido = Boolean(estado.configuracoes.onboarding?.concluidoEm)
+
+  useEffect(() => {
+    const mediaTema = window.matchMedia('(prefers-color-scheme: light)')
+
+    const aplicarTema = () => {
+      const temaPreferidoSistema = mediaTema.matches ? 'claro' : 'escuro'
+      const temaAtivo = estado.configuracoes.temaAuto ? temaPreferidoSistema : estado.configuracoes.tema
+
+      document.body.classList.toggle('tema-claro', temaAtivo === 'claro')
+      document.body.setAttribute('data-tema-ativo', temaAtivo)
+    }
+
+    aplicarTema()
+
+    mediaTema.addEventListener('change', aplicarTema)
+
+    return () => {
+      mediaTema.removeEventListener('change', aplicarTema)
+    }
+  }, [estado.configuracoes.tema, estado.configuracoes.temaAuto])
+
+  if (estado.ui.carregando) {
+    return (
+      <div className="app app--bootstrapando">
+        <main className="principal principal--bootstrapando">
+          <section className="estado-bootstrap">
+            <h1>Carregando seu Compasso</h1>
+            <p>Reidratando registros, pausas e configurações salvas neste dispositivo.</p>
+          </section>
         </main>
       </div>
+    )
+  }
+
+  return (
+    <Roteador>
+      <RotasAplicacao onboardingConcluido={onboardingConcluido} />
     </Roteador>
   )
 }

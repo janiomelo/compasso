@@ -98,6 +98,15 @@ export interface Configuracoes {
   sonsAtivos: boolean;
   autoBackup14Dias: boolean;
   diasRetencaoDados?: number;
+  onboarding?: EstadoOnboarding;
+}
+
+export interface EstadoOnboarding {
+  concluidoEm: number;
+  confirmouMaioridadeEm: number;
+  aceitouTermosPrivacidadeEm: number;
+  versaoTermos: string;
+  versaoPolitica: string;
 }
 
 // Estado da UI
