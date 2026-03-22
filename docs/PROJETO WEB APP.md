@@ -21,6 +21,7 @@
 - `npm run type-check`: OK.
 - `npm run build`: OK.
 - `npx vitest run`: 57/57 testes passando.
+- CI automatizada com gate de qualidade (`type-check + lint + testes + build`).
 - Commits de referencia:
   - `a95676f` (Pacote A)
   - `a3add5c` (Pacote B)
@@ -31,7 +32,6 @@
 ### 0.3. O que falta (lacunas objetivas)
 
 - Cobertura ainda nao esta sendo usada como criterio de gate no fluxo (meta declarada de ~80% ainda sem enforce automatizado).
-- Ausencia de automacao em CI para executar `type-check + lint + testes` a cada PR/push.
 - Fases futuras do plano (4 a 7) ainda pendentes:
   - dados (import/export + backup com testes dedicados),
   - polimento visual/PWA,
