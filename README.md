@@ -32,7 +32,12 @@ Ele resume a proposta do produto, os princípios de construção e como navegar 
 - Fundamentos completos do produto (conteúdo original integral): `docs/FUNDAMENTOS-PRODUTO.md`
 - Arquitetura técnica e fases de execução: `docs/PROJETO WEB APP.md`
 - Guia técnico de desenvolvimento (setup, comandos, cobertura): `docs/GUIA-DESENVOLVIMENTO.md`
-- Compliance de origem de assets e licenças de terceiros: `docs/compliance/assets-e-licencas.md`
+- Compliance de origem de assets e licenças de terceiros: `docs/transparencia/assets-e-licencas.md`
+- Política de privacidade (resumo): `docs/transparencia/POLITICA-DE-PRIVACIDADE.md`
+- Política de privacidade (completa): `docs/transparencia/POLITICA-DE-PRIVACIDADE-COMPLETA.md`
+- Sobre e transparência: `docs/transparencia/SOBRE-E-TRANSPARENCIA.md`
+- Termos de uso: `docs/transparencia/TERMOS-DE-USO.md`
+- Dados locais e segurança: `docs/transparencia/DADOS-LOCAIS-E-SEGURANCA.md`
 
 ## Início rápido (desenvolvimento)
 
