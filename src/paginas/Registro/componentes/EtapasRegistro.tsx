@@ -2,6 +2,17 @@
 // Componentes puros e reutilizáveis para cada etapa do wizard
 
 import type { FC } from 'react'
+import {
+  FlaskConical,
+  Flower2,
+  HeartHandshake,
+  HelpCircle,
+  Moon,
+  Sparkles,
+  Target,
+  Users,
+  Wind,
+} from 'lucide-react'
 import { INTENCOES, METODOS, INTENSIDADES } from '../../../utilitarios/constantes'
 import type { EntradaRegistro } from '../../../tipos'
 import styles from '../pagina-registro.module.scss'
@@ -11,22 +22,42 @@ interface EtapaBaseProps {
   atualizar: <K extends keyof EntradaRegistro>(campo: K, valor: EntradaRegistro[K]) => void
 }
 
+const ICONES_METODO = {
+  vapor: Wind,
+  flor: Flower2,
+  extracao: FlaskConical,
+  outro: HelpCircle,
+} as const
+
+const ICONES_INTENCAO = {
+  paz: HeartHandshake,
+  foco: Target,
+  social: Users,
+  descanso: Moon,
+  criatividade: Sparkles,
+  outro: HelpCircle,
+} as const
+
 /**
  * Etapa 0: Selecionar método
  */
 export const EtapaMetodo: FC<EtapaBaseProps> = ({ form, atualizar }) => (
   <div className={styles.opcoesGrid}>
-    {METODOS.map((metodo: typeof METODOS[number]) => (
-      <button
-        key={metodo.id}
-        type="button"
-        className={styles.opcao + (form.metodo === metodo.id ? ' ' + styles['opcao--ativa'] : '')}
-        onClick={() => atualizar('metodo', metodo.id as EntradaRegistro['metodo'])}
-      >
-        <span className={styles.opcao__icone}>{metodo.icone}</span>
-        <span className={styles.opcao__titulo}>{metodo.nome}</span>
-      </button>
-    ))}
+    {METODOS.map((metodo: typeof METODOS[number]) => {
+      const IconeMetodo = ICONES_METODO[metodo.id as EntradaRegistro['metodo']]
+
+      return (
+        <button
+          key={metodo.id}
+          type="button"
+          className={styles.opcao + (form.metodo === metodo.id ? ' ' + styles['opcao--ativa'] : '')}
+          onClick={() => atualizar('metodo', metodo.id as EntradaRegistro['metodo'])}
+        >
+          <span className={styles.opcao__icone}><IconeMetodo size={32} aria-hidden="true" /></span>
+          <span className={styles.opcao__titulo}>{metodo.nome}</span>
+        </button>
+      )
+    })}
   </div>
 )
 
@@ -35,17 +66,21 @@ export const EtapaMetodo: FC<EtapaBaseProps> = ({ form, atualizar }) => (
  */
 export const EtapaIntencao: FC<EtapaBaseProps> = ({ form, atualizar }) => (
   <div className={styles.listaOpcoes}>
-    {INTENCOES.map((intencao: typeof INTENCOES[number]) => (
-      <button
-        key={intencao.id}
-        type="button"
-        className={styles.opcaoLista + (form.intencao === intencao.id ? ' ' + styles['opcaoLista--ativa'] : '')}
-        onClick={() => atualizar('intencao', intencao.id as EntradaRegistro['intencao'])}
-      >
-        <span>{intencao.nome}</span>
-        <span className={styles.opcaoLista__icone}>{intencao.icone}</span>
-      </button>
-    ))}
+    {INTENCOES.map((intencao: typeof INTENCOES[number]) => {
+      const IconeIntencao = ICONES_INTENCAO[intencao.id as EntradaRegistro['intencao']]
+
+      return (
+        <button
+          key={intencao.id}
+          type="button"
+          className={styles.opcaoLista + (form.intencao === intencao.id ? ' ' + styles['opcaoLista--ativa'] : '')}
+          onClick={() => atualizar('intencao', intencao.id as EntradaRegistro['intencao'])}
+        >
+          <span>{intencao.nome}</span>
+          <span className={styles.opcaoLista__icone}><IconeIntencao size={21} aria-hidden="true" /></span>
+        </button>
+      )
+    })}
   </div>
 )
 

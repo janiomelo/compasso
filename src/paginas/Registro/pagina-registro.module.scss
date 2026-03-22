@@ -117,7 +117,10 @@
 }
 
 .opcao__icone {
-  font-size: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cor-acento-principal);
 }
 
 .opcao__titulo {
@@ -149,7 +152,10 @@
 }
 
 .opcaoLista__icone {
-  font-size: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cor-acento-principal);
 }
 
 .intensidade {

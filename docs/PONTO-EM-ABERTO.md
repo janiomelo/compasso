@@ -26,21 +26,31 @@ Observação:
 
 ### X.2. Linguagem visual dos elementos gráficos
 
-Este ponto ainda não está fechado porque a interface ainda mistura linguagens visuais diferentes.
+Status: fechado.
 
-O principal pendente é definir:
+**Decisão**
 
-- se o produto usará ícones padronizados como linguagem principal;
-- se emojis continuarão existindo em algum contexto;
-- ou se tudo será unificado numa única biblioteca visual.
+Este ponto passa a ser tratado como decisão de sistema.
 
-Hoje o que mais pede decisão é:
+- a biblioteca padrão de ícones do produto será a **Lucide**;
+- o logo será tratado como exceção deliberada, por pertencer à identidade da marca e não à iconografia funcional da interface;
+- o fluxo principal do produto não deve misturar livremente Lucide, emojis e outras famílias de ícones.
 
-- as telas de intenção;
-- as telas de método;
-- a representação visual de “Outro”.
+Com isso:
 
-A necessidade aqui não é redesenhar tudo, mas decidir uma regra e aplicá-la com consistência.
+- navegação, ações, estados, cards e configurações devem usar linguagem iconográfica consistente;
+- telas como método, intenção e opção “Outro” precisam seguir a mesma lógica visual do restante do sistema;
+- a interface ganha unidade, previsibilidade e manutenção mais simples.
+
+Implementação aplicada no app:
+
+- `src/paginas/Registro/componentes/EtapasRegistro.tsx`
+- `src/paginas/Registro/pagina-registro.module.scss`
+- `src/utilitarios/constantes.ts`
+
+Próximo passo após o fechamento:
+
+- inventário dos pontos residuais de mistura visual em `docs/INVENTARIO-MISTURA-VISUAL.md`.
 
 ### X.3. Vocabulário central da interface
 
@@ -54,6 +64,29 @@ Os pontos que ainda pedem decisão objetiva são:
 - nomes e verbos que aparecem nas telas principais e precisam soar consistentes entre si.
 
 A pendência aqui não é de estilo geral, mas de padronização final de microcopy.
+
+**Decisão**
+
+Este ponto passa a ser tratado como regra editorial do produto.
+
+A linguagem do Compasso deve seguir os princípios abaixo:
+
+- preferir clareza à poesia quando a interface estiver orientando ação;
+- usar termos específicos para o conteúdo real de cada tela;
+- evitar ambiguidade em títulos, rótulos e botões;
+- usar verbos neutros, funcionais e coerentes com o tom do produto;
+- dar contexto suficiente a estados e métricas que apareçam isolados;
+- evitar linguagem excessivamente conceitual quando a função exigir objetividade.
+
+Com base nisso, o vocabulário da interface deve tender a escolhas como:
+
+- “Qual foi o método?” em vez de “Como foi?”, quando a tela tratar do método;
+- “Encerrar pausa” para ação manual de término;
+- “Pausa concluída” para estado final natural da pausa;
+- “Ritmo estável” em vez de “Estável”, quando houver risco de falta de contexto.
+
+A pendência deixa de ser apenas escolher palavras isoladas e passa a ser manter uma regra editorial consistente em toda a interface.
+
 
 ### X.4. Paridade real entre dark mode e light mode
 

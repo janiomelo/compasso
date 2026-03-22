@@ -2,20 +2,20 @@
 
 // Métodos disponíveis
 export const METODOS = [
-  { id: 'vapor', nome: 'Vapor', icone: '💨' },
-  { id: 'flor', nome: 'Flor', icone: '🌸' },
-  { id: 'extracao', nome: 'Extração', icone: '🧃' },
-  { id: 'outro', nome: 'Outro', icone: '❓' },
+  { id: 'vapor', nome: 'Vapor' },
+  { id: 'flor', nome: 'Flor' },
+  { id: 'extracao', nome: 'Extração' },
+  { id: 'outro', nome: 'Outro' },
 ] as const
 
 // Intenções disponíveis
 export const INTENCOES = [
-  { id: 'paz', nome: 'Paz', icone: '☮️' },
-  { id: 'foco', nome: 'Foco', icone: '🎯' },
-  { id: 'social', nome: 'Social', icone: '👥' },
-  { id: 'descanso', nome: 'Descanso', icone: '😴' },
-  { id: 'criatividade', nome: 'Criatividade', icone: '🎨' },
-  { id: 'outro', nome: 'Outro', icone: '❓' },
+  { id: 'paz', nome: 'Paz' },
+  { id: 'foco', nome: 'Foco' },
+  { id: 'social', nome: 'Social' },
+  { id: 'descanso', nome: 'Descanso' },
+  { id: 'criatividade', nome: 'Criatividade' },
+  { id: 'outro', nome: 'Outro' },
 ] as const
 
 // Intensidades disponíveis
