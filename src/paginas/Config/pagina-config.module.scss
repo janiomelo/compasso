@@ -94,13 +94,13 @@
 }
 
 .mensagemSucesso {
-  color: #baf2cd;
-  background: rgba(61, 145, 95, 0.16);
-  border-color: rgba(61, 145, 95, 0.38);
+  color: var(--feedback-sucesso-texto);
+  background: var(--feedback-sucesso-fundo);
+  border-color: var(--feedback-sucesso-borda);
 }
 
 .mensagemErro {
-  color: #ffd1d1;
-  background: rgba(171, 57, 57, 0.18);
-  border-color: rgba(171, 57, 57, 0.4);
+  color: var(--feedback-erro-texto);
+  background: var(--feedback-erro-fundo);
+  border-color: var(--feedback-erro-borda);
 }

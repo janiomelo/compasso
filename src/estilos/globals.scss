@@ -17,6 +17,12 @@
   --borda-suave: rgba(255, 255, 255, 0.08);
   --borda-sutil: rgba(255, 255, 255, 0.06);
   --trilho: rgba(255, 255, 255, 0.08);
+  --feedback-sucesso-texto: #baf2cd;
+  --feedback-sucesso-fundo: rgba(61, 145, 95, 0.16);
+  --feedback-sucesso-borda: rgba(61, 145, 95, 0.38);
+  --feedback-erro-texto: #ffd1d1;
+  --feedback-erro-fundo: rgba(171, 57, 57, 0.18);
+  --feedback-erro-borda: rgba(171, 57, 57, 0.4);
 }
 
 body.tema-claro {
@@ -36,6 +42,12 @@ body.tema-claro {
   --borda-suave: rgba(21, 32, 34, 0.12);
   --borda-sutil: rgba(21, 32, 34, 0.08);
   --trilho: rgba(21, 32, 34, 0.12);
+  --feedback-sucesso-texto: #1f5b35;
+  --feedback-sucesso-fundo: rgba(74, 155, 111, 0.18);
+  --feedback-sucesso-borda: rgba(74, 155, 111, 0.46);
+  --feedback-erro-texto: #8b1f1f;
+  --feedback-erro-fundo: rgba(171, 57, 57, 0.16);
+  --feedback-erro-borda: rgba(171, 57, 57, 0.34);
 }
 
 // ============================================================
