@@ -10,6 +10,7 @@ import {
   validarDadosImport,
 } from '../../../src/servicos/servicoDados'
 import type { Configuracoes } from '../../../src/tipos'
+import { VERSAO_APP } from '../../../src/utilitarios/constantes'
 
 const configuracoesBase: Configuracoes = {
   valorEconomia: 90,
@@ -88,5 +89,61 @@ describe('servicoDados: importacao e exportacao', () => {
 
     expect(resultado.sucesso).toBe(false)
     expect(resultado.erros.length).toBeGreaterThan(0)
+  })
+
+  it('recusa importar backup com major de versao diferente', async () => {
+    const pacoteIncompativel = {
+      versao: '9.0.0',
+      exportadoEm: new Date().toISOString(),
+      dados: {
+        registros: [],
+        pausas: [],
+        configuracoes: configuracoesBase,
+        metadados: {
+          ultimaSincronizacao: Date.now(),
+          versaoApp: VERSAO_APP,
+          criadoEm: Date.now(),
+        },
+      },
+    }
+
+    const validacao = await validarDadosImport(pacoteIncompativel)
+    expect(validacao.valido).toBe(false)
+    expect(validacao.erros.some((erro) => erro.includes('Versão incompatível'))).toBe(true)
+  })
+
+  it('importa pausa legada com duracaoPlanjada convertendo para duracaoPlanejada', async () => {
+    const pacoteLegado = {
+      versao: VERSAO_APP,
+      exportadoEm: new Date().toISOString(),
+      dados: {
+        registros: [],
+        pausas: [
+          {
+            id: 'pausa-legada',
+            iniciadoEm: Date.now(),
+            duracaoPlanjada: 3600000,
+            status: 'concluida',
+            valorEconomia: 10,
+            motivoEncerramento: 'import legado',
+          },
+        ],
+        configuracoes: configuracoesBase,
+        metadados: {
+          ultimaSincronizacao: Date.now(),
+          versaoApp: VERSAO_APP,
+          criadoEm: Date.now(),
+        },
+      },
+    }
+
+    const bytes = new TextEncoder().encode(JSON.stringify(pacoteLegado))
+    const resultado = await importarDados(bytes)
+
+    expect(resultado.sucesso).toBe(true)
+
+    const estado = await hidratarEstado()
+    expect(estado.historicoPausa).toHaveLength(1)
+    expect(estado.historicoPausa[0].duracaoPlanejada).toBe(3600000)
   })
 })

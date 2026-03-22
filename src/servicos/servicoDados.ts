@@ -10,6 +10,11 @@ interface PacoteExportacao {
   dados: PersistenciaApp
 }
 
+const obterVersaoMajor = (versao: string): number | null => {
+  const correspondencia = versao.match(/^(\d+)\./)
+  return correspondencia ? Number(correspondencia[1]) : null
+}
+
 export async function exportarDados(): Promise<{
   blob: Blob
   conteudo: Uint8Array
@@ -56,6 +61,17 @@ export async function validarDadosImport(dados: unknown): Promise<{ valido: bool
   if (!pacote.versao) erros.push('Versão não encontrada')
   if (!pacote.exportadoEm) erros.push('Data de exportação não encontrada')
   if (!pacote.dados || typeof pacote.dados !== 'object') erros.push('Dados não encontrados')
+
+  if (pacote.versao) {
+    const majorPacote = obterVersaoMajor(pacote.versao)
+    const majorApp = obterVersaoMajor(VERSAO_APP)
+
+    if (majorPacote === null || majorApp === null) {
+      erros.push('Versão inválida')
+    } else if (majorPacote !== majorApp) {
+      erros.push(`Versão incompatível: backup ${pacote.versao} / app ${VERSAO_APP}`)
+    }
+  }
 
   const dadosPersistencia = pacote.dados as Partial<PersistenciaApp> | undefined
 
