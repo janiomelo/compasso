@@ -77,8 +77,14 @@
 }
 
 .acao--perigo {
-  border-color: rgba(255, 87, 87, 0.3);
-  color: #ffb9b9;
+  border-color: var(--acao-perigo-borda);
+  color: var(--acao-perigo-texto);
+  background: var(--acao-perigo-fundo);
+
+  &:hover:not(:disabled) {
+    border-color: var(--acao-perigo-borda);
+    background: var(--acao-perigo-fundo-hover);
+  }
 }
 
 .inputOculto {
