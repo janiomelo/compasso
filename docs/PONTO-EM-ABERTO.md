@@ -4,66 +4,25 @@ Esta versão substitui a lista anterior de pontos em aberto e considera o estág
 
 ### X.1. Intensidade no fluxo de registro
 
-Este ainda é um ponto de decisão real.
+Status: fechado.
 
-Hoje o fluxo já funciona visualmente, mas ainda falta definir qual será o modelo oficial de intensidade no MVP:
+Decisão aplicada no app (MVP):
 
-- manter escala contínua de 1 a 10;
-- simplificar a experiência para três estados: leve, média e alta;
-- ou adotar uma solução híbrida, em que a pessoa escolhe uma categoria principal e o valor detalhado fica secundário.
+- intensidade registrada em três níveis fixos (`Leve`, `Média`, `Alta`);
+- remoção da escala numérica de 1 a 10 no fluxo principal;
+- etapa de registro com seleção direta por opções, mantendo check-in rápido.
 
-O ponto central não é mais visual, e sim de produto:
+Implementação de referência:
 
-- o registro precisa continuar rápido;
-- a intensidade não pode transformar o check-in em uma mini planilha;
-- o modelo escolhido precisa conversar com os resumos, listas e análises posteriores.
+- `src/paginas/Registro/componentes/EtapasRegistro.tsx`
+- `src/paginas/Registro/PaginaRegistro.tsx`
+- `src/paginas/Registro/useFluxoRegistro.ts`
+- `src/paginas/Registro/pagina-registro.module.scss`
+- `__testes__/ui/wizard-registro.teste.tsx`
 
-Minha recomendação objetiva
+Observação:
 
-Eu fecharia assim:
-
-Decisão
-no MVP, a intensidade será registrada em três níveis fixos:
-Leve
-Média
-Alta
-Regra
-não haverá escala numérica no fluxo principal de registro;
-o objetivo é preservar rapidez, clareza e recorrência;
-qualquer granularidade maior fica como possibilidade futura, não como parte da primeira versão.
-Consequência positiva
-
-Isso simplifica também:
-
-histórico;
-ritmo;
-cards de registro;
-filtros;
-linguagem do produto.
-
-Um cuidado importante
-
-Se fizer essa mudança, eu também ajustaria a copy da tela.
-
-Porque aí talvez “Qual foi a intensidade?” continue bom, mas a mecânica muda.
-
-A tela pode virar algo como:
-
-Como foi a intensidade?
-Qual foi a intensidade?
-No geral, como foi?
-
-E em vez de slider:
-
-três opções claras
-talvez com cards ou pills grandes
-com uma pequena legenda curta
-
-Exemplo:
-
-Leve — mais sutil
-Média — intermediária
-Alta — mais intensa
+- qualquer granularidade adicional fica para fase posterior, fora do escopo do MVP.
 
 ### X.2. Linguagem visual dos elementos gráficos
 

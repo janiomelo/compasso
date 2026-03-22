@@ -52,58 +52,25 @@ export const EtapaIntencao: FC<EtapaBaseProps> = ({ form, atualizar }) => (
 /**
  * Etapa 2: Selecionar intensidade
  */
-interface EtapaIntensidadeProps extends EtapaBaseProps {
-  intensidadeEscala: number
-  setIntensidadeEscala: (valor: number) => void
+const DESCRICAO_INTENSIDADE: Record<EntradaRegistro['intensidade'], string> = {
+  leve: 'mais sutil',
+  media: 'intermediaria',
+  alta: 'mais intensa',
 }
 
-const mapearIntensidade = (valor: number): EntradaRegistro['intensidade'] => {
-  if (valor <= 3) return 'leve'
-  if (valor <= 7) return 'media'
-  return 'alta'
-}
-
-export const EtapaIntensidade: FC<EtapaIntensidadeProps> = ({
-  form,
-  atualizar,
-  intensidadeEscala,
-  setIntensidadeEscala,
-}) => (
+export const EtapaIntensidade: FC<EtapaBaseProps> = ({ form, atualizar }) => (
   <div className={styles.intensidade}>
-    <div className={styles.intensidade__rotulos}>
-      <span>Leve</span>
-      <strong>{intensidadeEscala}</strong>
-      <span>Intensa</span>
-    </div>
-
-    <input
-      className={styles.intensidade__slider}
-      type="range"
-      min={1}
-      max={10}
-      step={1}
-      value={intensidadeEscala}
-      onChange={(evento) => {
-        const valor = Number(evento.target.value)
-        setIntensidadeEscala(valor)
-        atualizar('intensidade', mapearIntensidade(valor))
-      }}
-    />
-
-    <div className={styles.intensidade__escala}>
-      {Array.from({ length: 10 }, (_, indice) => (
-        <span key={indice + 1}>{indice + 1}</span>
-      ))}
-    </div>
-
-    <div className={styles.intensidade__chipLinha}>
+    <div className={styles.intensidade__opcoes}>
       {INTENSIDADES.map((item: typeof INTENSIDADES[number]) => (
-        <span
+        <button
           key={item.id}
-          className={styles.intensidade__chip + (form.intensidade === item.id ? ' ' + styles['intensidade__chip--ativa'] : '')}
+          type="button"
+          className={styles.intensidade__opcao + (form.intensidade === item.id ? ' ' + styles['intensidade__opcao--ativa'] : '')}
+          onClick={() => atualizar('intensidade', item.id as EntradaRegistro['intensidade'])}
         >
-          {item.nome}
-        </span>
+          <strong>{item.nome}</strong>
+          <span>{DESCRICAO_INTENSIDADE[item.id as EntradaRegistro['intensidade']]}</span>
+        </button>
       ))}
     </div>
   </div>

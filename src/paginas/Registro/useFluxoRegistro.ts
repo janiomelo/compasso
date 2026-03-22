@@ -23,7 +23,6 @@ export const useFluxoRegistro = () => {
   const { criar } = useRegistro()
   const [form, setForm] = useState<EntradaRegistro>(ESTADO_INICIAL)
   const [etapaAtual, setEtapaAtual] = useState(0)
-  const [intensidadeEscala, setIntensidadeEscala] = useState(5)
   const [aguardando, setAguardando] = useState(false)
   const [sucesso, setSucesso] = useState(false)
   const [erro, setErro] = useState<string | null>(null)
@@ -48,7 +47,6 @@ export const useFluxoRegistro = () => {
         setSucesso(true)
         setForm(ESTADO_INICIAL)
         setEtapaAtual(0)
-        setIntensidadeEscala(5)
       } catch (e) {
         setErro(e instanceof Error ? e.message : 'Falha ao salvar registro')
       } finally {
@@ -72,8 +70,6 @@ export const useFluxoRegistro = () => {
     form,
     atualizar,
     etapaAtual,
-    intensidadeEscala,
-    setIntensidadeEscala,
     avancar,
     voltar,
     handleSubmit,

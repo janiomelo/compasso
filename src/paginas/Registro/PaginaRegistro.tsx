@@ -6,7 +6,7 @@ import styles from './pagina-registro.module.scss'
 const ETAPAS = [
   { titulo: 'Como foi?', descricao: 'Escolha o método que mais combina com este momento.' },
   { titulo: 'Qual era sua intenção?', descricao: 'Selecione a intenção dominante antes do momento.' },
-  { titulo: 'Qual foi a intensidade?', descricao: 'Use a escala para registrar a percepção geral.' },
+  { titulo: 'Como foi a intensidade?', descricao: 'Escolha entre Leve, Média ou Alta para registrar rápido.' },
   { titulo: 'Quer adicionar uma observação?', descricao: 'Esta etapa é opcional e serve para contexto rápido.' },
 ] as const
 
@@ -15,8 +15,6 @@ export const PaginaRegistro = () => {
     form,
     atualizar,
     etapaAtual,
-    intensidadeEscala,
-    setIntensidadeEscala,
     avancar,
     voltar,
     handleSubmit,
@@ -32,14 +30,7 @@ export const PaginaRegistro = () => {
       case 1:
         return <EtapaIntencao form={form} atualizar={atualizar} />
       case 2:
-        return (
-          <EtapaIntensidade
-            form={form}
-            atualizar={atualizar}
-            intensidadeEscala={intensidadeEscala}
-            setIntensidadeEscala={setIntensidadeEscala}
-          />
-        )
+        return <EtapaIntensidade form={form} atualizar={atualizar} />
       default:
         return <EtapaNotas form={form} atualizar={atualizar} />
     }

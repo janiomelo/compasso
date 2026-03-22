@@ -79,9 +79,9 @@ describe('Wizard de Registro — UI', () => {
     fireEvent.click(screen.getByText('Continuar'))
 
     await waitFor(() => {
-      expect(screen.getByText('Qual foi a intensidade?')).toBeDefined()
+      expect(screen.getByText('Como foi a intensidade?')).toBeDefined()
     })
-    fireEvent.change(screen.getByRole('slider'), { target: { value: '7' } })
+    fireEvent.click(screen.getByText('Alta'))
     fireEvent.click(screen.getByText('Continuar'))
 
     await waitFor(() => {
