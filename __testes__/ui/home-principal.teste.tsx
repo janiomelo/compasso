@@ -42,8 +42,8 @@ describe('Home Principal — UI Comportamental', () => {
     render(<PaginaPrincipal />, { wrapper: envolverProvider })
 
     await waitFor(() => {
-      expect(screen.getByText('Sem pausa ativa')).toBeDefined()
       expect(screen.getByText('Nenhuma pausa ativa')).toBeDefined()
+      expect(screen.getByText(/inicie uma pausa curta/i)).toBeDefined()
     })
   })
 

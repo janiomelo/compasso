@@ -159,7 +159,11 @@ Então eu diria:
 
 ### X.3. Home versus Pausa
 
-O texto indica que a home está forte, mas ainda existe uma dúvida estrutural importante:
+**Status: fechado em 22/03/2026 (Fase 8.2).**
+
+Referência oficial: `docs/DIRETRIZES-HOME-PAUSA.md`
+
+O texto indicava que a home estava forte, mas ainda existia uma dúvida estrutural importante:
 
 - quanto da experiência de pausa deve aparecer na home;
     

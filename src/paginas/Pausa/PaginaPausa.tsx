@@ -59,7 +59,7 @@ export const PaginaPausa = () => {
       <header className={styles.topo}>
         <span className={styles.eyebrow}>Pausa</span>
         <h1 className={styles.titulo}>Pausa de Compasso</h1>
-        <p className={styles.subtitulo}>Uma pausa programada deixa o ritmo mais legível sem transformar a experiência em planilha.</p>
+        <p className={styles.subtitulo}>Este é o espaço de acompanhamento detalhado da pausa: progresso, meta, tempo e ações de controle.</p>
       </header>
 
       {pausaAtiva && progresso ? (
