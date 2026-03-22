@@ -1,8 +1,10 @@
 import { Activity, Home, PauseCircle, PlusCircle, Settings2 } from 'lucide-react'
+import { useEffect } from 'react'
 import { BrowserRouter as Roteador, NavLink, Routes, Route, Link } from 'react-router-dom'
 import { useApp } from './ganchos'
 import { ProvedorApp } from './loja/ContextoApp'
 import { PaginaPrincipal, PaginaRegistro, PaginaPausa, PaginaRitmo, PaginaConfig } from './paginas'
+import { AvisoOffline } from './componentes/comum/AvisoOffline'
 import './App.scss'
 
 type ItemNavegacao = {
@@ -21,6 +23,12 @@ const NAVEGACAO: ItemNavegacao[] = [
 
 const ConteudoApp = () => {
   const { estado } = useApp()
+
+  useEffect(() => {
+    const temaPreferidoSistema = window.matchMedia('(prefers-color-scheme: light)').matches ? 'claro' : 'escuro'
+    const temaAtivo = estado.configuracoes.temaAuto ? temaPreferidoSistema : estado.configuracoes.tema
+    document.body.classList.toggle('tema-claro', temaAtivo === 'claro')
+  }, [estado.configuracoes.tema, estado.configuracoes.temaAuto])
 
   if (estado.ui.carregando) {
     return (
@@ -76,6 +84,8 @@ const ConteudoApp = () => {
             </NavLink>
           </div>
         </header>
+
+        <AvisoOffline />
 
         <main className="principal">
           <Routes>

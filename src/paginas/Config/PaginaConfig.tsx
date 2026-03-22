@@ -1,13 +1,15 @@
 import { Download, FileUp, RefreshCw, Save, ShieldCheck, Trash2 } from 'lucide-react'
 import { useRef, useState } from 'react'
-import { useApp, useArmazenamento } from '../../ganchos'
+import { useApp, useArmazenamento, useConectividade } from '../../ganchos'
 import { hidratarEstado } from '../../servicos/servicoDados'
 import styles from './pagina-config.module.scss'
 
 export const PaginaConfig = () => {
-  const { despacho } = useApp()
+  const { estado, despacho } = useApp()
+  const { offline } = useConectividade()
   const {
     carregando,
+    salvarConfiguracoes,
     fazerBackupLocal,
     restaurarBackupLocal,
     exportarDados,
@@ -19,6 +21,21 @@ export const PaginaConfig = () => {
   const [mensagem, setMensagem] = useState<string | null>(null)
   const [erro, setErro] = useState<string | null>(null)
   const inputImportacaoRef = useRef<HTMLInputElement | null>(null)
+
+  const definirTema = async (tema: 'escuro' | 'claro') => {
+    limparFeedback()
+
+    const novasConfiguracoes = {
+      ...estado.configuracoes,
+      tema,
+      temaAuto: false,
+    }
+
+    await salvarConfiguracoes(novasConfiguracoes)
+    despacho({ tipo: 'DEFINIR_CONFIGURACAO', payload: { tema, temaAuto: false } })
+    document.body.classList.toggle('tema-claro', tema === 'claro')
+    setMensagem(`Tema ${tema} aplicado.`)
+  }
 
   const limparFeedback = () => {
     setMensagem(null)
@@ -42,6 +59,11 @@ export const PaginaConfig = () => {
   }
 
   const handleBackupManual = async () => {
+    if (offline) {
+      setMensagem('Você está offline. O backup manual foi enfileirado para quando houver conectividade.')
+      return
+    }
+
     await acaoComFeedback(async () => {
       await fazerBackupLocal({ origem: 'manual' })
     }, 'Backup manual salvo com sucesso.')
@@ -122,6 +144,14 @@ export const PaginaConfig = () => {
       </header>
 
       <section className={styles.grade}>
+        <button className={styles.acao} onClick={() => void definirTema('escuro')} disabled={carregando}>
+          <span>Tema escuro</span>
+        </button>
+
+        <button className={styles.acao} onClick={() => void definirTema('claro')} disabled={carregando}>
+          <span>Tema claro</span>
+        </button>
+
         <button className={styles.acao} onClick={handleBackupManual} disabled={carregando}>
           <Save size={18} />
           <span>Gerar backup manual</span>

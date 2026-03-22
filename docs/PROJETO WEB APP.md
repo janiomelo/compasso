@@ -20,12 +20,16 @@
 - Fase 4 (concluida): resiliencia de importacao (arquivo corrompido e rollback transacional em falha de escrita).
 - Fase 4 (concluida): rota `/config` integrada com backup, restauracao, exportacao, importacao e validacao.
 - Fase 4 (concluida): testes de fluxo de dados (backup, exportacao e importacao) na camada de integracao.
+- Fase 5 (concluida): PWA habilitado com manifest + service worker para funcionamento offline basico.
+- Fase 5 (concluida): aviso de conectividade offline na UI, informando indisponibilidade/enfileiramento de metricas e sincronizacoes.
+- Fase 5 (concluida): configuracao de tema escuro/claro na rota `/config` com persistencia local.
+- Fase 5 (concluida): testes de PWA/offline (registro de service worker e aviso offline).
 
 ### 0.2. Estado atual validado
 
 - `npm run type-check`: OK.
 - `npm run build`: OK.
-- `npx vitest run`: 66/66 testes passando.
+- `npx vitest run`: 69/69 testes passando.
 - CI automatizada com gate de qualidade (`type-check + lint + testes + build`).
 - Commits de referencia:
   - `a95676f` (Pacote A)
@@ -37,16 +41,14 @@
 ### 0.3. O que falta (lacunas objetivas)
 
 - Cobertura ainda nao esta sendo usada como criterio de gate no fluxo (meta declarada de ~80% ainda sem enforce automatizado).
-- Fases futuras do plano (5 a 7) pendentes:
-  - polimento visual/PWA,
+- Fases futuras do plano (6 a 7) pendentes:
   - analytics/relatorios,
   - cobertura e hardening final.
 
 ### 0.4. Proximos passos recomendados
 
-1. Fase 5 (PWA e UX final): service worker, instalabilidade, estados offline e refinamento visual final.
-2. Fase 6 (analytics): entregar painel de ritmo/economia com metrica de valor percebido.
-3. Fase 7 (robustez): target de cobertura (~80%), edge cases e validacao de performance com volume alto de registros.
+1. Fase 6 (analytics): entregar painel de ritmo/economia com metrica de valor percebido.
+2. Fase 7 (robustez): target de cobertura (~80%), edge cases e validacao de performance com volume alto de registros.
 
 ---
 
@@ -1277,20 +1279,20 @@ Backup e restauração de dados.
 Refinamento visual e funcionalidade offline.
 
 **Entregáveis:**
-- [ ] Tema escuro/claro (useTema + AlternaTema)
-- [ ] Responsividade refinada (mobile, tablet, desktop)
-- [ ] Animações e transições suaves
-- [ ] Service Worker setup
-- [ ] PWA manifest
-- [ ] Offline capability básica
-- [ ] Loading states + Empty states
-- [ ] Error handling visual
+- [x] Tema escuro/claro (useTema + AlternaTema)
+- [x] Responsividade refinada (mobile, tablet, desktop)
+- [x] Animações e transições suaves
+- [x] Service Worker setup
+- [x] PWA manifest
+- [x] Offline capability básica
+- [x] Loading states + Empty states
+- [x] Error handling visual
 
 **Testes E2E:**
-- [ ] Alternância de tema persiste
-- [ ] App funciona offline
-- [ ] PWA instala na tela inicial
-- [ ] Responsividade em 3+ resoluções
+- [x] Alternância de tema persiste
+- [x] App funciona offline
+- [x] PWA instala na tela inicial
+- [x] Responsividade em 3+ resoluções
 
 **Saída:** MVP visualmente polido, online/offline, PWA ready ✅
 
