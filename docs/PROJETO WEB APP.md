@@ -15,12 +15,13 @@
 - Pacote C: camada compartilhada de apresentação (`rotulos.ts` + `estilos/compartilhados.scss`).
 - Pacote D: fatiamento de componentes em Registro e Principal (hook de fluxo + componentes por responsabilidade).
 - Pacote E: testes de UI comportamental para Registro, Pausa e Principal.
+- Fase 4 (parcial): exportacao/importacao de dados com compressao gzip e teste de round-trip.
 
 ### 0.2. Estado atual validado
 
 - `npm run type-check`: OK.
 - `npm run build`: OK.
-- `npx vitest run`: 57/57 testes passando.
+- `npx vitest run`: 59/59 testes passando.
 - CI automatizada com gate de qualidade (`type-check + lint + testes + build`).
 - Commits de referencia:
   - `a95676f` (Pacote A)

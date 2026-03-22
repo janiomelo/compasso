@@ -1,6 +1,149 @@
 import { estadoInicial } from '../loja/redutor'
 import type { Configuracoes, EstadoApp, PersistenciaApp } from '../tipos'
 import { consultasBD } from '../utilitarios/armazenamento/bd'
+import pako from 'pako'
+import { VERSAO_APP } from '../utilitarios/constantes'
+
+interface PacoteExportacao {
+  versao: string
+  exportadoEm: string
+  dados: PersistenciaApp
+}
+
+export async function exportarDados(): Promise<{
+  blob: Blob
+  conteudo: Uint8Array
+  nomeArquivo: string
+  timestamp: number
+}> {
+  const estado = await hidratarEstado()
+
+  const dadosExport: PacoteExportacao = {
+    versao: VERSAO_APP,
+    exportadoEm: new Date().toISOString(),
+    dados: {
+      registros: estado.registros,
+      pausas: estado.historicoPausa,
+      configuracoes: estado.configuracoes,
+      metadados: estado.metadados,
+    },
+  }
+
+  const json = JSON.stringify(dadosExport)
+  const comprimido = pako.gzip(json)
+  const blob = new Blob([comprimido], { type: 'application/gzip' })
+
+  const agora = new Date()
+  const nomeArquivo = `compasso-backup-${agora.getFullYear()}-${String(agora.getMonth() + 1).padStart(2, '0')}-${String(agora.getDate()).padStart(2, '0')}.json.gz`
+
+  return {
+    blob,
+    conteudo: comprimido,
+    nomeArquivo,
+    timestamp: Date.now(),
+  }
+}
+
+export async function validarDadosImport(dados: unknown): Promise<{ valido: boolean; erros: string[] }> {
+  const erros: string[] = []
+
+  if (!dados || typeof dados !== 'object') {
+    return { valido: false, erros: ['Formato inválido'] }
+  }
+
+  const pacote = dados as Partial<PacoteExportacao>
+
+  if (!pacote.versao) erros.push('Versão não encontrada')
+  if (!pacote.exportadoEm) erros.push('Data de exportação não encontrada')
+  if (!pacote.dados || typeof pacote.dados !== 'object') erros.push('Dados não encontrados')
+
+  const dadosPersistencia = pacote.dados as Partial<PersistenciaApp> | undefined
+
+  if (!dadosPersistencia || !Array.isArray(dadosPersistencia.registros)) {
+    erros.push('registros inválido')
+  }
+
+  if (!dadosPersistencia || !Array.isArray(dadosPersistencia.pausas)) {
+    erros.push('pausas inválido')
+  }
+
+  if (!dadosPersistencia || !dadosPersistencia.configuracoes) {
+    erros.push('configurações inválido')
+  }
+
+  if (!dadosPersistencia || !dadosPersistencia.metadados) {
+    erros.push('metadados inválido')
+  }
+
+  if (Array.isArray(dadosPersistencia?.registros)) {
+    dadosPersistencia.registros.forEach((registro, indice) => {
+      if (!registro.id || !registro.timestamp || !registro.metodo) {
+        erros.push(`Registro inválido no índice ${indice}`)
+      }
+    })
+  }
+
+  return {
+    valido: erros.length === 0,
+    erros,
+  }
+}
+
+export async function importarDados(
+  arquivo: File | Blob | Uint8Array | ArrayBuffer
+): Promise<{ sucesso: boolean; erros: string[] }> {
+  try {
+    let bytes: Uint8Array
+
+    if (arquivo instanceof Uint8Array) {
+      bytes = arquivo
+    } else if (arquivo instanceof ArrayBuffer) {
+      bytes = new Uint8Array(arquivo)
+    } else {
+      const leitor = arquivo as Blob & { arrayBuffer?: () => Promise<ArrayBuffer> }
+      const buffer = typeof leitor.arrayBuffer === 'function'
+        ? await leitor.arrayBuffer()
+        : await new Response(arquivo).arrayBuffer()
+      bytes = new Uint8Array(buffer)
+    }
+
+    let pacote: PacoteExportacao
+    try {
+      const json = pako.ungzip(bytes, { to: 'string' })
+      pacote = JSON.parse(json) as PacoteExportacao
+    } catch {
+      // Fallback para compatibilidade com backup em JSON sem compressão.
+      const json = new TextDecoder().decode(bytes)
+      pacote = JSON.parse(json) as PacoteExportacao
+    }
+
+    const validacao = await validarDadosImport(pacote)
+    if (!validacao.valido) {
+      return {
+        sucesso: false,
+        erros: validacao.erros,
+      }
+    }
+
+    await consultasBD.importarTudo(pacote.dados)
+
+    return {
+      sucesso: true,
+      erros: [],
+    }
+  } catch (erro) {
+    const mensagem = erro instanceof Error
+      ? erro.message
+      : typeof erro === 'string'
+        ? erro
+        : JSON.stringify(erro)
+
+    return {
+      sucesso: false,
+      erros: [mensagem || 'Falha ao importar dados'],
+    }
+  }
+}
 
 export async function hidratarEstado(): Promise<EstadoApp> {
   const { registros, pausas, configuracoes } = await consultasBD.obterEstadoPersistido()
