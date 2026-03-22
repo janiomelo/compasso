@@ -5,7 +5,6 @@ import {
   rotularMetodo,
   rotularIntencao,
   MAPA_INTENSIDADE,
-  ROTULOS_TENDENCIA,
 } from '../../utilitarios/apresentacao/rotulos'
 import {
   calcularValorPercebido,
@@ -14,6 +13,12 @@ import {
 } from '../../utilitarios/dados/calculos'
 import { formatarDataHora, formatarMoeda, formatarNumero } from '../../utilitarios/dados/formatacao'
 import styles from './pagina-ritmo.module.scss'
+
+const ROTULOS_TENDENCIA_CURTOS = {
+  aumentando: 'Em alta',
+  diminuindo: 'Em queda',
+  estavel: 'Estável',
+} as const
 
 const DICAS = [
   'Combine uma pausa curta com hidratação para reduzir recaídas no fim do dia.',
@@ -160,7 +165,9 @@ export const PaginaRitmo = () => {
 
         <article className={styles.cartaoMetrica}>
           <div className={styles.cartaoMetrica__topo}><Activity size={18} /> Média semanal</div>
-          <strong className={styles.cartaoMetrica__numero}>{(estatisticas.registrosPorDia * 7).toFixed(1)}</strong>
+          <strong className={styles.cartaoMetrica__numero + ' ' + styles['cartaoMetrica__numero--medio']}>
+            {(estatisticas.registrosPorDia * 7).toFixed(1)}
+          </strong>
           <span className={styles.cartaoMetrica__texto}>por semana</span>
         </article>
 
@@ -168,7 +175,9 @@ export const PaginaRitmo = () => {
           <div className={styles.cartaoMetrica__topo}>
             {tendencia === 'diminuindo' ? <TrendingDown size={18} /> : <TrendingUp size={18} />} Tendência
           </div>
-          <strong className={styles.cartaoMetrica__numero}>{ROTULOS_TENDENCIA[tendencia]}</strong>
+          <strong className={styles.cartaoMetrica__numero + ' ' + styles['cartaoMetrica__numero--texto']}>
+            {ROTULOS_TENDENCIA_CURTOS[tendencia]}
+          </strong>
           <span className={styles.cartaoMetrica__texto}>intensidade média {intensidadeMedia.toFixed(1)} / 10</span>
         </article>
 

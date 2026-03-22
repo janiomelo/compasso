@@ -61,7 +61,7 @@ describe('Home Principal — UI Comportamental', () => {
     render(<PaginaPrincipal />, { wrapper: envolverProvider })
 
     await waitFor(() => {
-      expect(screen.getByText('Nenhum registro ainda')).toBeDefined()
+      expect(screen.getByText('Sem registros')).toBeDefined()
       expect(screen.getByText(/Comece registrando um momento/)).toBeDefined()
     })
   })

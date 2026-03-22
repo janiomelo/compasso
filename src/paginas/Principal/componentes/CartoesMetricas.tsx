@@ -36,7 +36,7 @@ export const CartaoUltimoRegistro: FC = () => {
         </>
       ) : (
         <>
-          <strong className={styles.cartao__titulo}>Nenhum registro ainda</strong>
+          <strong className={styles.cartao__titulo}>Sem registros</strong>
           <p className={styles.cartao__texto}>Comece registrando um momento para montar sua leitura recente.</p>
         </>
       )}
