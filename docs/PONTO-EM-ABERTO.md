@@ -18,6 +18,53 @@ O ponto central não é mais visual, e sim de produto:
 - a intensidade não pode transformar o check-in em uma mini planilha;
 - o modelo escolhido precisa conversar com os resumos, listas e análises posteriores.
 
+Minha recomendação objetiva
+
+Eu fecharia assim:
+
+Decisão
+no MVP, a intensidade será registrada em três níveis fixos:
+Leve
+Média
+Alta
+Regra
+não haverá escala numérica no fluxo principal de registro;
+o objetivo é preservar rapidez, clareza e recorrência;
+qualquer granularidade maior fica como possibilidade futura, não como parte da primeira versão.
+Consequência positiva
+
+Isso simplifica também:
+
+histórico;
+ritmo;
+cards de registro;
+filtros;
+linguagem do produto.
+
+Um cuidado importante
+
+Se fizer essa mudança, eu também ajustaria a copy da tela.
+
+Porque aí talvez “Qual foi a intensidade?” continue bom, mas a mecânica muda.
+
+A tela pode virar algo como:
+
+Como foi a intensidade?
+Qual foi a intensidade?
+No geral, como foi?
+
+E em vez de slider:
+
+três opções claras
+talvez com cards ou pills grandes
+com uma pequena legenda curta
+
+Exemplo:
+
+Leve — mais sutil
+Média — intermediária
+Alta — mais intensa
+
 ### X.2. Linguagem visual dos elementos gráficos
 
 Este ponto ainda não está fechado porque a interface ainda mistura linguagens visuais diferentes.
