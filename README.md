@@ -32,6 +32,7 @@ Ele resume a proposta do produto, os princípios de construção e como navegar 
 - Fundamentos completos do produto (conteúdo original integral): `docs/FUNDAMENTOS-PRODUTO.md`
 - Arquitetura técnica e fases de execução: `docs/PROJETO WEB APP.md`
 - Guia técnico de desenvolvimento (setup, comandos, cobertura): `docs/GUIA-DESENVOLVIMENTO.md`
+- Compliance de origem de assets e licenças de terceiros: `docs/compliance/assets-e-licencas.md`
 
 ## Início rápido (desenvolvimento)
 

@@ -177,12 +177,12 @@ Isso é importante para que a linguagem continue coerente conforme o projeto cre
 
 ### X.9. Limites de originalidade e origem dos assets
 
-Não há sinal evidente de plágio direto na interface atual, mas continuam em aberto alguns cuidados operacionais:
+Este ponto passa a ter trilha operacional e documentação dedicada:
 
-- definir origem oficial dos ícones e demais assets;
-- revisar licenças de qualquer recurso de terceiros;
-- manter atenção à microcopy para evitar proximidade excessiva com concorrentes;
-- revisar o símbolo da marca quando ele for fechado.
+- documento principal: `docs/compliance/assets-e-licencas.md`;
+- artefato formal para distribuição: `THIRD_PARTY_NOTICES.md`.
+
+Com isso, o item deixa de ser apenas observação e passa a ser checklist verificável de origem de assets, licenças e pendências de originalidade.
 
 Este ponto não bloqueia o produto visualmente agora, mas precisa permanecer na lista de fechamento.
 
