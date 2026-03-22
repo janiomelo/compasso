@@ -45,9 +45,23 @@ const ConteudoApp = () => {
   const { estado } = useApp()
 
   useEffect(() => {
-    const temaPreferidoSistema = window.matchMedia('(prefers-color-scheme: light)').matches ? 'claro' : 'escuro'
-    const temaAtivo = estado.configuracoes.temaAuto ? temaPreferidoSistema : estado.configuracoes.tema
-    document.body.classList.toggle('tema-claro', temaAtivo === 'claro')
+    const mediaTema = window.matchMedia('(prefers-color-scheme: light)')
+
+    const aplicarTema = () => {
+      const temaPreferidoSistema = mediaTema.matches ? 'claro' : 'escuro'
+      const temaAtivo = estado.configuracoes.temaAuto ? temaPreferidoSistema : estado.configuracoes.tema
+
+      document.body.classList.toggle('tema-claro', temaAtivo === 'claro')
+      document.body.setAttribute('data-tema-ativo', temaAtivo)
+    }
+
+    aplicarTema()
+
+    mediaTema.addEventListener('change', aplicarTema)
+
+    return () => {
+      mediaTema.removeEventListener('change', aplicarTema)
+    }
   }, [estado.configuracoes.tema, estado.configuracoes.temaAuto])
 
   if (estado.ui.carregando) {

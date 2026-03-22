@@ -16,12 +16,12 @@
   margin: 0;
   font-size: clamp(2rem, 5vw, 3rem);
   letter-spacing: -0.04em;
-  color: $cor-texto-primaria;
+  color: var(--cor-texto-primaria);
 }
 
 .subtitulo {
   margin: 0;
-  color: $cor-texto-secundaria;
+  color: var(--cor-texto-secundaria);
   max-width: 44rem;
 }
 
@@ -34,8 +34,8 @@
 }
 
 .hero {
-  background: linear-gradient(180deg, rgba($cor-bg-secundaria, 0.98), rgba($cor-bg-primaria, 0.98));
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, var(--superficie-cartao-forte), var(--superficie-cartao));
+  border: 1px solid var(--borda-suave);
   border-radius: 1.75rem;
   padding: clamp(1.5rem, 4vw, 2.5rem);
   box-shadow: $sombra-md;
@@ -54,7 +54,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: $cor-acento-principal;
+  color: var(--cor-acento-principal);
   background: rgba($cor-acento-principal, 0.12);
   border: 1px solid rgba($cor-acento-principal, 0.18);
 }
@@ -66,7 +66,7 @@
 }
 
 .hero__kicker {
-  color: $cor-texto-terciaria;
+  color: var(--cor-texto-terciaria);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: $tamanho-pequeno;
@@ -81,7 +81,7 @@
 
 .hero__descricao {
   margin: 0;
-  color: $cor-texto-secundaria;
+  color: var(--cor-texto-secundaria);
   max-width: 40rem;
 }
 
@@ -90,7 +90,7 @@
   height: 0.65rem;
   border-radius: $raio-pill;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--trilho);
 }
 
 .hero__barra {
@@ -107,8 +107,8 @@
   span {
     padding: 0.625rem 0.9rem;
     border-radius: $raio-pill;
-    background: rgba(255, 255, 255, 0.04);
-    color: $cor-texto-secundaria;
+    background: var(--superficie-suave);
+    color: var(--cor-texto-secundaria);
     font-size: $tamanho-pequeno;
   }
 }
@@ -133,7 +133,7 @@
 .botaoPrimario {
   background: linear-gradient(135deg, $cor-acento-principal 0%, $cor-acento-secundaria 100%);
   color: #fff;
-  box-shadow: 0 16px 28px rgba($cor-acento-principal, 0.24);
+  box-shadow: 0 8px 16px rgba($cor-acento-principal, 0.18);
 
   &:hover {
     color: #fff;
@@ -142,12 +142,12 @@
 }
 
 .botaoSecundario {
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: $cor-texto-primaria;
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--borda-suave);
+  color: var(--cor-texto-primaria);
+  background: var(--superficie-sutil);
 
   &:hover {
-    color: $cor-texto-primaria;
+    color: var(--cor-texto-primaria);
     text-decoration: none;
   }
 }
@@ -162,8 +162,8 @@
 }
 
 .cartao {
-  background: rgba($cor-bg-secundaria, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--superficie-cartao);
+  border: 1px solid var(--borda-suave);
   border-radius: 1.5rem;
   padding: 1.35rem;
   display: flex;
@@ -175,7 +175,7 @@
   display: flex;
   align-items: center;
   gap: $espaco-xs;
-  color: $cor-texto-terciaria;
+  color: var(--cor-texto-terciaria);
   font-size: $tamanho-pequeno;
 }
 
@@ -186,7 +186,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--superficie-suave);
 }
 
 .cartao__rotulo {
@@ -196,18 +196,18 @@
 
 .cartao__titulo,
 .cartao__numero {
-  color: $cor-texto-primaria;
+  color: var(--cor-texto-primaria);
   font-size: clamp(1.5rem, 4vw, 2.2rem);
   line-height: 1;
 }
 
 .cartao__texto {
   margin: 0;
-  color: $cor-texto-secundaria;
+  color: var(--cor-texto-secundaria);
 }
 
 .cartao__meta {
-  color: $cor-texto-terciaria;
+  color: var(--cor-texto-terciaria);
   font-size: $tamanho-pequeno;
 }
 
@@ -215,7 +215,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  color: $cor-texto-primaria;
+  color: var(--cor-texto-primaria);
   font-weight: $peso-semibold;
 
   &:hover {
@@ -232,7 +232,7 @@
   border-radius: 1.5rem;
   background: linear-gradient(135deg, rgba($cor-acento-principal, 0.92), rgba($cor-acento-secundaria, 0.92));
   color: #fff;
-  box-shadow: 0 24px 50px rgba($cor-acento-principal, 0.24);
+  box-shadow: 0 20px 44px rgba($cor-acento-principal, 0.24);
 
   &:hover {
     color: #fff;
@@ -278,11 +278,11 @@
 
 .secao__titulo {
   margin: 0;
-  color: $cor-texto-primaria;
+  color: var(--cor-texto-primaria);
 }
 
 .vazio {
-  color: $cor-texto-secundaria;
+  color: var(--cor-texto-secundaria);
 }
 
 .listaRegistros {
@@ -300,31 +300,31 @@
   justify-content: space-between;
   gap: $espaco-md;
   padding: 1rem 1.1rem;
-  background: rgba($cor-bg-secundaria, 0.92);
+  background: var(--superficie-cartao);
   border-radius: 1.25rem;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--borda-sutil);
 }
 
 .itemRegistro__titulo {
   font-weight: $peso-semibold;
-  color: $cor-texto-primaria;
+  color: var(--cor-texto-primaria);
 
   span {
-    color: $cor-texto-secundaria;
+    color: var(--cor-texto-secundaria);
     font-weight: $peso-regular;
   }
 }
 
 .itemRegistro__subtitulo {
-  color: $cor-texto-terciaria;
+  color: var(--cor-texto-terciaria);
   font-size: $tamanho-pequeno;
 }
 
 .itemRegistro__intensidade {
   padding: 0.45rem 0.75rem;
   border-radius: $raio-pill;
-  background: rgba(255, 255, 255, 0.05);
-  color: $cor-texto-secundaria;
+  background: var(--superficie-suave);
+  color: var(--cor-texto-secundaria);
   text-transform: capitalize;
   font-size: $tamanho-pequeno;
 }

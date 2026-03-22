@@ -1,5 +1,5 @@
 import { Download, FileUp, RefreshCw, Save, ShieldCheck, Trash2 } from 'lucide-react'
-import { useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { useApp, useArmazenamento, useConectividade } from '../../ganchos'
 import { hidratarEstado } from '../../servicos/servicoDados'
 import styles from './pagina-config.module.scss'
@@ -35,6 +35,19 @@ export const PaginaConfig = () => {
     despacho({ tipo: 'DEFINIR_CONFIGURACAO', payload: { tema, temaAuto: false } })
     document.body.classList.toggle('tema-claro', tema === 'claro')
     setMensagem(`Tema ${tema} aplicado.`)
+  }
+
+  const definirTemaAutomatico = async () => {
+    limparFeedback()
+
+    const novasConfiguracoes = {
+      ...estado.configuracoes,
+      temaAuto: true,
+    }
+
+    await salvarConfiguracoes(novasConfiguracoes)
+    despacho({ tipo: 'DEFINIR_CONFIGURACAO', payload: { temaAuto: true } })
+    setMensagem('Tema automático ativado. O app seguirá a preferência do sistema.')
   }
 
   const limparFeedback = () => {
@@ -135,6 +148,14 @@ export const PaginaConfig = () => {
     }, 'Todos os dados locais foram removidos.')
   }
 
+  const temaEfetivo = useMemo(() => {
+    if (!estado.configuracoes.temaAuto) {
+      return estado.configuracoes.tema
+    }
+
+    return window.matchMedia('(prefers-color-scheme: light)').matches ? 'claro' : 'escuro'
+  }, [estado.configuracoes.tema, estado.configuracoes.temaAuto])
+
   return (
     <div className={styles.pagina}>
       <header className={styles.topo}>
@@ -144,13 +165,34 @@ export const PaginaConfig = () => {
       </header>
 
       <section className={styles.grade}>
-        <button className={styles.acao} onClick={() => void definirTema('escuro')} disabled={carregando}>
+        <button
+          className={styles.acao + (estado.configuracoes.temaAuto ? ' ' + styles['acao--ativa'] : '')}
+          onClick={() => void definirTemaAutomatico()}
+          disabled={carregando}
+        >
+          <span>Tema automático</span>
+        </button>
+
+        <button
+          className={styles.acao + (!estado.configuracoes.temaAuto && estado.configuracoes.tema === 'escuro' ? ' ' + styles['acao--ativa'] : '')}
+          onClick={() => void definirTema('escuro')}
+          disabled={carregando}
+        >
           <span>Tema escuro</span>
         </button>
 
-        <button className={styles.acao} onClick={() => void definirTema('claro')} disabled={carregando}>
+        <button
+          className={styles.acao + (!estado.configuracoes.temaAuto && estado.configuracoes.tema === 'claro' ? ' ' + styles['acao--ativa'] : '')}
+          onClick={() => void definirTema('claro')}
+          disabled={carregando}
+        >
           <span>Tema claro</span>
         </button>
+
+        <p className={styles.temaResumo}>
+          Tema em uso: <strong>{temaEfetivo === 'claro' ? 'Claro' : 'Escuro'}</strong>
+          {estado.configuracoes.temaAuto ? ' (automático)' : ' (manual)'}
+        </p>
 
         <button className={styles.acao} onClick={handleBackupManual} disabled={carregando}>
           <Save size={18} />

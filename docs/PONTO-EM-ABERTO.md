@@ -4,6 +4,10 @@ Esta seção resume apenas o que, a partir do texto-base, ainda não está sufic
 
 ### X.1. Direção visual que precisa ser oficialmente congelada
 
+**Status: fechado em 22/03/2026 (Fase 8.1).**
+
+Referência oficial: `docs/DIRETRIZES-TEMAS-E-CORES.md`
+
 Embora a análise já aponte uma direção forte, ainda falta transformar essa percepção em decisão formal de sistema:
 
 - o produto não terá dark mode como direção principal exclusiva;
@@ -69,6 +73,10 @@ Embora a análise já aponte uma direção forte, ainda falta transformar essa p
     
 
 ### X.2. Escopo exato do estilo visual
+
+**Status: fechado em 22/03/2026 (Fase 8.1).**
+
+Referência oficial: `docs/DIRETRIZES-TEMAS-E-CORES.md`
 
 Ainda falta decidir, de forma explícita, qual será a dominância final da linguagem visual:
 

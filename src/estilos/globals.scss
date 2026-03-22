@@ -1,5 +1,43 @@
 @use './variaveis' as *;
 
+:root {
+  --cor-bg-primaria: #0f0f0f;
+  --cor-bg-secundaria: #1a1a1a;
+  --cor-bg-terciaria: #2a2a2a;
+  --cor-texto-primaria: #ffffff;
+  --cor-texto-secundaria: #b0b0b0;
+  --cor-texto-terciaria: #808080;
+  --cor-acento-principal: #4a9b6f;
+  --cor-acento-secundaria: #6bb582;
+  --superficie-elevada: rgba(15, 15, 15, 0.76);
+  --superficie-cartao: rgba(26, 26, 26, 0.92);
+  --superficie-cartao-forte: rgba(26, 26, 26, 0.98);
+  --superficie-suave: rgba(255, 255, 255, 0.04);
+  --superficie-sutil: rgba(255, 255, 255, 0.03);
+  --borda-suave: rgba(255, 255, 255, 0.08);
+  --borda-sutil: rgba(255, 255, 255, 0.06);
+  --trilho: rgba(255, 255, 255, 0.08);
+}
+
+body.tema-claro {
+  --cor-bg-primaria: #f4f6f6;
+  --cor-bg-secundaria: #ffffff;
+  --cor-bg-terciaria: #eef2f2;
+  --cor-texto-primaria: #152022;
+  --cor-texto-secundaria: #3a4c50;
+  --cor-texto-terciaria: #64777b;
+  --cor-acento-principal: #4a9b6f;
+  --cor-acento-secundaria: #6bb582;
+  --superficie-elevada: rgba(255, 255, 255, 0.72);
+  --superficie-cartao: rgba(255, 255, 255, 0.88);
+  --superficie-cartao-forte: rgba(255, 255, 255, 0.96);
+  --superficie-suave: rgba(21, 32, 34, 0.06);
+  --superficie-sutil: rgba(21, 32, 34, 0.04);
+  --borda-suave: rgba(21, 32, 34, 0.12);
+  --borda-sutil: rgba(21, 32, 34, 0.08);
+  --trilho: rgba(21, 32, 34, 0.12);
+}
+
 // ============================================================
 // RESET & NORMALIZAÇÕES
 // ============================================================
@@ -19,8 +57,8 @@ html {
 }
 
 body {
-  background-color: $cor-bg-primaria;
-  color: $cor-texto-primaria;
+  background-color: var(--cor-bg-primaria);
+  color: var(--cor-texto-primaria);
   font-family: $fonte-principal;
   font-size: $tamanho-corpo;
   font-weight: $peso-regular;
@@ -80,21 +118,21 @@ p {
 // ============================================================
 
 a {
-  color: $cor-acento-principal;
+  color: var(--cor-acento-principal);
   text-decoration: none;
   transition: color $transicao-rapida;
 
   &:hover {
-    color: $cor-acento-secundaria;
+    color: var(--cor-acento-secundaria);
     text-decoration: underline;
   }
 
   &:active {
-    color: $cor-acento-principal;
+    color: var(--cor-acento-principal);
   }
 
   &:focus-visible {
-    outline: 2px solid $cor-acento-principal;
+    outline: 2px solid var(--cor-acento-principal);
     outline-offset: 2px;
   }
 }
@@ -136,7 +174,7 @@ button {
 
 code,
 pre {
-  background-color: $cor-bg-terciaria;
+  background-color: var(--cor-bg-terciaria);
   border-radius: $raio-sm;
   font-family: $fonte-mono;
   font-size: 0.875em;
@@ -168,14 +206,14 @@ table {
 }
 
 thead {
-  background-color: $cor-bg-secundaria;
+  background-color: var(--cor-bg-secundaria);
 }
 
 th,
 td {
   padding: $espaco-md;
   text-align: left;
-  border-bottom: 1px solid $cor-bg-terciaria;
+  border-bottom: 1px solid var(--cor-bg-terciaria);
 }
 
 // ============================================================
@@ -188,15 +226,15 @@ td {
 }
 
 ::-webkit-scrollbar-track {
-  background: $cor-bg-secundaria;
+  background: var(--cor-bg-secundaria);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: $cor-texto-terciaria;
+  background: var(--cor-texto-terciaria);
   border-radius: $raio-sm;
 
   &:hover {
-    background: $cor-texto-secundaria;
+    background: var(--cor-texto-secundaria);
   }
 }
 
@@ -205,11 +243,11 @@ td {
 // ============================================================
 
 ::selection {
-  background-color: $cor-acento-principal;
-  color: $cor-bg-primaria;
+  background-color: var(--cor-acento-principal);
+  color: var(--cor-bg-primaria);
 }
 
 ::-moz-selection {
-  background-color: $cor-acento-principal;
-  color: $cor-bg-primaria;
+  background-color: var(--cor-acento-principal);
+  color: var(--cor-bg-primaria);
 }

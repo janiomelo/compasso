@@ -16,12 +16,12 @@
   margin: 0;
   font-size: clamp(2rem, 5vw, 3rem);
   letter-spacing: -0.04em;
-  color: $cor-texto-primaria;
+  color: var(--cor-texto-primaria);
 }
 
 .subtitulo {
   margin: 0;
-  color: $cor-texto-secundaria;
+  color: var(--cor-texto-secundaria);
   max-width: 44rem;
 }
 
@@ -34,7 +34,7 @@
 }
 
 .hero {
-  background: linear-gradient(180deg, rgba($cor-bg-secundaria, 0.98), rgba($cor-bg-primaria, 0.98));
+  background: linear-gradient(180deg, var(--superficie-cartao-forte), var(--superficie-cartao));
   border: 1px solid rgba($cor-acento-principal, 0.35);
   border-radius: 1.75rem;
   padding: clamp(1.5rem, 4vw, 2.5rem);
@@ -71,21 +71,21 @@
 
 .hero__titulo {
   margin: 0;
-  color: $cor-texto-primaria;
+  color: var(--cor-texto-primaria);
   font-size: clamp(1.8rem, 4vw, 2.4rem);
   letter-spacing: -0.04em;
 }
 
 .hero__descricao {
   margin: 0;
-  color: $cor-texto-secundaria;
+  color: var(--cor-texto-secundaria);
 }
 
 .hero__nota {
   display: inline-flex;
   align-items: center;
   gap: $espaco-xs;
-  color: $cor-texto-secundaria;
+  color: var(--cor-texto-secundaria);
   font-size: $tamanho-pequeno;
 }
 
@@ -98,13 +98,13 @@
 .cronometroValor {
   font-size: clamp(2.5rem, 8vw, 4.5rem);
   font-weight: 700;
-  color: $cor-texto-primaria;
+  color: var(--cor-texto-primaria);
   font-variant-numeric: tabular-nums;
 }
 
 .cronometroRotulo {
   font-size: $tamanho-pequeno;
-  color: $cor-texto-terciaria;
+  color: var(--cor-texto-terciaria);
   text-transform: uppercase;
   letter-spacing: 0.04em;
   margin-top: $espaco-xs;
@@ -112,7 +112,7 @@
 
 .barraContainer {
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.08);
+  background-color: var(--trilho);
   border-radius: $raio-pill;
   height: 10px;
   overflow: hidden;
@@ -142,26 +142,26 @@
   gap: $espaco-xs;
   padding: 1rem 1.1rem;
   border-radius: 1.15rem;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--superficie-suave);
+  border: 1px solid var(--borda-sutil);
 }
 
 .pausaInfoRotulo {
   font-size: $tamanho-pequeno;
-  color: $cor-texto-terciaria;
+  color: var(--cor-texto-terciaria);
   text-transform: uppercase;
 }
 
 .pausaInfoValor {
   font-size: $tamanho-h5;
   font-weight: 500;
-  color: $cor-texto-primaria;
+  color: var(--cor-texto-primaria);
 }
 
 .secaoTitulo {
   margin: 0;
   font-size: $tamanho-h5;
-  color: $cor-texto-primaria;
+  color: var(--cor-texto-primaria);
 }
 
 .opcoesGrid {
@@ -176,11 +176,11 @@
 }
 
 .opcaoDuracao {
-  background-color: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: var(--superficie-suave);
+  border: 1px solid var(--borda-suave);
   border-radius: 1.25rem;
   padding: $espaco-md;
-  color: $cor-texto-secundaria;
+  color: var(--cor-texto-secundaria);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -190,13 +190,13 @@
 
   &:hover {
     border-color: rgba($cor-acento-principal, 0.35);
-    color: $cor-texto-primaria;
+    color: var(--cor-texto-primaria);
   }
 
   &--ativa {
     border-color: rgba($cor-acento-principal, 0.45);
     background: rgba($cor-acento-principal, 0.1);
-    color: $cor-texto-primaria;
+    color: var(--cor-texto-primaria);
     font-weight: 500;
   }
 }
@@ -208,7 +208,7 @@
 
 .opcaoDuracao__subtitulo {
   font-size: $tamanho-pequeno;
-  color: $cor-texto-terciaria;
+  color: var(--cor-texto-terciaria);
 }
 
 .acoes {
@@ -229,7 +229,7 @@
   font-weight: 500;
   cursor: pointer;
   transition: opacity $transicao-rapida;
-  box-shadow: 0 18px 30px rgba($cor-acento-principal, 0.24);
+  box-shadow: 0 8px 18px rgba($cor-acento-principal, 0.18);
 
   &:hover:not(:disabled) {
     opacity: 0.88;
@@ -248,18 +248,18 @@
 }
 
 .botaoSecundario {
-  background-color: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: var(--superficie-sutil);
+  border: 1px solid var(--borda-suave);
   border-radius: 1rem;
   padding: $espaco-sm $espaco-lg;
-  color: $cor-texto-secundaria;
+  color: var(--cor-texto-secundaria);
   font-size: $tamanho-corpo;
   cursor: pointer;
   transition: border-color $transicao-rapida, color $transicao-rapida;
 
   &:hover:not(:disabled) {
-    border-color: $cor-texto-secundaria;
-    color: $cor-texto-primaria;
+    border-color: var(--cor-texto-secundaria);
+    color: var(--cor-texto-primaria);
   }
 
   &:disabled {
@@ -285,7 +285,7 @@
   display: inline-flex;
   align-items: center;
   gap: $espaco-xs;
-  color: $cor-texto-primaria;
+  color: var(--cor-texto-primaria);
 }
 
 .lista {
@@ -302,8 +302,8 @@
   align-items: center;
   gap: $espaco-sm;
   padding: 1rem 1.15rem;
-  background-color: rgba($cor-bg-secundaria, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: var(--superficie-cartao);
+  border: 1px solid var(--borda-suave);
   border-radius: 1.2rem;
   font-size: $tamanho-pequeno;
 }
@@ -331,7 +331,7 @@
 }
 
 .itemDuracao {
-  color: $cor-texto-secundaria;
+  color: var(--cor-texto-secundaria);
   flex: 1;
 }
 

@@ -23,13 +23,13 @@
 .titulo {
   margin: 0;
   font-size: clamp(2rem, 5vw, 3rem);
-  color: $cor-texto-primaria;
+  color: var(--cor-texto-primaria);
   letter-spacing: -0.04em;
 }
 
 .subtitulo {
   margin: 0;
-  color: $cor-texto-secundaria;
+  color: var(--cor-texto-secundaria);
   max-width: 48rem;
 }
 
@@ -49,8 +49,8 @@
 .cartaoMetrica,
 .bloco,
 .itemRegistro {
-  background: rgba($cor-bg-secundaria, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--superficie-cartao);
+  border: 1px solid var(--borda-suave);
   border-radius: 1.5rem;
   box-shadow: $sombra-sm;
 }
@@ -66,17 +66,17 @@
   display: inline-flex;
   align-items: center;
   gap: $espaco-xs;
-  color: $cor-texto-terciaria;
+  color: var(--cor-texto-terciaria);
 }
 
 .cartaoMetrica__numero {
   font-size: clamp(1.9rem, 5vw, 2.7rem);
-  color: $cor-texto-primaria;
+  color: var(--cor-texto-primaria);
   line-height: 1;
 }
 
 .cartaoMetrica__texto {
-  color: $cor-texto-secundaria;
+  color: var(--cor-texto-secundaria);
 }
 
 .bloco {
@@ -88,7 +88,7 @@
 
 .bloco__titulo {
   margin: 0;
-  color: $cor-texto-primaria;
+  color: var(--cor-texto-primaria);
   font-size: $tamanho-h4;
 }
 
@@ -105,8 +105,8 @@
 .dia {
   min-height: 8rem;
   border-radius: 1.15rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba($cor-bg-primaria, 0.34);
+  border: 1px solid var(--borda-suave);
+  background: var(--superficie-suave);
   padding: 1rem 0.85rem;
   display: flex;
   flex-direction: column;
@@ -120,13 +120,13 @@
 
 .dia__semana,
 .dia__quantidade {
-  color: $cor-texto-terciaria;
+  color: var(--cor-texto-terciaria);
   font-size: $tamanho-pequeno;
 }
 
 .dia__numero {
   font-size: $tamanho-h4;
-  color: $cor-texto-primaria;
+  color: var(--cor-texto-primaria);
 }
 
 .gradeEconomia {
@@ -144,20 +144,20 @@
 
 .itemEconomia {
   border-radius: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba($cor-bg-primaria, 0.36);
+  border: 1px solid var(--borda-suave);
+  background: var(--superficie-suave);
   padding: 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
 
   span {
-    color: $cor-texto-terciaria;
+    color: var(--cor-texto-terciaria);
     font-size: $tamanho-pequeno;
   }
 
   strong {
-    color: $cor-texto-primaria;
+    color: var(--cor-texto-primaria);
     font-size: $tamanho-h5;
   }
 }
@@ -173,7 +173,7 @@
 
   p {
     margin: 0;
-    color: $cor-texto-primaria;
+    color: var(--cor-texto-primaria);
   }
 }
 
@@ -181,7 +181,7 @@
   align-self: flex-start;
   border: 1px solid rgba($cor-acento-principal, 0.4);
   background: rgba($cor-acento-principal, 0.18);
-  color: $cor-texto-primaria;
+  color: var(--cor-texto-primaria);
   border-radius: $raio-pill;
   padding: 0.55rem 1rem;
   font-weight: $peso-semibold;
@@ -196,7 +196,7 @@
 .listaRelatorios {
   margin: 0;
   padding-left: 1.25rem;
-  color: $cor-texto-secundaria;
+  color: var(--cor-texto-secundaria);
   display: flex;
   flex-direction: column;
   gap: $espaco-xs;
@@ -222,7 +222,7 @@
   display: flex;
   justify-content: space-between;
   gap: $espaco-md;
-  color: $cor-texto-primaria;
+  color: var(--cor-texto-primaria);
 }
 
 .barraLinha__trilho,
@@ -231,7 +231,7 @@
   height: 0.45rem;
   border-radius: $raio-pill;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--trilho);
 }
 
 .barraLinha__valor,
@@ -261,17 +261,17 @@
   display: flex;
   justify-content: space-between;
   gap: $espaco-sm;
-  color: $cor-texto-primaria;
+  color: var(--cor-texto-primaria);
 
   span {
-    color: $cor-texto-secundaria;
+    color: var(--cor-texto-secundaria);
   }
 }
 
 .itemRegistro__data,
 .itemRegistro__rodape,
 .vazio {
-  color: $cor-texto-terciaria;
+  color: var(--cor-texto-terciaria);
 }
 
 @media (max-width: $ponto-corte-tablet - 1px) {
