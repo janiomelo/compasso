@@ -1,0 +1,131 @@
+@use '../../estilos/variaveis' as *;
+
+.pagina {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-lg;
+}
+
+.voltar,
+.topo,
+.hero,
+.blocoLeitura {
+  width: min(100%, 56rem);
+}
+
+.voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: fit-content;
+  color: var(--cor-texto-secundaria);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+    color: var(--cor-texto-primaria);
+  }
+}
+
+.topo {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-xs;
+}
+
+.eyebrow {
+  color: var(--cor-acento-principal);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: $tamanho-pequeno;
+  font-weight: $peso-semibold;
+}
+
+.titulo {
+  margin: 0;
+}
+
+.subtitulo {
+  margin: 0;
+  color: var(--cor-texto-secundaria);
+  max-width: 44rem;
+}
+
+.hero,
+.blocoLeitura {
+  border: 1px solid var(--borda-suave);
+  background: var(--superficie-cartao);
+  border-radius: 1.2rem;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: $espaco-md;
+  padding: 1.25rem;
+  background:
+    radial-gradient(circle at left top, rgba($cor-acento-principal, 0.18), transparent 44%),
+    var(--superficie-cartao);
+
+  h2,
+  p {
+    margin: 0;
+  }
+}
+
+.heroIcone {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cor-acento-principal);
+  background: rgba($cor-acento-principal, 0.14);
+  border: 1px solid rgba($cor-acento-principal, 0.28);
+}
+
+.blocoLeitura {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 1.2rem;
+}
+
+.secaoTexto {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-sm;
+  padding: 1rem 0;
+  border-top: 1px solid var(--borda-sutil);
+
+  h2,
+  p,
+  ul {
+    margin: 0;
+  }
+
+  ul {
+    padding-left: 1.1rem;
+    color: var(--cor-texto-secundaria);
+  }
+
+  &:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+}
+
+.cartaoTopo {
+  display: inline-flex;
+  align-items: center;
+  gap: $espaco-sm;
+
+  h2 {
+    font-size: $tamanho-h5;
+  }
+}

@@ -1,0 +1,118 @@
+@use '../../estilos/variaveis' as *;
+
+.pagina {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-lg;
+}
+
+.voltar,
+.topo,
+.blocoLeitura {
+  width: min(100%, 56rem);
+}
+
+.voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: fit-content;
+  color: var(--cor-texto-secundaria);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+    color: var(--cor-texto-primaria);
+  }
+}
+
+.topo {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-xs;
+}
+
+.eyebrow {
+  color: var(--cor-acento-principal);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: $tamanho-pequeno;
+  font-weight: $peso-semibold;
+}
+
+.titulo {
+  margin: 0;
+}
+
+.subtitulo {
+  margin: 0;
+  color: var(--cor-texto-secundaria);
+  max-width: 44rem;
+}
+
+.blocoLeitura {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-md;
+}
+
+.cartao,
+.cartaoDestaque {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-sm;
+  border: 1px solid var(--borda-suave);
+  background: var(--superficie-cartao);
+  border-radius: 1.2rem;
+  padding: 1.2rem;
+
+  h2,
+  p,
+  ul,
+  dl {
+    margin: 0;
+  }
+
+  ul {
+    padding-left: 1.1rem;
+    color: var(--cor-texto-secundaria);
+  }
+}
+
+.cartaoDestaque {
+  background:
+    radial-gradient(circle at top right, rgba($cor-acento-principal, 0.16), transparent 42%),
+    var(--superficie-cartao);
+}
+
+.cartaoTopo {
+  display: inline-flex;
+  align-items: center;
+  gap: $espaco-sm;
+
+  h2 {
+    font-size: $tamanho-h5;
+  }
+}
+
+.listaLicencas {
+  display: grid;
+  gap: $espaco-sm;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    gap: $espaco-md;
+    padding-bottom: 0.55rem;
+    border-bottom: 1px solid var(--borda-sutil);
+  }
+
+  dt {
+    color: var(--cor-texto-secundaria);
+  }
+
+  dd {
+    margin: 0;
+    font-weight: $peso-semibold;
+  }
+}

@@ -28,9 +28,37 @@
 .subtitulo {
   margin: 0;
   color: var(--cor-texto-secundaria);
+  max-width: 44rem;
 }
 
-.grade {
+.cartaoTema {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-sm;
+  border: 1px solid var(--borda-suave);
+  border-radius: $raio-lg;
+  padding: $espaco-md;
+  background: var(--superficie-cartao);
+}
+
+.cartaoTemaResumo {
+  margin: 0;
+  color: var(--cor-texto-secundaria);
+}
+
+.cartaoTemaTopo {
+  display: inline-flex;
+  align-items: center;
+  gap: $espaco-sm;
+  color: var(--cor-texto-primaria);
+
+  h2 {
+    margin: 0;
+    font-size: $tamanho-h5;
+  }
+}
+
+.gradeTema {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: $espaco-sm;
@@ -42,7 +70,6 @@
 
 .temaResumo {
   margin: 0;
-  grid-column: 1 / -1;
   color: var(--cor-texto-secundaria);
   font-size: $tamanho-pequeno;
 }
@@ -76,19 +103,83 @@
   background: rgba($cor-acento-principal, 0.14);
 }
 
-.acao--perigo {
-  border-color: var(--acao-perigo-borda);
-  color: var(--acao-perigo-texto);
-  background: var(--acao-perigo-fundo);
+.listaNavegacao {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-sm;
+}
 
-  &:hover:not(:disabled) {
-    border-color: var(--acao-perigo-borda);
-    background: var(--acao-perigo-fundo-hover);
+.painelLinks {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-sm;
+  border: 1px solid var(--borda-suave);
+  border-radius: $raio-lg;
+  padding: $espaco-md;
+  background: var(--superficie-cartao);
+}
+
+.painelLinksTopo {
+  display: inline-flex;
+  align-items: center;
+  gap: $espaco-sm;
+
+  h2 {
+    margin: 0;
+    font-size: $tamanho-h5;
   }
 }
 
-.inputOculto {
-  display: none;
+.painelLinksResumo {
+  margin: 0;
+  color: var(--cor-texto-secundaria);
+}
+
+.itemNavegacao {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: $espaco-sm;
+  border-radius: $raio-md;
+  border: 1px solid var(--borda-suave);
+  background: var(--superficie-cartao);
+  color: var(--cor-texto-primaria);
+  padding: 0.95rem;
+  text-decoration: none;
+  transition: border-color $transicao-rapida, background-color $transicao-rapida;
+
+  &:hover {
+    text-decoration: none;
+    color: var(--cor-texto-primaria);
+    border-color: rgba($cor-acento-principal, 0.4);
+    background: var(--superficie-cartao-forte);
+  }
+}
+
+.itemNavegacaoIcone {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba($cor-acento-principal, 0.14);
+  border: 1px solid rgba($cor-acento-principal, 0.3);
+  color: var(--cor-acento-principal);
+}
+
+.itemNavegacaoTexto {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+
+  strong {
+    font-size: $tamanho-corpo;
+  }
+
+  small {
+    color: var(--cor-texto-secundaria);
+  }
 }
 
 .mensagemSucesso,

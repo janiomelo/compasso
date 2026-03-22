@@ -1,0 +1,193 @@
+@use '../../estilos/variaveis' as *;
+
+.pagina {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-lg;
+  align-items: stretch;
+}
+
+.voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: fit-content;
+  color: var(--cor-texto-secundaria);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+    color: var(--cor-texto-primaria);
+  }
+}
+
+.topo {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-xs;
+}
+
+.voltar,
+.topo,
+.resumo,
+.blocoLeitura,
+.secaoLinks {
+  width: min(100%, 56rem);
+}
+
+.eyebrow {
+  color: var(--cor-acento-principal);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: $tamanho-pequeno;
+  font-weight: $peso-semibold;
+}
+
+.titulo {
+  margin: 0;
+  color: var(--cor-texto-primaria);
+}
+
+.subtitulo {
+  margin: 0;
+  color: var(--cor-texto-secundaria);
+  max-width: 44rem;
+}
+
+.resumo,
+.blocoLeitura,
+.secaoLinks {
+  border: 1px solid var(--borda-suave);
+  background: var(--superficie-cartao);
+  border-radius: 1.2rem;
+}
+
+.resumo {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: $espaco-md;
+  padding: 1.25rem;
+  background:
+    radial-gradient(circle at top left, rgba($cor-acento-principal, 0.18), transparent 45%),
+    var(--superficie-cartao);
+
+  h2,
+  p {
+    margin: 0;
+  }
+}
+
+.resumoIcone {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cor-acento-principal);
+  background: rgba($cor-acento-principal, 0.14);
+  border: 1px solid rgba($cor-acento-principal, 0.28);
+}
+
+.gradeLinks {
+  display: grid;
+  gap: $espaco-md;
+
+  @media (min-width: $ponto-corte-tablet) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.blocoLeitura {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 1.2rem;
+}
+
+.secaoTexto {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-sm;
+  padding: 1rem 0;
+  border-top: 1px solid var(--borda-sutil);
+
+  h2,
+  p,
+  ul {
+    margin: 0;
+  }
+
+  ul {
+    padding-left: 1.1rem;
+    color: var(--cor-texto-secundaria);
+  }
+
+  &:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+}
+
+.secaoLinks {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-md;
+  padding: 1.2rem;
+}
+
+.secaoTopo {
+  display: inline-flex;
+  align-items: center;
+  gap: $espaco-sm;
+
+  h2 {
+    margin: 0;
+  }
+}
+
+.linkCard {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: $espaco-sm;
+  border: 1px solid var(--borda-suave);
+  border-radius: 1rem;
+  background: var(--superficie-suave);
+  color: var(--cor-texto-primaria);
+  text-decoration: none;
+  padding: 1rem;
+  transition: border-color $transicao-rapida, background-color $transicao-rapida;
+
+  &:hover {
+    text-decoration: none;
+    color: var(--cor-texto-primaria);
+    border-color: rgba($cor-acento-principal, 0.36);
+    background: rgba($cor-acento-principal, 0.08);
+  }
+}
+
+.linkCardIcone {
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: rgba($cor-acento-principal, 0.12);
+  color: var(--cor-acento-principal);
+}
+
+.linkCardTexto {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+
+  small {
+    color: var(--cor-texto-secundaria);
+  }
+}

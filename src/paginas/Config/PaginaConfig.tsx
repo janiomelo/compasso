@@ -1,26 +1,15 @@
-import { Download, FileUp, RefreshCw, Save, ShieldCheck, Trash2 } from 'lucide-react'
-import { useMemo, useRef, useState } from 'react'
-import { useApp, useArmazenamento, useConectividade } from '../../ganchos'
-import { hidratarEstado } from '../../servicos/servicoDados'
+import { BookOpen, Database, Info, Palette, ShieldCheck } from 'lucide-react'
+import { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { useApp, useArmazenamento } from '../../ganchos'
 import styles from './pagina-config.module.scss'
 
 export const PaginaConfig = () => {
   const { estado, despacho } = useApp()
-  const { offline } = useConectividade()
-  const {
-    carregando,
-    salvarConfiguracoes,
-    fazerBackupLocal,
-    restaurarBackupLocal,
-    exportarDados,
-    importarDados,
-    validarPersistencia,
-    limparDados,
-  } = useArmazenamento()
+  const { carregando, salvarConfiguracoes } = useArmazenamento()
 
   const [mensagem, setMensagem] = useState<string | null>(null)
   const [erro, setErro] = useState<string | null>(null)
-  const inputImportacaoRef = useRef<HTMLInputElement | null>(null)
 
   const definirTema = async (tema: 'escuro' | 'claro') => {
     limparFeedback()
@@ -34,7 +23,7 @@ export const PaginaConfig = () => {
     await salvarConfiguracoes(novasConfiguracoes)
     despacho({ tipo: 'DEFINIR_CONFIGURACAO', payload: { tema, temaAuto: false } })
     document.body.classList.toggle('tema-claro', tema === 'claro')
-    setMensagem(`Tema ${tema} aplicado.`)
+    setMensagem(`Tema ${tema === 'claro' ? 'claro' : 'escuro'} aplicado.`)
   }
 
   const definirTemaAutomatico = async () => {
@@ -55,99 +44,6 @@ export const PaginaConfig = () => {
     setErro(null)
   }
 
-  const reidratarContexto = async () => {
-    const estadoAtualizado = await hidratarEstado()
-    despacho({ tipo: 'REIDRATAR_ESTADO', payload: estadoAtualizado })
-  }
-
-  const acaoComFeedback = async (acao: () => Promise<void>, sucesso: string) => {
-    limparFeedback()
-
-    try {
-      await acao()
-      setMensagem(sucesso)
-    } catch (e) {
-      setErro(e instanceof Error ? e.message : 'Falha ao executar ação')
-    }
-  }
-
-  const handleBackupManual = async () => {
-    if (offline) {
-      setMensagem('Você está offline. O backup manual foi enfileirado para quando houver conectividade.')
-      return
-    }
-
-    await acaoComFeedback(async () => {
-      await fazerBackupLocal({ origem: 'manual' })
-    }, 'Backup manual salvo com sucesso.')
-  }
-
-  const handleRestaurar = async () => {
-    await acaoComFeedback(async () => {
-      const restaurado = await restaurarBackupLocal({ origemPreferencial: 'manual' })
-
-      if (!restaurado) {
-        throw new Error('Nenhum backup encontrado para restauração')
-      }
-
-      await reidratarContexto()
-    }, 'Backup restaurado com sucesso.')
-  }
-
-  const handleExportar = async () => {
-    await acaoComFeedback(async () => {
-      const { blob, nomeArquivo } = await exportarDados()
-      const url = URL.createObjectURL(blob)
-
-      const ancora = document.createElement('a')
-      ancora.href = url
-      ancora.download = nomeArquivo
-      document.body.appendChild(ancora)
-      ancora.click()
-      ancora.remove()
-      URL.revokeObjectURL(url)
-    }, 'Exportação concluída com sucesso.')
-  }
-
-  const handleImportarArquivo = async (arquivo?: File) => {
-    if (!arquivo) {
-      return
-    }
-
-    await acaoComFeedback(async () => {
-      const resultado = await importarDados(arquivo)
-
-      if (!resultado.sucesso) {
-        throw new Error(resultado.erros[0] ?? 'Falha ao importar dados')
-      }
-
-      await reidratarContexto()
-    }, 'Importação concluída e estado reidratado.')
-  }
-
-  const handleValidar = async () => {
-    await acaoComFeedback(async () => {
-      const resultado = await validarPersistencia()
-
-      if (!resultado.valido) {
-        throw new Error(resultado.erros.join(' | '))
-      }
-    }, 'Persistência validada sem inconsistências.')
-  }
-
-  const handleLimpar = async () => {
-    const confirmado = window.confirm('Tem certeza que deseja apagar todos os dados locais?')
-
-    if (!confirmado) {
-      return
-    }
-
-    await acaoComFeedback(async () => {
-      await limparDados()
-      await reidratarContexto()
-    }, 'Todos os dados locais foram removidos.')
-  }
-
   const temaEfetivo = useMemo(() => {
     if (!estado.configuracoes.temaAuto) {
       return estado.configuracoes.tema
@@ -160,11 +56,23 @@ export const PaginaConfig = () => {
     <div className={styles.pagina}>
       <header className={styles.topo}>
         <span className={styles.eyebrow}>Configurações</span>
-        <h1 className={styles.titulo}>Dados e segurança local</h1>
-        <p className={styles.subtitulo}>Backup, restauração e validação da persistência neste dispositivo.</p>
+        <h1 className={styles.titulo}>Configurações</h1>
+        <p className={styles.subtitulo}>
+          Ajuste a aparência da interface e acesse as páginas de dados, transparência e contexto do produto.
+        </p>
       </header>
 
-      <section className={styles.grade}>
+      <section className={styles.cartaoTema}>
+        <div className={styles.cartaoTemaTopo}>
+          <Palette size={18} />
+          <h2>Aparência</h2>
+        </div>
+
+        <p className={styles.cartaoTemaResumo}>
+          Escolha entre seguir o sistema ou definir manualmente o tema do app neste dispositivo.
+        </p>
+
+        <div className={styles.gradeTema}>
         <button
           className={styles.acao + (estado.configuracoes.temaAuto ? ' ' + styles['acao--ativa'] : '')}
           onClick={() => void definirTemaAutomatico()}
@@ -188,54 +96,66 @@ export const PaginaConfig = () => {
         >
           <span>Tema claro</span>
         </button>
+        </div>
 
         <p className={styles.temaResumo}>
           Tema em uso: <strong>{temaEfetivo === 'claro' ? 'Claro' : 'Escuro'}</strong>
           {estado.configuracoes.temaAuto ? ' (automático)' : ' (manual)'}
         </p>
-
-        <button className={styles.acao} onClick={handleBackupManual} disabled={carregando}>
-          <Save size={18} />
-          <span>Gerar backup manual</span>
-        </button>
-
-        <button className={styles.acao} onClick={handleRestaurar} disabled={carregando}>
-          <RefreshCw size={18} />
-          <span>Restaurar backup</span>
-        </button>
-
-        <button className={styles.acao} onClick={handleExportar} disabled={carregando}>
-          <Download size={18} />
-          <span>Exportar arquivo (.json.gz)</span>
-        </button>
-
-        <button className={styles.acao} onClick={() => inputImportacaoRef.current?.click()} disabled={carregando}>
-          <FileUp size={18} />
-          <span>Importar arquivo</span>
-        </button>
-
-        <button className={styles.acao} onClick={handleValidar} disabled={carregando}>
-          <ShieldCheck size={18} />
-          <span>Validar persistência</span>
-        </button>
-
-        <button className={styles.acao + ' ' + styles['acao--perigo']} onClick={handleLimpar} disabled={carregando}>
-          <Trash2 size={18} />
-          <span>Limpar dados locais</span>
-        </button>
       </section>
 
-      <input
-        ref={inputImportacaoRef}
-        type="file"
-        accept=".gz,.json,.json.gz"
-        className={styles.inputOculto}
-        onChange={(evento) => {
-          const arquivo = evento.target.files?.[0]
-          void handleImportarArquivo(arquivo)
-          evento.currentTarget.value = ''
-        }}
-      />
+      <section className={styles.painelLinks}>
+        <div className={styles.painelLinksTopo}>
+          <ShieldCheck size={18} />
+          <h2>Leitura e operação</h2>
+        </div>
+
+        <p className={styles.painelLinksResumo}>
+          Essas páginas explicam como o Compasso funciona hoje, o que fica salvo localmente e onde verificar as referências públicas do projeto.
+        </p>
+
+        <div className={styles.listaNavegacao}>
+        <Link to="/config/dados-locais-seguranca" className={styles.itemNavegacao}>
+          <span className={styles.itemNavegacaoIcone}>
+            <Database size={18} />
+          </span>
+          <span className={styles.itemNavegacaoTexto}>
+            <strong>Dados locais e segurança</strong>
+            <small>O que está salvo aqui e o que você pode fazer com esses dados.</small>
+          </span>
+        </Link>
+
+        <Link to="/config/privacidade-transparencia" className={styles.itemNavegacao}>
+          <span className={styles.itemNavegacaoIcone}>
+            <ShieldCheck size={18} />
+          </span>
+          <span className={styles.itemNavegacaoTexto}>
+            <strong>Privacidade e transparência</strong>
+            <small>O que o projeto faz hoje, como trata dados e onde ler mais.</small>
+          </span>
+        </Link>
+
+        <Link to="/config/licencas-creditos" className={styles.itemNavegacao}>
+          <span className={styles.itemNavegacaoIcone}>
+            <BookOpen size={18} />
+          </span>
+          <span className={styles.itemNavegacaoTexto}>
+            <strong>Licenças e créditos</strong>
+            <small>Origem visual, notices e bibliotecas relevantes desta fase.</small>
+          </span>
+        </Link>
+
+        <Link to="/config/sobre-projeto" className={styles.itemNavegacao}>
+          <span className={styles.itemNavegacaoIcone}>
+            <Info size={18} />
+          </span>
+          <span className={styles.itemNavegacaoTexto}>
+            <strong>Sobre o projeto</strong>
+            <small>Propósito, valores e responsabilidade pública do Compasso.</small>
+          </span>
+        </Link>
+        </div>
+      </section>
 
       {mensagem && <p className={styles.mensagemSucesso}>{mensagem}</p>}
       {erro && <p className={styles.mensagemErro}>{erro}</p>}

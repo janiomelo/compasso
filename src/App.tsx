@@ -26,6 +26,28 @@ const PaginaConfig = lazy(async () => {
   const { PaginaConfig: P } = await import('./paginas/Config/PaginaConfig')
   return { default: P }
 })
+const PaginaPrivacidadeTransparencia = lazy(async () => {
+  const { PaginaPrivacidadeTransparencia: P } = await import(
+    './paginas/PrivacidadeTransparencia/PaginaPrivacidadeTransparencia'
+  )
+  return { default: P }
+})
+const PaginaDadosLocaisSeguranca = lazy(async () => {
+  const { PaginaDadosLocaisSeguranca: P } = await import(
+    './paginas/DadosLocaisSeguranca/PaginaDadosLocaisSeguranca'
+  )
+  return { default: P }
+})
+const PaginaLicencasCreditos = lazy(async () => {
+  const { PaginaLicencasCreditos: P } = await import(
+    './paginas/LicencasCreditos/PaginaLicencasCreditos'
+  )
+  return { default: P }
+})
+const PaginaSobreProjeto = lazy(async () => {
+  const { PaginaSobreProjeto: P } = await import('./paginas/SobreProjeto/PaginaSobreProjeto')
+  return { default: P }
+})
 
 type ItemNavegacao = {
   para: string
@@ -131,6 +153,16 @@ const ConteudoApp = () => {
               <Route path="/pausa" element={<PaginaPausa />} />
               <Route path="/ritmo" element={<PaginaRitmo />} />
               <Route path="/config" element={<PaginaConfig />} />
+              <Route
+                path="/config/privacidade-transparencia"
+                element={<PaginaPrivacidadeTransparencia />}
+              />
+              <Route
+                path="/config/dados-locais-seguranca"
+                element={<PaginaDadosLocaisSeguranca />}
+              />
+              <Route path="/config/licencas-creditos" element={<PaginaLicencasCreditos />} />
+              <Route path="/config/sobre-projeto" element={<PaginaSobreProjeto />} />
             </Routes>
           </Suspense>
         </main>

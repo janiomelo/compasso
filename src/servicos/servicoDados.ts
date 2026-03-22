@@ -249,6 +249,38 @@ export async function validarPersistencia(): Promise<{ valido: boolean; erros: s
   }
 }
 
+export async function obterResumoDadosLocais(): Promise<{
+  totalRegistros: number
+  totalPausas: number
+  totalPreferenciasSalvas: number
+  tamanhoAproximadoBytes: number
+  ultimoBackupManualEm: number | null
+  ultimoBackupAutomaticoEm: number | null
+}> {
+  const { registros, pausas, configuracoes } = await consultasBD.obterEstadoPersistido()
+  const [backupManual, backupAutomatico] = await Promise.all([
+    consultasBD.obterBackupMaisRecente('manual'),
+    consultasBD.obterBackupMaisRecente('automatico'),
+  ])
+
+  const totalPreferenciasSalvas = configuracoes
+    ? Object.values(configuracoes).filter((valor) => valor !== undefined).length
+    : 0
+
+  const tamanhoAproximadoBytes = new TextEncoder().encode(
+    JSON.stringify({ registros, pausas, configuracoes })
+  ).length
+
+  return {
+    totalRegistros: registros.length,
+    totalPausas: pausas.length,
+    totalPreferenciasSalvas,
+    tamanhoAproximadoBytes,
+    ultimoBackupManualEm: backupManual?.criadoEm ?? null,
+    ultimoBackupAutomaticoEm: backupAutomatico?.criadoEm ?? null,
+  }
+}
+
 export async function limparDados(): Promise<void> {
   await consultasBD.limparTudo()
 }
