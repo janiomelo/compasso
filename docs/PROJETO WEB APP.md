@@ -28,12 +28,17 @@
 - Fase 6 (concluida): ResumoEconomia detalhado, metrica de valor percebido e comparativo de periodos.
 - Fase 6 (concluida): DicasReducao com rotacao manual e insights baseados em padroes de uso.
 - Fase 6 (concluida): testes de integracao de analise para ritmo e economia.
+- Fase 7 (concluida): cobertura com `@vitest/coverage-v8`, script `npm run coverage` e thresholds minimos no `vitest.config.ts`.
+- Fase 7 (concluida): edge cases e stress tests (1200+ registros) para utilitarios de calculo.
+- Fase 7 (concluida): lazy loading de rotas no `src/App.tsx` com `React.lazy` + `Suspense`.
+- Fase 7 (concluida): README restaurado como base do projeto e desdobramento em documentos complementares (`docs/FUNDAMENTOS-PRODUTO.md` e `docs/GUIA-DESENVOLVIMENTO.md`).
 
 ### 0.2. Estado atual validado
 
 - `npm run type-check`: OK.
 - `npm run build`: OK.
-- `npx vitest run`: 73/73 testes passando.
+- `npm run coverage`: 98/98 testes passando.
+- Cobertura global atual: 91.12% statements, 83.67% branches, 87.85% functions, 91.12% lines.
 - CI automatizada com gate de qualidade (`type-check + lint + testes + build`).
 - Commits de referencia:
   - `a95676f` (Pacote A)
@@ -44,13 +49,13 @@
 
 ### 0.3. O que falta (lacunas objetivas)
 
-- Cobertura ainda nao esta sendo usada como criterio de gate no fluxo (meta declarada de ~80% ainda sem enforce automatizado).
-- Fases futuras do plano (7) pendentes:
-  - cobertura e hardening final.
+- Nao ha lacunas bloqueantes no escopo definido ate a Fase 7.
+- Proximas lacunas sao evolutivas (nao criticas): observabilidade mais detalhada, refinamento de acessibilidade e monitoramento de performance em producao.
 
 ### 0.4. Proximos passos recomendados
 
-1. Fase 7 (robustez): target de cobertura (~80%), edge cases e validacao de performance com volume alto de registros.
+1. Consolidar backlog da proxima iteracao (Fase 8) com foco em UX de longo prazo e telemetria opt-in.
+2. Definir checklist de release do MVP (documentacao, QA exploratorio, validacao manual em mobile).
 
 ---
 
