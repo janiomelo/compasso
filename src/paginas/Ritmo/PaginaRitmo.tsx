@@ -1,17 +1,13 @@
 import { Activity, CalendarDays, Lightbulb, TrendingDown, TrendingUp } from 'lucide-react'
-import { useMemo, useState } from 'react'
-import { useApp, useEconomia, useRegistro, useRitmo } from '../../ganchos'
+import { useMemo } from 'react'
+import { useEconomia, useRegistro, useRitmo } from '../../ganchos'
 import {
   rotularMetodo,
   rotularIntencao,
   MAPA_INTENSIDADE,
 } from '../../utilitarios/apresentacao/rotulos'
-import {
-  calcularValorPercebido,
-  compararEconomiaPorPeriodo,
-  identificarPadroesUso,
-} from '../../utilitarios/dados/calculos'
-import { formatarDataHora, formatarMoeda, formatarNumero } from '../../utilitarios/dados/formatacao'
+import { calcularValorPercebido } from '../../utilitarios/dados/calculos'
+import { formatarDataHora, formatarNumero } from '../../utilitarios/dados/formatacao'
 import styles from './pagina-ritmo.module.scss'
 
 const ROTULOS_TENDENCIA_CURTOS = {
@@ -20,33 +16,10 @@ const ROTULOS_TENDENCIA_CURTOS = {
   estavel: 'Estável',
 } as const
 
-const DICAS = [
-  'Combine uma pausa curta com hidratação para reduzir recaídas no fim do dia.',
-  'Quando notar um gatilho social, mude de ambiente por dez minutos antes de decidir.',
-  'Lembretes de respiração nos horários de pico ajudam a reduzir impulsos automáticos.',
-  'Planeje uma atividade de substituição nos horários em que o padrão costuma ser mais intenso.',
-  'Revise semanalmente suas intenções mais frequentes para ajustar a estratégia de pausa.',
-]
-
-const ROTULO_JANELA: Record<'madrugada' | 'manha' | 'tarde' | 'noite', string> = {
-  madrugada: 'madrugada',
-  manha: 'manhã',
-  tarde: 'tarde',
-  noite: 'noite',
-}
-
 export const PaginaRitmo = () => {
-  const { estado } = useApp()
-  const { frequencia7Dias, tendencia, estatisticas, percentualReducao } = useRitmo(7)
+  const { frequencia7Dias, tendencia, estatisticas } = useRitmo(7)
   const { registros, registrosRecentes } = useRegistro()
-  const {
-    totalAcumulado,
-    taxaDiaria,
-    economiaUltimaPausa,
-    projecao30Dias,
-    economiaPotencialPausaAtiva,
-  } = useEconomia()
-  const [indiceDica, setIndiceDica] = useState(0)
+  const { totalAcumulado } = useEconomia()
 
   const intensidadeMedia = useMemo(() => {
     if (registros.length === 0) {
@@ -89,64 +62,7 @@ export const PaginaRitmo = () => {
 
   const maiorFrequenciaMetodo = metodosMaisUsados[0]?.[1] ?? 1
   const recentes = registrosRecentes(5)
-  const padroes = useMemo(() => identificarPadroesUso(registros), [registros])
   const valorPercebido = useMemo(() => calcularValorPercebido(registros, totalAcumulado), [registros, totalAcumulado])
-  const comparativoEconomia = useMemo(() => compararEconomiaPorPeriodo(estado.historicoPausa, 30), [estado.historicoPausa])
-
-  const insights = useMemo(() => {
-    const lista: string[] = []
-
-    if (padroes.metodoPredominante) {
-      lista.push(`Método mais usado no período: ${rotularMetodo(padroes.metodoPredominante)}.`)
-    }
-
-    if (padroes.intencaoPredominante) {
-      lista.push(`Intenção mais recorrente: ${rotularIntencao(padroes.intencaoPredominante)}.`)
-    }
-
-    if (padroes.janelaMaisComum) {
-      lista.push(`A maioria dos registros acontece à ${ROTULO_JANELA[padroes.janelaMaisComum]}.`)
-    }
-
-    if (percentualReducao > 0) {
-      lista.push(`Esta semana você registrou ${formatarNumero(percentualReducao, 1)}% menos do que na anterior.`)
-    } else if (percentualReducao < 0) {
-      lista.push(`Esta semana teve ${formatarNumero(Math.abs(percentualReducao), 1)}% mais registros do que a anterior — vale observar o que mudou.`)
-    }
-
-    if (valorPercebido >= 70) {
-      lista.push('Consistência e ganhos de humor mostram evolução sólida.')
-    } else if (valorPercebido >= 40) {
-      lista.push('Há sinais positivos; estabilizar a rotina de pausas deve ampliar os resultados.')
-    } else {
-      lista.push('Priorize registrar humor antes e depois das pausas para acompanhar o progresso com mais nitidez.')
-    }
-
-    return lista.slice(0, 4)
-  }, [padroes, percentualReducao, valorPercebido])
-
-  const resumoPeriodo = useMemo(() => {
-    const variacao = comparativoEconomia.variacaoPercentual
-    const direcao = variacao >= 0 ? 'acima' : 'abaixo'
-    const variacaoAbs = formatarNumero(Math.abs(variacao), 1)
-
-    return [
-      variacao !== 0
-        ? `Economia dos últimos 30 dias ficou ${variacaoAbs}% ${direcao} do período anterior.`
-        : 'Economia dos últimos 30 dias estável em relação ao período anterior.',
-      `Taxa diária média de ${formatarMoeda(taxaDiaria)}, com projeção mensal de ${formatarMoeda(projecao30Dias)}.`,
-      estatisticas.metodoMaisUsado
-        ? `Método mais frequente no período: ${rotularMetodo(estatisticas.metodoMaisUsado)}.`
-        : 'Ainda sem método predominante no período.',
-      estatisticas.intencaoMaisComum
-        ? `Intenção mais comum no período: ${rotularIntencao(estatisticas.intencaoMaisComum)}.`
-        : 'Ainda sem intenção predominante no período.',
-    ]
-  }, [comparativoEconomia.variacaoPercentual, taxaDiaria, projecao30Dias, estatisticas])
-
-  const irParaProximaDica = () => {
-    setIndiceDica((indiceAtual) => (indiceAtual + 1) % DICAS.length)
-  }
 
   return (
     <div className={styles.pagina}>
@@ -199,71 +115,6 @@ export const PaginaRitmo = () => {
             </article>
           ))}
         </div>
-      </section>
-
-      <section className={styles.bloco}>
-        <h2 className={styles.bloco__titulo}>O que as pausas rendem</h2>
-        <div className={styles.gradeEconomia}>
-          <article className={styles.itemEconomia}>
-            <span>Total acumulado</span>
-            <strong>{formatarMoeda(totalAcumulado, estado.configuracoes.moedaEconomia)}</strong>
-          </article>
-          <article className={styles.itemEconomia}>
-            <span>Taxa diária</span>
-            <strong>{formatarMoeda(taxaDiaria, estado.configuracoes.moedaEconomia)}</strong>
-          </article>
-          <article className={styles.itemEconomia}>
-            <span>Projeção para 30 dias</span>
-            <strong>{formatarMoeda(projecao30Dias, estado.configuracoes.moedaEconomia)}</strong>
-          </article>
-          <article className={styles.itemEconomia}>
-            <span>Última pausa concluída</span>
-            <strong>{formatarMoeda(economiaUltimaPausa, estado.configuracoes.moedaEconomia)}</strong>
-          </article>
-          <article className={styles.itemEconomia}>
-            <span>Pausa em curso (potencial)</span>
-            <strong>{formatarMoeda(economiaPotencialPausaAtiva, estado.configuracoes.moedaEconomia)}</strong>
-          </article>
-          <article className={styles.itemEconomia}>
-            <span>Variação nos últimos 30 dias</span>
-            <strong>
-              {comparativoEconomia.variacaoPercentual >= 0 ? '+' : ''}
-              {formatarNumero(comparativoEconomia.variacaoPercentual, 1)}%
-            </strong>
-          </article>
-        </div>
-      </section>
-
-      <section className={styles.bloco}>
-        <h2 className={styles.bloco__titulo}>O que o período revela</h2>
-        {insights.length === 0 ? (
-          <p className={styles.vazio}>Registre alguns momentos para que os padrões comecem a aparecer.</p>
-        ) : (
-          <ul className={styles.listaInsights}>
-            {insights.map((insight) => (
-              <li key={insight}>{insight}</li>
-            ))}
-          </ul>
-        )}
-      </section>
-
-      <section className={styles.bloco}>
-        <h2 className={styles.bloco__titulo}>Dica desta semana</h2>
-        <article className={styles.dica}>
-          <p>{DICAS[indiceDica]}</p>
-          <button className={styles.dica__botao} onClick={irParaProximaDica}>
-            Outra dica
-          </button>
-        </article>
-      </section>
-
-      <section className={styles.bloco}>
-        <h2 className={styles.bloco__titulo}>Resumo dos últimos 30 dias</h2>
-        <ul className={styles.listaRelatorios}>
-          {resumoPeriodo.map((linha) => (
-            <li key={linha}>{linha}</li>
-          ))}
-        </ul>
       </section>
 
       <section className={styles.bloco}>

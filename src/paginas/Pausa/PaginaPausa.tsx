@@ -59,7 +59,7 @@ export const PaginaPausa = () => {
       <header className={styles.topo}>
         <span className={styles.eyebrow}>Pausa</span>
         <h1 className={styles.titulo}>Pausa de Compasso</h1>
-        <p className={styles.subtitulo}>Este é o espaço de acompanhamento detalhado da pausa: progresso, meta, tempo e ações de controle.</p>
+        <p className={styles.subtitulo}>Acompanhe o progresso, visualize sua meta e decida quando encerrar.</p>
       </header>
 
       {pausaAtiva && progresso ? (
@@ -112,7 +112,7 @@ export const PaginaPausa = () => {
               onClick={handleEncerrar}
               disabled={aguardando}
             >
-              Concluir pausa
+              Encerrar pausa
             </button>
             <button
               className={styles.botaoSecundario}

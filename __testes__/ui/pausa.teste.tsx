@@ -54,21 +54,21 @@ describe('Pausa — UI', () => {
     await waitFor(() => {
       expect(screen.getByText('Sua pausa está em andamento')).toBeDefined()
       expect(screen.getByRole('progressbar')).toBeDefined()
-      expect(screen.getByText('Concluir pausa')).toBeDefined()
+      expect(screen.getByText('Encerrar pausa')).toBeDefined()
       expect(screen.getByText('Interromper')).toBeDefined()
     })
   })
 
-  it('permite concluir pausa manualmente', async () => {
+  it('permite encerrar pausa manualmente', async () => {
     render(<PaginaPausa />, { wrapper: envolverProvider })
 
     fireEvent.click(screen.getByText('Iniciar pausa'))
 
     await waitFor(() => {
-      expect(screen.getByText('Concluir pausa')).toBeDefined()
+      expect(screen.getByText('Encerrar pausa')).toBeDefined()
     })
 
-    fireEvent.click(screen.getByText('Concluir pausa'))
+    fireEvent.click(screen.getByText('Encerrar pausa'))
 
     await waitFor(() => {
       expect(screen.getByText('Começar uma pausa')).toBeDefined()

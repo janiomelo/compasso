@@ -103,73 +103,38 @@ Ou seja: a pendência aqui é de refinamento e regra, não mais de direção.
 
 ### X.5. Escopo real do MVP nas telas de Ritmo e Pausa
 
-Este é um ponto importante e hoje parece mais aberto do que antes.
+Status: fechado.
 
-O app já tem material para uma visão rica de ritmo, incluindo:
-
-- métricas de frequência;
-- formas mais usadas;
-- últimos registros;
-- resumos do período;
-- dicas;
-- blocos de economia.
-
-Isso é bom, mas ainda falta decidir o que realmente entra na primeira versão utilizável.
-
-As decisões pendentes são:
-
-- quanto da leitura de ritmo entra no MVP;
-- se blocos como “O que o período revela”, “Dica desta semana” e “Resumo dos últimos 30 dias” entram já agora ou ficam para depois;
-- qual é o grau de detalhe mínimo necessário para a tela de pausa;
-- quão forte a economia será no MVP: resumo simples ou área mais desenvolvida.
-
-A questão aqui não é se essas telas estão boas, mas se o escopo delas já está calibrado para a primeira versão.
-
-**Decisão**
-
-Este ponto continua realmente em aberto, mas com pesos diferentes entre as duas áreas.
+**Decisão aplicada**
 
 #### Pausa
 
-A tela de pausa já está suficientemente coerente com o MVP e com a proposta do produto. Ela cumpre bem o papel de acompanhamento, progresso e controle, sem excesso de complexidade.
+A tela de pausa está coerente com o MVP. Ajustes aplicados:
 
-As pendências aqui passam a ser de refinamento, e não de escopo:
-
-- ajustar a microcopy das ações principais, remover informação sem necessidade ou repetida;
-- revisar a hierarquia entre ação principal e secundária;
-- decidir se algum detalhe adicional entra agora ou fica para depois.
+- microcopy do subtítulo simplificada;
+- botão de término manual renomeado para "Encerrar pausa" (alinhado com X.3).
 
 #### Ritmo
 
-A tela de ritmo ainda precisa ser reduzida e reorganizada para o MVP.
+Tela reduzida ao núcleo do MVP. Blocos removidos:
 
-Hoje ela reúne elementos demais ao mesmo tempo, misturando:
+- "O que as pausas rendem" (economia detalhada em múltiplos itens);
+- "O que o período revela" (interpretação narrativa);
+- "Dica desta semana";
+- "Resumo dos últimos 30 dias".
 
-- métricas de frequência;
-- resumos semanais;
-- economia;
-- listas de registros;
-- interpretações narrativas;
-- dicas;
-- resumos de períodos maiores.
+Blocos mantidos:
 
-Para a primeira versão, a recomendação é manter apenas o núcleo mais claro e útil:
-
-- resumo curto do período recente;
+- cards de métricas (frequência, média, tendência, valor percebido);
 - leitura visual da semana;
 - formas mais usadas;
 - últimos registros.
 
-Ficam fora do MVP, por enquanto:
+Implementação de referência:
 
-- blocos interpretativos como “O que o período revela”;
-- “Dica desta semana”;
-- “Resumo dos últimos 30 dias”;
-- economia detalhada em múltiplos blocos;
-- qualquer camada de aconselhamento ou interpretação mais forte do comportamento.
-
-A direção recomendada é que a tela de ritmo funcione mais como espelho do hábito recente do que como painel analítico ou camada de aconselhamento.
-
+- `src/paginas/Ritmo/PaginaRitmo.tsx`
+- `src/paginas/Pausa/PaginaPausa.tsx`
+- `__testes__/ui/pausa.teste.tsx`
 ### X.6. Sistema visual formalizado
 
 A interface já demonstra direção consistente, mas ainda falta transformar isso em sistema oficial.
