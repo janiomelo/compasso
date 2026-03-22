@@ -15,16 +15,17 @@
 - Pacote C: camada compartilhada de apresentação (`rotulos.ts` + `estilos/compartilhados.scss`).
 - Pacote D: fatiamento de componentes em Registro e Principal (hook de fluxo + componentes por responsabilidade).
 - Pacote E: testes de UI comportamental para Registro, Pausa e Principal.
-- Fase 4 (parcial): exportacao/importacao de dados com compressao gzip e teste de round-trip.
-- Fase 4 (parcial): validacao de compatibilidade de versao no import e migracao de pausa legada (`duracaoPlanjada` -> `duracaoPlanejada`).
-- Fase 4 (parcial): politica de retencao por origem de backup (`automatico` e `manual`) com restauracao preferencial.
-- Fase 4 (parcial): testes de resiliencia para importacao (arquivo corrompido e rollback transacional em falha de escrita).
+- Fase 4 (concluida): exportacao/importacao de dados com compressao gzip, validacao de versao e migracao legada.
+- Fase 4 (concluida): politica de retencao por origem de backup (`automatico` e `manual`) com restauracao preferencial.
+- Fase 4 (concluida): resiliencia de importacao (arquivo corrompido e rollback transacional em falha de escrita).
+- Fase 4 (concluida): rota `/config` integrada com backup, restauracao, exportacao, importacao e validacao.
+- Fase 4 (concluida): testes de fluxo de dados (backup, exportacao e importacao) na camada de integracao.
 
 ### 0.2. Estado atual validado
 
 - `npm run type-check`: OK.
 - `npm run build`: OK.
-- `npx vitest run`: 64/64 testes passando.
+- `npx vitest run`: 66/66 testes passando.
 - CI automatizada com gate de qualidade (`type-check + lint + testes + build`).
 - Commits de referencia:
   - `a95676f` (Pacote A)
@@ -36,19 +37,16 @@
 ### 0.3. O que falta (lacunas objetivas)
 
 - Cobertura ainda nao esta sendo usada como criterio de gate no fluxo (meta declarada de ~80% ainda sem enforce automatizado).
-- Fases futuras do plano (4 a 7) ainda pendentes:
-  - dados (import/export + backup com testes dedicados),
+- Fases futuras do plano (5 a 7) pendentes:
   - polimento visual/PWA,
   - analytics/relatorios,
   - cobertura e hardening final.
 
 ### 0.4. Proximos passos recomendados
 
-1. Fechar gate de engenharia: adicionar CI com `type-check + lint + test` como bloqueio de regressao.
-2. Fase 4 (dados): consolidar `exportar/importar/backup` com round-trip testado e estrategia de migracao de schema.
-3. Fase 5 (PWA e UX final): service worker, instalabilidade, estados offline e refinamento visual final.
-4. Fase 6 (analytics): entregar painel de ritmo/economia com metrica de valor percebido.
-5. Fase 7 (robustez): target de cobertura (~80%), edge cases e validacao de performance com volume alto de registros.
+1. Fase 5 (PWA e UX final): service worker, instalabilidade, estados offline e refinamento visual final.
+2. Fase 6 (analytics): entregar painel de ritmo/economia com metrica de valor percebido.
+3. Fase 7 (robustez): target de cobertura (~80%), edge cases e validacao de performance com volume alto de registros.
 
 ---
 

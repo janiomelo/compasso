@@ -2,7 +2,7 @@ import { Activity, Home, PauseCircle, PlusCircle, Settings2 } from 'lucide-react
 import { BrowserRouter as Roteador, NavLink, Routes, Route, Link } from 'react-router-dom'
 import { useApp } from './ganchos'
 import { ProvedorApp } from './loja/ContextoApp'
-import { PaginaPrincipal, PaginaRegistro, PaginaPausa, PaginaRitmo } from './paginas'
+import { PaginaPrincipal, PaginaRegistro, PaginaPausa, PaginaRitmo, PaginaConfig } from './paginas'
 import './App.scss'
 
 type ItemNavegacao = {
@@ -11,14 +11,6 @@ type ItemNavegacao = {
   icone: typeof Home
   fim?: boolean
 }
-
-const PaginaConfig = () => <div className="pagina">
-  <div className="pagina-placeholder">
-    <span className="pagina-placeholder__eyebrow">Configurações</span>
-    <h2>Preferências e dados</h2>
-    <p>Esta área continua reservada para tema, backup, importação e ajustes do aplicativo.</p>
-  </div>
-</div>
 
 const NAVEGACAO: ItemNavegacao[] = [
   { para: '/', rotulo: 'Início', icone: Home, fim: true },

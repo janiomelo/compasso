@@ -1,0 +1,93 @@
+@use '../../estilos/variaveis' as *;
+
+.pagina {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-lg;
+}
+
+.topo {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-xs;
+}
+
+.eyebrow {
+  color: $cor-acento-principal;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: $tamanho-pequeno;
+  font-weight: $peso-semibold;
+}
+
+.titulo {
+  margin: 0;
+  color: $cor-texto-primaria;
+}
+
+.subtitulo {
+  margin: 0;
+  color: $cor-texto-secundaria;
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $espaco-sm;
+
+  @media (max-width: $ponto-corte-tablet - 1px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.acao {
+  display: inline-flex;
+  align-items: center;
+  gap: $espaco-xs;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba($cor-bg-secundaria, 0.9);
+  color: $cor-texto-primaria;
+  border-radius: $raio-md;
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  transition: border-color $transicao-rapida, background-color $transicao-rapida;
+
+  &:hover:not(:disabled) {
+    border-color: rgba($cor-acento-principal, 0.4);
+    background: rgba($cor-bg-secundaria, 1);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.acao--perigo {
+  border-color: rgba(255, 87, 87, 0.3);
+  color: #ffb9b9;
+}
+
+.inputOculto {
+  display: none;
+}
+
+.mensagemSucesso,
+.mensagemErro {
+  margin: 0;
+  padding: $espaco-sm $espaco-md;
+  border-radius: $raio-md;
+  border: 1px solid transparent;
+}
+
+.mensagemSucesso {
+  color: #baf2cd;
+  background: rgba(61, 145, 95, 0.16);
+  border-color: rgba(61, 145, 95, 0.38);
+}
+
+.mensagemErro {
+  color: #ffd1d1;
+  background: rgba(171, 57, 57, 0.18);
+  border-color: rgba(171, 57, 57, 0.4);
+}
