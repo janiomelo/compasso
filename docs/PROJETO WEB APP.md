@@ -1,8 +1,50 @@
 # Arquitetura Técnica — Compasso Web App
 
-**Status:** Documento de Arquitetura v1.0  
-**Data:** 21 de março de 2026  
+**Status:** Documento de Arquitetura v1.1  
+**Data:** 22 de março de 2026  
 **Escopo:** MVP com stack React + TypeScript + Vite  
+
+---
+
+## 0. Atualizacao de Execucao (22/03/2026)
+
+### 0.1. Concluido nesta iteracao
+
+- Pacote A: normalizacao de contratos de dominio (`duracaoPlanejada`, `historicoPausa`) com compatibilidade de dados legados.
+- Pacote B: saneamento do store global (remoção de estado e ações mortas de UI).
+- Pacote C: camada compartilhada de apresentação (`rotulos.ts` + `estilos/compartilhados.scss`).
+- Pacote D: fatiamento de componentes em Registro e Principal (hook de fluxo + componentes por responsabilidade).
+- Pacote E: testes de UI comportamental para Registro, Pausa e Principal.
+
+### 0.2. Estado atual validado
+
+- `npm run type-check`: OK.
+- `npm run build`: OK.
+- `npx vitest run`: 57/57 testes passando.
+- Commits de referencia:
+  - `a95676f` (Pacote A)
+  - `a3add5c` (Pacote B)
+  - `bae308d` (Pacote C)
+  - `e3f154c` (Pacote D)
+  - `9f74363` (Pacote E)
+
+### 0.3. O que falta (lacunas objetivas)
+
+- Pipeline de qualidade incompleto: `npm run lint` existe, mas o projeto ainda nao possui configuracao do ESLint (`.eslintrc*`).
+- Cobertura ainda nao esta sendo usada como criterio de gate no fluxo (meta declarada de ~80% ainda sem enforce automatizado).
+- Fases futuras do plano (4 a 7) ainda pendentes:
+  - dados (import/export + backup com testes dedicados),
+  - polimento visual/PWA,
+  - analytics/relatorios,
+  - cobertura e hardening final.
+
+### 0.4. Proximos passos recomendados
+
+1. Fechar base de engenharia: criar configuracao ESLint minima e deixar `type-check + lint + test` como gate obrigatorio local/CI.
+2. Fase 4 (dados): consolidar `exportar/importar/backup` com round-trip testado e estrategia de migracao de schema.
+3. Fase 5 (PWA e UX final): service worker, instalabilidade, estados offline e refinamento visual final.
+4. Fase 6 (analytics): entregar painel de ritmo/economia com metrica de valor percebido.
+5. Fase 7 (robustez): target de cobertura (~80%), edge cases e validacao de performance com volume alto de registros.
 
 ---
 
