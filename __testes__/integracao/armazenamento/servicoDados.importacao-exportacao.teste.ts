@@ -146,4 +146,69 @@ describe('servicoDados: importacao e exportacao', () => {
     expect(estado.historicoPausa).toHaveLength(1)
     expect(estado.historicoPausa[0].duracaoPlanejada).toBe(3600000)
   })
+
+  it('falha com arquivo corrompido sem alterar estado', async () => {
+    await salvarConfiguracoes(configuracoesBase)
+    await criarRegistro({ metodo: 'flor', intencao: 'paz', intensidade: 'leve' })
+
+    const estadoAntes = await hidratarEstado()
+    expect(estadoAntes.registros).toHaveLength(1)
+
+    const bytesCorrompidos = new Uint8Array([1, 255, 0, 7, 42, 99, 12])
+    const resultado = await importarDados(bytesCorrompidos)
+
+    expect(resultado.sucesso).toBe(false)
+    expect(resultado.erros.length).toBeGreaterThan(0)
+
+    const estadoDepois = await hidratarEstado()
+    expect(estadoDepois.registros).toHaveLength(1)
+    expect(estadoDepois.registros[0].metodo).toBe('flor')
+  })
+
+  it('faz rollback transacional quando importacao falha durante escrita', async () => {
+    await salvarConfiguracoes(configuracoesBase)
+    await criarRegistro({ metodo: 'vapor', intencao: 'foco', intensidade: 'media' })
+
+    const pacoteComFalhaDeEscrita = {
+      versao: VERSAO_APP,
+      exportadoEm: new Date().toISOString(),
+      dados: {
+        registros: [
+          {
+            id: 'registro-import-valido',
+            timestamp: Date.now(),
+            data: new Date(),
+            metodo: 'outro',
+            intencao: 'outro',
+            intensidade: 'alta',
+          },
+        ],
+        // Pausa sem id para induzir falha no bulkPut dentro da transacao.
+        pausas: [
+          {
+            iniciadoEm: Date.now(),
+            duracaoPlanejada: 3600000,
+            status: 'concluida',
+            valorEconomia: 15,
+          },
+        ],
+        configuracoes: configuracoesBase,
+        metadados: {
+          ultimaSincronizacao: Date.now(),
+          versaoApp: VERSAO_APP,
+          criadoEm: Date.now(),
+        },
+      },
+    }
+
+    const bytes = new TextEncoder().encode(JSON.stringify(pacoteComFalhaDeEscrita))
+    const resultado = await importarDados(bytes)
+
+    expect(resultado.sucesso).toBe(false)
+
+    const estadoAposFalha = await hidratarEstado()
+    // Se houve rollback, estado anterior permanece intacto.
+    expect(estadoAposFalha.registros).toHaveLength(1)
+    expect(estadoAposFalha.registros[0].metodo).toBe('vapor')
+  })
 })

@@ -18,12 +18,13 @@
 - Fase 4 (parcial): exportacao/importacao de dados com compressao gzip e teste de round-trip.
 - Fase 4 (parcial): validacao de compatibilidade de versao no import e migracao de pausa legada (`duracaoPlanjada` -> `duracaoPlanejada`).
 - Fase 4 (parcial): politica de retencao por origem de backup (`automatico` e `manual`) com restauracao preferencial.
+- Fase 4 (parcial): testes de resiliencia para importacao (arquivo corrompido e rollback transacional em falha de escrita).
 
 ### 0.2. Estado atual validado
 
 - `npm run type-check`: OK.
 - `npm run build`: OK.
-- `npx vitest run`: 62/62 testes passando.
+- `npx vitest run`: 64/64 testes passando.
 - CI automatizada com gate de qualidade (`type-check + lint + testes + build`).
 - Commits de referencia:
   - `a95676f` (Pacote A)
