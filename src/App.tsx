@@ -1,11 +1,31 @@
 import { Activity, Home, PauseCircle, PlusCircle, Settings2 } from 'lucide-react'
-import { useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { BrowserRouter as Roteador, NavLink, Routes, Route, Link } from 'react-router-dom'
 import { useApp } from './ganchos'
 import { ProvedorApp } from './loja/ContextoApp'
-import { PaginaPrincipal, PaginaRegistro, PaginaPausa, PaginaRitmo, PaginaConfig } from './paginas'
 import { AvisoOffline } from './componentes/comum/AvisoOffline'
 import './App.scss'
+
+const PaginaPrincipal = lazy(async () => {
+  const { PaginaPrincipal: P } = await import('./paginas/Principal/PaginaPrincipal')
+  return { default: P }
+})
+const PaginaRegistro = lazy(async () => {
+  const { PaginaRegistro: P } = await import('./paginas/Registro/PaginaRegistro')
+  return { default: P }
+})
+const PaginaPausa = lazy(async () => {
+  const { PaginaPausa: P } = await import('./paginas/Pausa/PaginaPausa')
+  return { default: P }
+})
+const PaginaRitmo = lazy(async () => {
+  const { PaginaRitmo: P } = await import('./paginas/Ritmo/PaginaRitmo')
+  return { default: P }
+})
+const PaginaConfig = lazy(async () => {
+  const { PaginaConfig: P } = await import('./paginas/Config/PaginaConfig')
+  return { default: P }
+})
 
 type ItemNavegacao = {
   para: string
@@ -88,13 +108,15 @@ const ConteudoApp = () => {
         <AvisoOffline />
 
         <main className="principal">
-          <Routes>
-            <Route path="/" element={<PaginaPrincipal />} />
-            <Route path="/registro" element={<PaginaRegistro />} />
-            <Route path="/pausa" element={<PaginaPausa />} />
-            <Route path="/ritmo" element={<PaginaRitmo />} />
-            <Route path="/config" element={<PaginaConfig />} />
-          </Routes>
+          <Suspense fallback={<div className="principal principal--carregando" aria-live="polite" aria-label="Carregando página" />}>
+            <Routes>
+              <Route path="/" element={<PaginaPrincipal />} />
+              <Route path="/registro" element={<PaginaRegistro />} />
+              <Route path="/pausa" element={<PaginaPausa />} />
+              <Route path="/ritmo" element={<PaginaRitmo />} />
+              <Route path="/config" element={<PaginaConfig />} />
+            </Routes>
+          </Suspense>
         </main>
       </div>
     </Roteador>
