@@ -7,10 +7,10 @@ Consolidar de forma rastreavel a origem de icones e assets do produto, o estado 
 ## Levantamento atual (22/03/2026)
 
 - icones funcionais: padrao definido em `lucide-react`, com uso consistente nas telas principais;
-- simbolo da marca: provisório, ainda representado por emoji em `src/App.tsx`;
-- assets do app/PWA: `public/manifest.webmanifest` e `public/sw.js` ainda referenciam `vite.svg`, herdado do template inicial;
+- simbolo da marca: provisório em SVG, integrado no cabecalho (`src/App.tsx`) e preservado como base original;
+- assets do app/PWA: `public/manifest.webmanifest` e `public/sw.js` ja apontam para assets proprios em `public/brand/`;
 - recursos externos: nao ha uso de CDN ou imagens remotas no `src/` ou `public/`;
-- licencas de terceiros: dependencias presentes em `node_modules`, mas o projeto ainda nao possui artefato proprio consolidado de notices;
+- licencas de terceiros: dependencias presentes em `node_modules` e artefato formal criado em `THIRD_PARTY_NOTICES.md`;
 - microcopy: sem evidencia automatica de proximidade com concorrentes, dependendo de revisao editorial manual.
 
 ## Origem dos icones
@@ -21,15 +21,16 @@ Consolidar de forma rastreavel a origem de icones e assets do produto, o estado 
 
 ## Origem do simbolo da marca
 
-- estado atual: emoji de bussola em `src/App.tsx`;
-- natureza: marcador temporario de identidade;
-- direcao: substituir por simbolo proprio (SVG do produto) quando a identidade final for fechada.
+- arquivo base/original preservado: `public/brand/compasso-simbolo-provisorio-base.svg`;
+- uso atual na navbar: geometria equivalente renderizada em SVG inline em `src/App.tsx`;
+- variacoes de uso criadas: `public/brand/compasso-favicon.svg`, `public/brand/compasso-app-icon.svg`, `public/brand/compasso-navbar.svg`;
+- direcao: manter o simbolo como provisório ate fechamento da identidade definitiva.
 
 ## Assets do app/PWA
 
-- `public/manifest.webmanifest`: icones ainda apontando para `/vite.svg`;
-- `public/sw.js`: recursos iniciais incluem `/vite.svg`;
-- acao recomendada: substituir por assets oficiais do Compasso antes de release.
+- `public/manifest.webmanifest`: icones apontam para `/brand/compasso-app-icon.svg`;
+- `public/sw.js`: recursos iniciais incluem os novos assets de marca em `/brand/`;
+- `index.html`: favicon aponta para `/brand/compasso-favicon.svg`.
 
 ## Bibliotecas e vendors relevantes
 
@@ -46,7 +47,6 @@ Consolidar de forma rastreavel a origem de icones e assets do produto, o estado 
 
 ## Pendencias abertas
 
-- substituir `vite.svg` por asset proprio do produto antes de release;
 - definir simbolo definitivo da marca;
 - manter e atualizar `THIRD_PARTY_NOTICES.md` conforme dependencias evoluem;
 - revisar microcopy como parte do checklist editorial de originalidade.

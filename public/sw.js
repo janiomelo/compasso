@@ -1,5 +1,11 @@
 const CACHE_NOME = 'compasso-cache-v1'
-const RECURSOS_INICIAIS = ['/', '/index.html', '/manifest.webmanifest', '/vite.svg']
+const RECURSOS_INICIAIS = [
+  '/',
+  '/index.html',
+  '/manifest.webmanifest',
+  '/brand/compasso-favicon.svg',
+  '/brand/compasso-app-icon.svg',
+]
 
 self.addEventListener('install', (evento) => {
   evento.waitUntil(

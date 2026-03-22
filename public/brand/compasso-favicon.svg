@@ -1,0 +1,24 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>Compasso — favicon monocromático vazado</title>
+  <desc>Favicon monocromático com círculo preenchido e símbolo do compasso vazado no centro.</desc>
+
+  <defs>
+    <mask id="cutout">
+      <rect width="256" height="256" fill="white"/>
+
+      <!-- símbolo vazado -->
+      <g transform="translate(0 8)" stroke="black" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="128" cy="46" r="16" stroke-width="12"/>
+        <circle cx="128" cy="80" r="6" fill="black" stroke="none"/>
+        <path d="M128 80 L102 176" stroke-width="12"/>
+        <path d="M128 80 L154 176" stroke-width="12"/>
+        <path d="M118 68 L128 80 L138 68" stroke-width="10"/>
+        <path d="M98 176 L106 176" stroke-width="12"/>
+        <path d="M152 176 L158 190" stroke-width="12"/>
+      </g>
+    </mask>
+  </defs>
+
+  <!-- círculo preenchido da marca -->
+  <circle cx="128" cy="128" r="108" fill="#4A9B6F" mask="url(#cutout)"/>
+</svg>

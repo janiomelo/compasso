@@ -1,0 +1,25 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>Compasso — símbolo provisório</title>
+  <desc>Símbolo simples de linha inspirado em um compasso de desenho, pensado para uso provisório em favicon, navbar e app icon.</desc>
+
+  <!-- círculo superior -->
+  <circle cx="128" cy="48" r="18" stroke="currentColor" stroke-width="12"/>
+
+  <!-- junta central -->
+  <circle cx="128" cy="84" r="8" fill="currentColor"/>
+
+  <!-- braço esquerdo -->
+  <path d="M128 84 L88 196" stroke="currentColor" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- braço direito -->
+  <path d="M128 84 L168 196" stroke="currentColor" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- topo interno dos braços -->
+  <path d="M116 72 L128 84 L140 72" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- apoio esquerdo -->
+  <path d="M83 196 L93 196" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+
+  <!-- ponta direita -->
+  <path d="M164 196 L172 212" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+</svg>

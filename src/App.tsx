@@ -83,7 +83,9 @@ const ConteudoApp = () => {
         <header className="app-header">
           <div className="app-header__linha">
             <Link to="/" className="marca" aria-label="Ir para a página inicial do Compasso">
-              <span className="marca__icone" aria-hidden="true">🧭</span>
+              <span className="marca__icone">
+                <img src="/brand/compasso-navbar.svg" alt="" aria-hidden="true" />
+              </span>
               <span className="marca__texto">Compasso</span>
             </Link>
 
