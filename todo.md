@@ -16,3 +16,14 @@
 
 - [ ] Criar etapa de revisão textual no fluxo de release (checklist de linguagem).
 - [ ] Registrar convenção de escrita em documento único de contribuição.
+
+## Mobile
+
+- [ ] Menu principal não vai para a base e fica apertado em cima
+- [ ] Revisar toda a interface mobile
+
+## Completar o Registrar
+
+- [ ] Falta uma tela com observações/comentários diversas não obrigatórias, para incluir no registro
+- [ ] Falta um aviso claro que o registro foi realizado, retornando para algum ponto
+- [ ] Rever e validar as opções nas duas listas
