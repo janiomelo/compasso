@@ -32,10 +32,30 @@ export const rotularMetodo = (valor: string): string => {
 }
 
 /**
- * Converte ID de r5 iu8y l,mkoj niuhby767y67yu67y .;enção para nome amigável
+ * Converte ID de intenção para nome amigável
  * @param valor - ID da intenção (ex: 'foco')
  * @returns Nome da intenção (ex: 'Foco')
  */
 export const rotularIntencao = (valor: string): string => {
   return INTENCOES.find((item) => item.id === valor)?.nome ?? valor
+}
+
+const ROTULOS_INTENSIDADE = {
+  leve: 'Leve',
+  media: 'Média',
+  alta: 'Alta',
+} as const
+
+const ROTULOS_STATUS_PAUSA = {
+  ativa: 'Ativa',
+  concluida: 'Concluída',
+  interrompida: 'Interrompida',
+} as const
+
+export const rotularIntensidade = (valor: string): string => {
+  return ROTULOS_INTENSIDADE[valor as keyof typeof ROTULOS_INTENSIDADE] ?? valor
+}
+
+export const rotularStatusPausa = (valor: string): string => {
+  return ROTULOS_STATUS_PAUSA[valor as keyof typeof ROTULOS_STATUS_PAUSA] ?? valor
 }

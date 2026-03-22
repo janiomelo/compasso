@@ -4,7 +4,12 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, Clock3, TrendingUp, Wallet } from 'lucide-react'
 import type { FC } from 'react'
-import { rotularMetodo, rotularIntencao, ROTULOS_TENDENCIA } from '../../../utilitarios/apresentacao/rotulos'
+import {
+  rotularMetodo,
+  rotularIntencao,
+  rotularIntensidade,
+  ROTULOS_TENDENCIA,
+} from '../../../utilitarios/apresentacao/rotulos'
 import { formatarDataHora, formatarMoeda } from '../../../utilitarios/dados/formatacao'
 import { useRegistro, useRitmo, useEconomia } from '../../../ganchos'
 import styles from '../pagina-principal.module.scss'
@@ -26,7 +31,7 @@ export const CartaoUltimoRegistro: FC = () => {
       {ultimoRegistro ? (
         <>
           <strong className={styles.cartao__titulo}>{rotularMetodo(ultimoRegistro.metodo)}</strong>
-          <p className={styles.cartao__texto}>{rotularIntencao(ultimoRegistro.intencao)} · intensidade {ultimoRegistro.intensidade}</p>
+          <p className={styles.cartao__texto}>{rotularIntencao(ultimoRegistro.intencao)} · intensidade {rotularIntensidade(ultimoRegistro.intensidade)}</p>
           <span className={styles.cartao__meta}>{formatarDataHora(ultimoRegistro.timestamp)}</span>
         </>
       ) : (

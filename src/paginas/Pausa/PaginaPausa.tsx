@@ -1,6 +1,7 @@
 import { History, PauseCircle, PlayCircle, Sparkles } from 'lucide-react'
 import { useState } from 'react'
 import { usePausa } from '../../ganchos'
+import { rotularStatusPausa } from '../../utilitarios/apresentacao/rotulos'
 import { formatarDuracao, formatarMoeda } from '../../utilitarios/dados/formatacao'
 import { DURACOES_PAUSA } from '../../utilitarios/constantes'
 import styles from './pagina-pausa.module.scss'
@@ -175,7 +176,7 @@ export const PaginaPausa = () => {
             {ultimasCinco.map((pausa) => (
               <li key={pausa.id} className={styles.itemHistorico}>
                 <span className={styles.itemStatus + ' ' + styles[`itemStatus--${pausa.status}`]}>
-                  {pausa.status}
+                  {rotularStatusPausa(pausa.status)}
                 </span>
                 <span className={styles.itemDuracao}>
                   {formatarDuracao(pausa.duracaoReal ?? pausa.duracaoPlanejada)}

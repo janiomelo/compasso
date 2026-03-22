@@ -1,39 +1,39 @@
 # Compasso
 
-Compasso e um web app mobile-first de autoconsciencia e equilibrio de habitos, com foco em privacidade local, reducao de danos e linguagem brasileira acessivel.
+Compasso é um web app mobile-first de autoconsciência e equilíbrio de hábitos, com foco em privacidade local, redução de danos e linguagem brasileira acessível.
 
 ## Base do projeto
 
 Este README permanece como documento-base e ponto de entrada do repositorio.
-Ele resume a proposta do produto, os principios de construcao e como navegar no restante da documentacao.
+Ele resume a proposta do produto, os princípios de construção e como navegar no restante da documentação.
 
 ### Proposta
 
 - Ajudar a pessoa usuaria a registrar contexto de uso com rapidez.
-- Mostrar padroes de ritmo e pausas sem tom moralista.
-- Tornar ganhos de bem-estar e economia visiveis.
-- Incentivar autonomia e consistencia no dia a dia.
+- Mostrar padrões de ritmo e pausas sem tom moralista.
+- Tornar ganhos de bem-estar e economia visíveis.
+- Incentivar autonomia e consistência no dia a dia.
 
 ### Limites do produto
 
-- Nao e ferramenta clinica.
-- Nao substitui orientacao medica.
-- Nao e plataforma de compra/venda nem de intermediacao.
+- Não é ferramenta clínica.
+- Não substitui orientação médica.
+- Não é plataforma de compra/venda nem de intermediação.
 
-### Principios de construcao
+### Princípios de construção
 
-- Privacidade por padrao (dados locais).
+- Privacidade por padrão (dados locais).
 - Offline-first no MVP.
-- Experiencia simples, amigavel e sem julgamento.
-- Evolucao incremental com testes e gate de qualidade.
+- Experiência simples, amigável e sem julgamento.
+- Evolução incremental com testes e gate de qualidade.
 
-## Mapa de documentacao
+## Mapa de documentação
 
-- Fundamentos completos do produto (conteudo original integral): `docs/FUNDAMENTOS-PRODUTO.md`
-- Arquitetura tecnica e fases de execucao: `docs/PROJETO WEB APP.md`
-- Guia tecnico de desenvolvimento (setup, comandos, cobertura): `docs/GUIA-DESENVOLVIMENTO.md`
+- Fundamentos completos do produto (conteúdo original integral): `docs/FUNDAMENTOS-PRODUTO.md`
+- Arquitetura técnica e fases de execução: `docs/PROJETO WEB APP.md`
+- Guia técnico de desenvolvimento (setup, comandos, cobertura): `docs/GUIA-DESENVOLVIMENTO.md`
 
-## Inicio rapido (desenvolvimento)
+## Início rápido (desenvolvimento)
 
 ```bash
 npm install
@@ -45,3 +45,9 @@ npm run dev
 ```bash
 npm run type-check && npm run lint && npm run build && npm run coverage
 ```
+
+## Norma de linguagem (Português First)
+
+- Todo texto visível ao usuário deve usar português correto, com acentuação e cedilha quando aplicável.
+- IDs técnicos (ex.: `metodo`, `intencao`, `concluida`) podem permanecer sem acento internamente, mas nunca devem ser exibidos diretamente na interface.
+- Antes de cada commit com mudanças de UI, revisar títulos, labels, mensagens e placeholders para evitar regressões de escrita.

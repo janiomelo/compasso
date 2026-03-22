@@ -4,7 +4,7 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import type { FC } from 'react'
-import { rotularMetodo, rotularIntencao } from '../../../utilitarios/apresentacao/rotulos'
+import { rotularMetodo, rotularIntencao, rotularIntensidade } from '../../../utilitarios/apresentacao/rotulos'
 import { formatarDataHora } from '../../../utilitarios/dados/formatacao'
 import { useRegistro } from '../../../ganchos'
 import styles from '../pagina-principal.module.scss'
@@ -29,7 +29,7 @@ export const ListaRegistrosRecentes: FC<{ limite?: number }> = ({ limite = 4 }) 
                 <div className={styles.itemRegistro__titulo}>{rotularMetodo(registro.metodo)} <span>· {rotularIntencao(registro.intencao)}</span></div>
                 <div className={styles.itemRegistro__subtitulo}>{formatarDataHora(registro.timestamp)}</div>
               </div>
-              <span className={styles.itemRegistro__intensidade}>{registro.intensidade}</span>
+              <span className={styles.itemRegistro__intensidade}>{rotularIntensidade(registro.intensidade)}</span>
             </li>
           ))}
         </ul>
