@@ -1,7 +1,54 @@
 import { Registro, Pausa } from '../../tipos'
 
+export type JanelaHorario = 'madrugada' | 'manha' | 'tarde' | 'noite'
+
+export interface PadroesUso {
+  metodoPredominante: Registro['metodo'] | null
+  intencaoPredominante: Registro['intencao'] | null
+  janelaMaisComum: JanelaHorario | null
+  intensidadeMedia: number
+}
+
+export interface ComparativoPeriodoEconomia {
+  atual: number
+  anterior: number
+  variacaoPercentual: number
+}
+
+const obterChaveMaisFrequente = <T extends string>(entradas: T[]): T | null => {
+  if (entradas.length === 0) {
+    return null
+  }
+
+  const contagem = entradas.reduce<Record<string, number>>((acumulado, item) => {
+    acumulado[item] = (acumulado[item] ?? 0) + 1
+    return acumulado
+  }, {})
+
+  const chaveMaisFrequente = Object.entries(contagem).sort((a, b) => b[1] - a[1])[0]?.[0]
+  return (chaveMaisFrequente as T) ?? null
+}
+
+const obterJanelaHorario = (timestamp: number): JanelaHorario => {
+  const hora = new Date(timestamp).getHours()
+
+  if (hora < 6) {
+    return 'madrugada'
+  }
+
+  if (hora < 12) {
+    return 'manha'
+  }
+
+  if (hora < 18) {
+    return 'tarde'
+  }
+
+  return 'noite'
+}
+
 /**
- * Calcula frequência de registros em um período (dias)
+ * Calcula frequencia de registros em um periodo (dias)
  * Retorna um mapa: { "2026-03-21": 3, "2026-03-20": 2 }
  */
 export const calcularFrequencia = (
@@ -11,7 +58,7 @@ export const calcularFrequencia = (
   const agora = new Date()
   const limiteTempo = agora.getTime() - dias * 24 * 60 * 60 * 1000
 
-  // Filtrar registros dentro do período
+  // Filtrar registros dentro do periodo
   const registrosFiltrados = registros.filter((r) => r.timestamp >= limiteTempo)
 
   // Agrupar por data
@@ -27,7 +74,7 @@ export const calcularFrequencia = (
 }
 
 /**
- * Calcula economia total acumulada baseada em pausas concluídas
+ * Calcula economia total acumulada baseada em pausas concluidas
  */
 export const calcularEconomiaAcumulada = (pausas: Pausa[]): number => {
   return pausas
@@ -36,7 +83,7 @@ export const calcularEconomiaAcumulada = (pausas: Pausa[]): number => {
 }
 
 /**
- * Calcula economia diária média
+ * Calcula economia diaria media
  */
 export const calcularEconomiaDiaria = (
   pausas: Pausa[],
@@ -56,7 +103,7 @@ export const calcularEconomiaDiaria = (
 }
 
 /**
- * Calcula tendência de frequência (aumentando, diminuindo, estável)
+ * Calcula tendencia de frequencia (aumentando, diminuindo, estavel)
  */
 export const calcularTendencia = (
   frequencia: Record<string, number>
@@ -82,7 +129,7 @@ export const calcularTendencia = (
 }
 
 /**
- * Calcula estatísticas gerais dos registros
+ * Calcula estatisticas gerais dos registros
  */
 export const calcularEstatisticas = (registros: Registro[], dias: number = 30) => {
   const agora = new Date()
@@ -93,7 +140,7 @@ export const calcularEstatisticas = (registros: Registro[], dias: number = 30) =
   const totalRegistros = registrosFiltrados.length
   const registrosPorDia = totalRegistros / dias
 
-  // Métodos mais usados
+  // Metodos mais usados
   const metodosCont: Record<string, number> = {}
   registrosFiltrados.forEach((r) => {
     metodosCont[r.metodo] = (metodosCont[r.metodo] || 0) + 1
@@ -101,7 +148,7 @@ export const calcularEstatisticas = (registros: Registro[], dias: number = 30) =
 
   const metodoMaisUsado = Object.entries(metodosCont).sort((a, b) => b[1] - a[1])[0]
 
-  // Intenções mais comuns
+  // Intencoes mais comuns
   const intencoesCont: Record<string, number> = {}
   registrosFiltrados.forEach((r) => {
     intencoesCont[r.intencao] = (intencoesCont[r.intencao] || 0) + 1
@@ -118,7 +165,7 @@ export const calcularEstatisticas = (registros: Registro[], dias: number = 30) =
 }
 
 /**
- * Calcula percentual de redução em um período
+ * Calcula percentual de reducao em um periodo
  */
 export const calcularPercentualReducao = (
   registrosAntes: number,
@@ -130,7 +177,99 @@ export const calcularPercentualReducao = (
 }
 
 /**
- * Formata número de dias para intervalo legível
+ * Identifica padroes basicos de uso a partir do historico de registros
+ */
+export const identificarPadroesUso = (registros: Registro[]): PadroesUso => {
+  if (registros.length === 0) {
+    return {
+      metodoPredominante: null,
+      intencaoPredominante: null,
+      janelaMaisComum: null,
+      intensidadeMedia: 0,
+    }
+  }
+
+  const pesosIntensidade: Record<Registro['intensidade'], number> = {
+    leve: 3,
+    media: 5,
+    alta: 8,
+  }
+
+  const intensidadeMedia =
+    registros.reduce((total, registro) => total + pesosIntensidade[registro.intensidade], 0) /
+    registros.length
+
+  return {
+    metodoPredominante: obterChaveMaisFrequente(registros.map((registro) => registro.metodo)) as Registro['metodo'] | null,
+    intencaoPredominante: obterChaveMaisFrequente(registros.map((registro) => registro.intencao)) as Registro['intencao'] | null,
+    janelaMaisComum: obterChaveMaisFrequente(registros.map((registro) => obterJanelaHorario(registro.timestamp))),
+    intensidadeMedia: parseFloat(intensidadeMedia.toFixed(1)),
+  }
+}
+
+/**
+ * Score de 0 a 100 combinando melhora de humor, consistencia e economia
+ */
+export const calcularValorPercebido = (registros: Registro[], totalEconomia: number): number => {
+  if (registros.length === 0) {
+    return 0
+  }
+
+  const amostrasHumor = registros.filter(
+    (registro) => typeof registro.humorAntes === 'number' && typeof registro.humorDepois === 'number'
+  )
+
+  const ganhoMedioHumor = amostrasHumor.length === 0
+    ? 0
+    : amostrasHumor.reduce((total, registro) => total + Math.max((registro.humorDepois ?? 0) - (registro.humorAntes ?? 0), 0), 0) /
+      amostrasHumor.length
+
+  const consistencia = amostrasHumor.length === 0
+    ? 0
+    : amostrasHumor.filter((registro) => (registro.humorDepois ?? 0) >= (registro.humorAntes ?? 0)).length / amostrasHumor.length
+
+  const componenteHumor = Math.min((ganhoMedioHumor / 10) * 60, 60)
+  const componenteConsistencia = Math.min(consistencia * 25, 25)
+  const componenteEconomia = Math.min((totalEconomia / 300) * 15, 15)
+
+  return parseFloat((componenteHumor + componenteConsistencia + componenteEconomia).toFixed(1))
+}
+
+/**
+ * Compara economia do periodo atual contra o periodo imediatamente anterior
+ */
+export const compararEconomiaPorPeriodo = (
+  pausas: Pausa[],
+  dias: number = 30,
+): ComparativoPeriodoEconomia => {
+  const agora = Date.now()
+  const periodoMs = dias * 24 * 60 * 60 * 1000
+  const limitePeriodoAtual = agora - periodoMs
+  const limitePeriodoAnterior = agora - 2 * periodoMs
+
+  const pausasConcluidas = pausas.filter((pausa) => pausa.status === 'concluida')
+
+  const atual = pausasConcluidas
+    .filter((pausa) => pausa.iniciadoEm >= limitePeriodoAtual)
+    .reduce((total, pausa) => total + pausa.valorEconomia, 0)
+
+  const anterior = pausasConcluidas
+    .filter((pausa) => pausa.iniciadoEm >= limitePeriodoAnterior && pausa.iniciadoEm < limitePeriodoAtual)
+    .reduce((total, pausa) => total + pausa.valorEconomia, 0)
+
+  const variacaoPercentual = anterior === 0
+    ? 0
+    : parseFloat((((atual - anterior) / anterior) * 100).toFixed(2))
+
+  return {
+    atual: parseFloat(atual.toFixed(2)),
+    anterior: parseFloat(anterior.toFixed(2)),
+    variacaoPercentual,
+  }
+}
+
+/**
+ * Formata numero de dias para intervalo legivel
  */
 export const intervaloEmDias = (ms: number): number => {
   return Math.floor(ms / (24 * 60 * 60 * 1000))

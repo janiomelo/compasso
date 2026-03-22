@@ -24,12 +24,16 @@
 - Fase 5 (concluida): aviso de conectividade offline na UI, informando indisponibilidade/enfileiramento de metricas e sincronizacoes.
 - Fase 5 (concluida): configuracao de tema escuro/claro na rota `/config` com persistencia local.
 - Fase 5 (concluida): testes de PWA/offline (registro de service worker e aviso offline).
+- Fase 6 (concluida): pagina de analytics com ritmo semanal, tendencias e relatorios basicos.
+- Fase 6 (concluida): ResumoEconomia detalhado, metrica de valor percebido e comparativo de periodos.
+- Fase 6 (concluida): DicasReducao com rotacao manual e insights baseados em padroes de uso.
+- Fase 6 (concluida): testes de integracao de analise para ritmo e economia.
 
 ### 0.2. Estado atual validado
 
 - `npm run type-check`: OK.
 - `npm run build`: OK.
-- `npx vitest run`: 69/69 testes passando.
+- `npx vitest run`: 73/73 testes passando.
 - CI automatizada com gate de qualidade (`type-check + lint + testes + build`).
 - Commits de referencia:
   - `a95676f` (Pacote A)
@@ -41,14 +45,12 @@
 ### 0.3. O que falta (lacunas objetivas)
 
 - Cobertura ainda nao esta sendo usada como criterio de gate no fluxo (meta declarada de ~80% ainda sem enforce automatizado).
-- Fases futuras do plano (6 a 7) pendentes:
-  - analytics/relatorios,
+- Fases futuras do plano (7) pendentes:
   - cobertura e hardening final.
 
 ### 0.4. Proximos passos recomendados
 
-1. Fase 6 (analytics): entregar painel de ritmo/economia com metrica de valor percebido.
-2. Fase 7 (robustez): target de cobertura (~80%), edge cases e validacao de performance com volume alto de registros.
+1. Fase 7 (robustez): target de cobertura (~80%), edge cases e validacao de performance com volume alto de registros.
 
 ---
 
@@ -1302,18 +1304,18 @@ Refinamento visual e funcionalidade offline.
 Dashboards e visualizações.
 
 **Entregáveis:**
-- [ ] PaginaRitmo com gráficos (frequência, tendência)
-- [ ] ResumoEconomia detalhado
-- [ ] DicasReducao (rotação de dicas)
-- [ ] Insights baseados em padrões
-- [ ] Relatórios básicos
+- [x] PaginaRitmo com gráficos (frequência, tendência)
+- [x] ResumoEconomia detalhado
+- [x] DicasReducao (rotação de dicas)
+- [x] Insights baseados em padrões
+- [x] Relatórios básicos
 
 **Testes de Integração:**
-- [ ] `__testes__/integracao/analise/ritmo.teste.ts`
+- [x] `__testes__/integracao/analise/ritmo.teste.tsx`
   - Cálculo de frequência por período
   - Detecção de tendências
   - Identificação de padrões
-- [ ] `__testes__/integracao/analise/economia.teste.ts`
+- [x] `__testes__/integracao/analise/economia.teste.tsx`
   - Projeções de economia
   - Comparações de períodos
 

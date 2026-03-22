@@ -30,7 +30,7 @@
 .subtitulo {
   margin: 0;
   color: $cor-texto-secundaria;
-  max-width: 44rem;
+  max-width: 48rem;
 }
 
 .metricas {
@@ -38,7 +38,11 @@
   gap: $espaco-md;
 
   @include media-tablet {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include media-desktop {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
@@ -123,6 +127,83 @@
 .dia__numero {
   font-size: $tamanho-h4;
   color: $cor-texto-primaria;
+}
+
+.gradeEconomia {
+  display: grid;
+  gap: $espaco-sm;
+
+  @include media-tablet {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include media-desktop {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.itemEconomia {
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba($cor-bg-primaria, 0.36);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+
+  span {
+    color: $cor-texto-terciaria;
+    font-size: $tamanho-pequeno;
+  }
+
+  strong {
+    color: $cor-texto-primaria;
+    font-size: $tamanho-h5;
+  }
+}
+
+.dica {
+  border-radius: 1rem;
+  border: 1px solid rgba($cor-acento-secundaria, 0.3);
+  background: rgba($cor-acento-secundaria, 0.12);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-sm;
+
+  p {
+    margin: 0;
+    color: $cor-texto-primaria;
+  }
+}
+
+.dica__botao {
+  align-self: flex-start;
+  border: 1px solid rgba($cor-acento-principal, 0.4);
+  background: rgba($cor-acento-principal, 0.18);
+  color: $cor-texto-primaria;
+  border-radius: $raio-pill;
+  padding: 0.55rem 1rem;
+  font-weight: $peso-semibold;
+
+  &:hover {
+    cursor: pointer;
+    filter: brightness(1.08);
+  }
+}
+
+.listaInsights,
+.listaRelatorios {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: $cor-texto-secundaria;
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-xs;
+
+  li {
+    line-height: 1.45;
+  }
 }
 
 .barras {
