@@ -271,6 +271,43 @@
   align-self: flex-end;
 }
 
+.resumoConclusao {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-md;
+  border: 1px solid var(--borda-suave);
+  border-radius: 1rem;
+  padding: 1rem;
+  background: var(--superficie-sutil);
+}
+
+.resumoConclusao__sucesso {
+  margin: 0;
+  color: var(--cor-texto-primaria);
+  font-weight: $peso-semibold;
+}
+
+.resumoConclusao__lista {
+  margin: 0;
+  display: grid;
+  gap: $espaco-sm;
+
+  div {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  dt {
+    font-size: $tamanho-pequeno;
+    color: var(--cor-texto-terciaria);
+  }
+
+  dd {
+    margin: 0;
+    color: var(--cor-texto-primaria);
+  }
+}
+
 .mensagemSucesso {
   margin: 0;
   color: $cor-acento-principal;

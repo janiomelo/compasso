@@ -32,16 +32,16 @@ describe('Wizard de Registro — UI', () => {
   it('renderiza etapa inicial com métodos', () => {
     render(<PaginaRegistro />, { wrapper: envolverProvider })
 
-    expect(screen.getByText('Como foi?')).toBeDefined()
-    expect(screen.getByText('Vapor')).toBeDefined()
-    expect(screen.getByText('Flor')).toBeDefined()
+    expect(screen.getByText('Qual foi a forma de uso?')).toBeDefined()
+    expect(screen.getByText('Vaporizado')).toBeDefined()
+    expect(screen.getByText('Fumado')).toBeDefined()
     expect(screen.getByText('Continuar')).toBeDefined()
   })
 
   it('avança para a etapa de intenção', async () => {
     render(<PaginaRegistro />, { wrapper: envolverProvider })
 
-    fireEvent.click(screen.getByText('Vapor'))
+    fireEvent.click(screen.getByText('Vaporizado'))
     fireEvent.click(screen.getByText('Continuar'))
 
     await waitFor(() => {
@@ -52,7 +52,7 @@ describe('Wizard de Registro — UI', () => {
   it('volta da etapa de intenção para método', async () => {
     render(<PaginaRegistro />, { wrapper: envolverProvider })
 
-    fireEvent.click(screen.getByText('Vapor'))
+    fireEvent.click(screen.getByText('Vaporizado'))
     fireEvent.click(screen.getByText('Continuar'))
 
     await waitFor(() => {
@@ -62,14 +62,14 @@ describe('Wizard de Registro — UI', () => {
     fireEvent.click(screen.getByText('Voltar'))
 
     await waitFor(() => {
-      expect(screen.getByText('Como foi?')).toBeDefined()
+      expect(screen.getByText('Qual foi a forma de uso?')).toBeDefined()
     })
   })
 
-  it('completa o fluxo até exibir botão de salvar', async () => {
+  it('completa o fluxo e exibe tela de conclusão', async () => {
     render(<PaginaRegistro />, { wrapper: envolverProvider })
 
-    fireEvent.click(screen.getByText('Vapor'))
+    fireEvent.click(screen.getByText('Vaporizado'))
     fireEvent.click(screen.getByText('Continuar'))
 
     await waitFor(() => {
@@ -79,7 +79,7 @@ describe('Wizard de Registro — UI', () => {
     fireEvent.click(screen.getByText('Continuar'))
 
     await waitFor(() => {
-      expect(screen.getByText('Como foi a intensidade?')).toBeDefined()
+      expect(screen.getByText('Qual foi a intensidade?')).toBeDefined()
     })
     fireEvent.click(screen.getByText('Alta'))
     fireEvent.click(screen.getByText('Continuar'))
@@ -87,6 +87,13 @@ describe('Wizard de Registro — UI', () => {
     await waitFor(() => {
       expect(screen.getByText('Quer adicionar uma observação?')).toBeDefined()
     })
-    expect(screen.getByText('Salvar registro')).toBeDefined()
+
+    fireEvent.click(screen.getByText('Continuar'))
+
+    await waitFor(() => {
+      expect(screen.getByText('Momento registrado')).toBeDefined()
+      expect(screen.getByText('Ir para o início')).toBeDefined()
+      expect(screen.getByText('Registrar outro momento')).toBeDefined()
+    })
   })
 })

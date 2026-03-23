@@ -1,40 +1,30 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 import { useFluxoRegistro } from './useFluxoRegistro'
-import { EtapaMetodo, EtapaIntencao, EtapaIntensidade, EtapaNotas } from './componentes/EtapasRegistro'
+import { RegistroEtapaRenderer } from './componentes/RegistroEtapaRenderer'
+import { PERGUNTAS_REGISTRO } from './config/perguntasRegistro'
 import styles from './pagina-registro.module.scss'
 
-const ETAPAS = [
-  { titulo: 'Como foi?', descricao: 'Escolha o método que mais combina com este momento.' },
-  { titulo: 'Qual era sua intenção?', descricao: 'Selecione a intenção dominante antes do momento.' },
-  { titulo: 'Como foi a intensidade?', descricao: 'Escolha entre Leve, Média ou Alta para registrar rápido.' },
-  { titulo: 'Quer adicionar uma observação?', descricao: 'Esta etapa é opcional e serve para contexto rápido.' },
-] as const
-
 export const PaginaRegistro = () => {
+  const navegar = useNavigate()
   const {
     form,
     atualizar,
     etapaAtual,
+    observacaoAberta,
+    registroConcluido,
     avancar,
     voltar,
+    abrirObservacao,
+    registrarOutro,
     handleSubmit,
     aguardando,
-    sucesso,
     erro,
   } = useFluxoRegistro()
 
-  const renderizarEtapa = () => {
-    switch (etapaAtual) {
-      case 0:
-        return <EtapaMetodo form={form} atualizar={atualizar} />
-      case 1:
-        return <EtapaIntencao form={form} atualizar={atualizar} />
-      case 2:
-        return <EtapaIntensidade form={form} atualizar={atualizar} />
-      default:
-        return <EtapaNotas form={form} atualizar={atualizar} />
-    }
-  }
+  const etapa = PERGUNTAS_REGISTRO[etapaAtual]
+  const estaNaConclusao = etapa.tipo === 'conclusao'
+  const estaNaObservacao = etapa.id === 'observacao'
 
   return (
     <div className={styles.pagina}>
@@ -46,7 +36,7 @@ export const PaginaRegistro = () => {
 
       <form className={styles.formulario} onSubmit={handleSubmit} noValidate>
         <div className={styles.progresso} aria-label="Progresso do registro">
-          {ETAPAS.map((_, indice) => (
+          {PERGUNTAS_REGISTRO.map((_, indice) => (
             <span
               key={indice}
               className={styles.progresso__item + (indice <= etapaAtual ? ' ' + styles['progresso__item--ativo'] : '')}
@@ -55,20 +45,34 @@ export const PaginaRegistro = () => {
         </div>
 
         <section className={styles.etapa}>
-          <h2 className={styles.etapa__titulo}>{ETAPAS[etapaAtual].titulo}</h2>
-          <p className={styles.etapa__descricao}>{ETAPAS[etapaAtual].descricao}</p>
-          {renderizarEtapa()}
+          <h2 className={styles.etapa__titulo}>{etapa.titulo}</h2>
+          <p className={styles.etapa__descricao}>{etapa.descricao}</p>
+
+          <RegistroEtapaRenderer
+            pergunta={etapa}
+            form={form}
+            atualizar={atualizar}
+            observacaoAberta={observacaoAberta}
+            abrirObservacao={abrirObservacao}
+            registroConcluido={registroConcluido}
+          />
         </section>
 
-        {sucesso && (
-          <p className={styles.mensagemSucesso}>✓ Registro salvo com sucesso.</p>
-        )}
         {erro && (
           <p className={styles.mensagemErro}>{erro}</p>
         )}
 
         <div className={styles.acoes}>
-          {etapaAtual > 0 ? (
+          {estaNaConclusao ? (
+            <>
+              <button type="button" className={styles.botaoSecundario} onClick={registrarOutro}>
+                Registrar outro momento
+              </button>
+              <button type="button" className={styles.botaoPrimario} onClick={() => navegar('/')}>
+                Ir para o início
+              </button>
+            </>
+          ) : etapaAtual > 0 ? (
             <button type="button" className={styles.botaoSecundario} onClick={voltar}>
               <ChevronLeft size={18} />
               Voltar
@@ -77,20 +81,22 @@ export const PaginaRegistro = () => {
             <span />
           )}
 
-          {etapaAtual < ETAPAS.length - 1 ? (
+          {!estaNaConclusao && etapaAtual < PERGUNTAS_REGISTRO.length - 1 && !estaNaObservacao ? (
             <button type="button" className={styles.botaoPrimario} onClick={avancar}>
               Continuar
               <ChevronRight size={18} />
             </button>
-          ) : (
+          ) : null}
+
+          {!estaNaConclusao && estaNaObservacao ? (
             <button
               type="submit"
               className={styles.botaoPrimario}
               disabled={aguardando}
             >
-              {aguardando ? 'Salvando...' : 'Salvar registro'}
+              {aguardando ? 'Salvando...' : 'Continuar'}
             </button>
-          )}
+          ) : null}
         </div>
       </form>
     </div>
