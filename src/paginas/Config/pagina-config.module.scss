@@ -129,6 +129,64 @@
   background: var(--superficie-cartao);
 }
 
+.painelProtecao {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-sm;
+  border: 1px solid var(--borda-suave);
+  border-radius: $raio-lg;
+  padding: $espaco-md;
+  background: var(--superficie-cartao);
+}
+
+.formProtecao {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-xs;
+
+  label {
+    color: var(--cor-texto-secundaria);
+    font-size: $tamanho-pequeno;
+  }
+
+  input,
+  select {
+    border: 1px solid var(--borda-suave);
+    border-radius: $raio-md;
+    background: var(--superficie-cartao);
+    color: var(--cor-texto-primaria);
+    padding: 0.72rem 0.8rem;
+  }
+}
+
+.checkboxLinha {
+  display: inline-flex;
+  align-items: center;
+  gap: $espaco-xs;
+  color: var(--cor-texto-secundaria);
+}
+
+.acaoPerigo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(186, 74, 74, 0.55);
+  background: rgba(186, 74, 74, 0.14);
+  color: var(--cor-texto-primaria);
+  border-radius: $raio-md;
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    background: rgba(186, 74, 74, 0.2);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
 .onboardingMeta {
   margin: 0;
   color: var(--cor-texto-secundaria);

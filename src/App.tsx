@@ -1,7 +1,8 @@
 import { Activity, Home, PauseCircle, PlusCircle, Settings2 } from 'lucide-react'
-import { lazy, Suspense, useEffect } from 'react'
+import { FormEvent, lazy, Suspense, useEffect, useMemo, useState } from 'react'
 import { BrowserRouter as Roteador, NavLink, Routes, Route, Link, Navigate, useLocation } from 'react-router-dom'
 import { useApp } from './ganchos'
+import { useProteção } from './ganchos/useProtecao'
 import { ProvedorApp } from './loja/ContextoApp'
 import { AvisoOffline } from './componentes/comum/AvisoOffline'
 import './App.scss'
@@ -175,7 +176,44 @@ const RotasAplicacao = ({ onboardingConcluido }: { onboardingConcluido: boolean 
 
 const ConteudoApp = () => {
   const { estado } = useApp()
+  const { desbloquear, bloquear } = useProteção()
   const onboardingConcluido = Boolean(estado.configuracoes.onboarding?.concluidoEm)
+  const [senhaDesbloqueio, setSenhaDesbloqueio] = useState('')
+  const [erroDesbloqueio, setErroDesbloqueio] = useState<string | null>(null)
+  const [desbloqueando, setDesbloqueando] = useState(false)
+
+  const protecaoExigeDesbloqueio =
+    estado.configuracoes.protecaoAtiva &&
+    !estado.protecao.desbloqueado &&
+    onboardingConcluido
+
+  const mensagemBloqueio = useMemo(() => {
+    if (!estado.protecao.ultimoDesbloqueioEm) {
+      return 'Digite sua senha para acessar seus dados locais.'
+    }
+
+    return 'O app foi bloqueado por inatividade. Digite sua senha para continuar.'
+  }, [estado.protecao.ultimoDesbloqueioEm])
+
+  const tentarDesbloquear = async (evento: FormEvent<HTMLFormElement>) => {
+    evento.preventDefault()
+
+    if (!senhaDesbloqueio) {
+      setErroDesbloqueio('Informe a senha para desbloquear.')
+      return
+    }
+
+    try {
+      setErroDesbloqueio(null)
+      setDesbloqueando(true)
+      await desbloquear(senhaDesbloqueio)
+      setSenhaDesbloqueio('')
+    } catch (erro) {
+      setErroDesbloqueio(erro instanceof Error ? erro.message : 'Não foi possível desbloquear agora.')
+    } finally {
+      setDesbloqueando(false)
+    }
+  }
 
   useEffect(() => {
     const mediaTema = window.matchMedia('(prefers-color-scheme: light)')
@@ -197,6 +235,69 @@ const ConteudoApp = () => {
     }
   }, [estado.configuracoes.tema, estado.configuracoes.temaAuto])
 
+  useEffect(() => {
+    if (!onboardingConcluido) {
+      return
+    }
+
+    if (!estado.configuracoes.protecaoAtiva || !estado.protecao.desbloqueado) {
+      return
+    }
+
+    if (estado.protecao.manterDesbloqueadoNestaSessao) {
+      return
+    }
+
+    const timeoutMs = estado.configuracoes.timeoutBloqueio
+
+    if (!timeoutMs || timeoutMs < 1000) {
+      return
+    }
+
+    let timeoutId: ReturnType<typeof setTimeout> | null = null
+
+    const reagendarBloqueio = () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+      }
+
+      timeoutId = setTimeout(() => {
+        bloquear()
+      }, timeoutMs)
+    }
+
+    const eventosAtividade: Array<keyof WindowEventMap> = [
+      'mousemove',
+      'mousedown',
+      'keydown',
+      'touchstart',
+      'scroll',
+    ]
+
+    eventosAtividade.forEach((nomeEvento) => {
+      window.addEventListener(nomeEvento, reagendarBloqueio, { passive: true })
+    })
+
+    reagendarBloqueio()
+
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+      }
+
+      eventosAtividade.forEach((nomeEvento) => {
+        window.removeEventListener(nomeEvento, reagendarBloqueio)
+      })
+    }
+  }, [
+    bloquear,
+    estado.configuracoes.protecaoAtiva,
+    estado.configuracoes.timeoutBloqueio,
+    estado.protecao.desbloqueado,
+    estado.protecao.manterDesbloqueadoNestaSessao,
+    onboardingConcluido,
+  ])
+
   if (estado.ui.carregando) {
     return (
       <div className="app app--bootstrapando">
@@ -213,6 +314,34 @@ const ConteudoApp = () => {
   return (
     <Roteador>
       <RotasAplicacao onboardingConcluido={onboardingConcluido} />
+
+      {protecaoExigeDesbloqueio && (
+        <div className="bloqueio-overlay" role="dialog" aria-modal="true" aria-labelledby="bloqueio-titulo">
+          <section className="bloqueio-card">
+            <p className="bloqueio-eyebrow">Proteção ativa</p>
+            <h1 id="bloqueio-titulo">Desbloquear Compasso</h1>
+            <p className="bloqueio-texto">{mensagemBloqueio}</p>
+
+            <form className="bloqueio-form" onSubmit={(evento) => void tentarDesbloquear(evento)}>
+              <label htmlFor="senha-desbloqueio">Senha</label>
+              <input
+                id="senha-desbloqueio"
+                type="password"
+                value={senhaDesbloqueio}
+                onChange={(evento) => setSenhaDesbloqueio(evento.target.value)}
+                autoComplete="current-password"
+                placeholder="Digite sua senha"
+              />
+
+              {erroDesbloqueio && <p className="bloqueio-erro">{erroDesbloqueio}</p>}
+
+              <button type="submit" disabled={desbloqueando}>
+                {desbloqueando ? 'Desbloqueando...' : 'Desbloquear'}
+              </button>
+            </form>
+          </section>
+        </div>
+      )}
     </Roteador>
   )
 }

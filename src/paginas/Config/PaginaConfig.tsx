@@ -2,14 +2,33 @@ import { BookOpen, Database, Info, Palette, ShieldCheck } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useApp, useArmazenamento } from '../../ganchos'
+import { useProteção } from '../../ganchos/useProtecao'
 import styles from './pagina-config.module.scss'
 
 export const PaginaConfig = () => {
   const { estado, despacho } = useApp()
   const { carregando, salvarConfiguracoes } = useArmazenamento()
+  const {
+    ativarProtecao,
+    desativarProtecao,
+    trocarSenha,
+    bloquear,
+    atualizarTimeoutSessao,
+  } = useProteção()
 
   const [mensagem, setMensagem] = useState<string | null>(null)
   const [erro, setErro] = useState<string | null>(null)
+  const [senhaProtecao, setSenhaProtecao] = useState('')
+  const [confirmacaoSenhaProtecao, setConfirmacaoSenhaProtecao] = useState('')
+  const [senhaAtual, setSenhaAtual] = useState('')
+  const [novaSenha, setNovaSenha] = useState('')
+
+  const opcoesTimeout = [
+    { rotulo: '5 minutos', valor: 5 * 60 * 1000 },
+    { rotulo: '15 minutos', valor: 15 * 60 * 1000 },
+    { rotulo: '30 minutos', valor: 30 * 60 * 1000 },
+    { rotulo: '60 minutos', valor: 60 * 60 * 1000 },
+  ]
 
   const definirTema = async (tema: 'escuro' | 'claro') => {
     limparFeedback()
@@ -42,6 +61,97 @@ export const PaginaConfig = () => {
   const limparFeedback = () => {
     setMensagem(null)
     setErro(null)
+  }
+
+  const ativarProtecaoNaPagina = async () => {
+    limparFeedback()
+
+    if (senhaProtecao.length < 8) {
+      setErro('Use uma senha com pelo menos 8 caracteres.')
+      return
+    }
+
+    if (senhaProtecao !== confirmacaoSenhaProtecao) {
+      setErro('A confirmação de senha não confere.')
+      return
+    }
+
+    try {
+      await ativarProtecao(senhaProtecao)
+      await salvarConfiguracoes({
+        ...estado.configuracoes,
+        protecaoAtiva: true,
+      })
+
+      setSenhaProtecao('')
+      setConfirmacaoSenhaProtecao('')
+      setMensagem('Proteção ativada. Seus dados locais passam a ser protegidos.')
+    } catch (causa) {
+      setErro(causa instanceof Error ? causa.message : 'Falha ao ativar proteção')
+    }
+  }
+
+  const desativarProtecaoNaPagina = async () => {
+    limparFeedback()
+
+    try {
+      await desativarProtecao()
+      await salvarConfiguracoes({
+        ...estado.configuracoes,
+        protecaoAtiva: false,
+      })
+      setMensagem('Proteção desativada para este dispositivo.')
+    } catch (causa) {
+      setErro(causa instanceof Error ? causa.message : 'Falha ao desativar proteção')
+    }
+  }
+
+  const trocarSenhaNaPagina = async () => {
+    limparFeedback()
+
+    if (novaSenha.length < 8) {
+      setErro('A nova senha deve ter pelo menos 8 caracteres.')
+      return
+    }
+
+    try {
+      await trocarSenha(senhaAtual, novaSenha)
+      setSenhaAtual('')
+      setNovaSenha('')
+      setMensagem('Senha atualizada com sucesso.')
+    } catch (causa) {
+      setErro(causa instanceof Error ? causa.message : 'Falha ao trocar senha')
+    }
+  }
+
+  const atualizarTimeoutNaPagina = async (timeoutMs: number) => {
+    limparFeedback()
+
+    atualizarTimeoutSessao(timeoutMs)
+    await salvarConfiguracoes({
+      ...estado.configuracoes,
+      timeoutBloqueio: timeoutMs,
+    })
+
+    setMensagem('Tempo de bloqueio automático atualizado.')
+  }
+
+  const alternarManterSessao = async (marcado: boolean) => {
+    limparFeedback()
+
+    despacho({
+      tipo: 'DEFINIR_CONFIGURACAO',
+      payload: { manterDesbloqueadoNestaSessao: marcado },
+    })
+
+    await salvarConfiguracoes({
+      ...estado.configuracoes,
+      manterDesbloqueadoNestaSessao: marcado,
+    })
+
+    setMensagem(marcado
+      ? 'Sessão permanecerá desbloqueada enquanto esta aba estiver ativa.'
+      : 'Bloqueio automático por inatividade reativado.')
   }
 
   const temaEfetivo = useMemo(() => {
@@ -168,6 +278,105 @@ export const PaginaConfig = () => {
           </span>
         </Link>
         </div>
+      </section>
+
+      <section className={styles.painelProtecao}>
+        <div className={styles.painelLinksTopo}>
+          <ShieldCheck size={18} />
+          <h2>Proteção e bloqueio</h2>
+        </div>
+
+        <p className={styles.painelLinksResumo}>
+          Defina uma senha local para bloquear o acesso ao app neste dispositivo.
+        </p>
+
+        {!estado.configuracoes.protecaoAtiva && (
+          <div className={styles.formProtecao}>
+            <label htmlFor="senha-protecao">Nova senha</label>
+            <input
+              id="senha-protecao"
+              type="password"
+              value={senhaProtecao}
+              onChange={(evento) => setSenhaProtecao(evento.target.value)}
+              placeholder="Mínimo de 8 caracteres"
+            />
+
+            <label htmlFor="confirmacao-senha-protecao">Confirmar senha</label>
+            <input
+              id="confirmacao-senha-protecao"
+              type="password"
+              value={confirmacaoSenhaProtecao}
+              onChange={(evento) => setConfirmacaoSenhaProtecao(evento.target.value)}
+              placeholder="Repita sua senha"
+            />
+
+            <button type="button" className={styles.acao} onClick={() => void ativarProtecaoNaPagina()} disabled={carregando}>
+              Ativar proteção
+            </button>
+          </div>
+        )}
+
+        {estado.configuracoes.protecaoAtiva && (
+          <div className={styles.formProtecao}>
+            <p className={styles.onboardingMeta}>
+              Status atual: <strong>{estado.protecao.desbloqueado ? 'Desbloqueado' : 'Bloqueado'}</strong>
+            </p>
+
+            <label htmlFor="timeout-bloqueio">Bloquear após inatividade</label>
+            <select
+              id="timeout-bloqueio"
+              value={estado.configuracoes.timeoutBloqueio}
+              onChange={(evento) => void atualizarTimeoutNaPagina(Number(evento.target.value))}
+              disabled={carregando}
+            >
+              {opcoesTimeout.map((opcao) => (
+                <option key={opcao.valor} value={opcao.valor}>
+                  {opcao.rotulo}
+                </option>
+              ))}
+            </select>
+
+            <label className={styles.checkboxLinha}>
+              <input
+                type="checkbox"
+                checked={estado.configuracoes.manterDesbloqueadoNestaSessao}
+                onChange={(evento) => void alternarManterSessao(evento.target.checked)}
+                disabled={carregando}
+              />
+              <span>Manter desbloqueado nesta sessão</span>
+            </label>
+
+            <button type="button" className={styles.acao} onClick={bloquear} disabled={carregando || !estado.protecao.desbloqueado}>
+              Bloquear agora
+            </button>
+
+            <label htmlFor="senha-atual-protecao">Senha atual</label>
+            <input
+              id="senha-atual-protecao"
+              type="password"
+              value={senhaAtual}
+              onChange={(evento) => setSenhaAtual(evento.target.value)}
+              placeholder="Senha atual"
+            />
+
+            <label htmlFor="nova-senha-protecao">Nova senha</label>
+            <input
+              id="nova-senha-protecao"
+              type="password"
+              value={novaSenha}
+              onChange={(evento) => setNovaSenha(evento.target.value)}
+              placeholder="Nova senha"
+            />
+
+            <button type="button" className={styles.acao} onClick={() => void trocarSenhaNaPagina()} disabled={carregando}>
+              Trocar senha
+            </button>
+
+            <button type="button" className={styles.acaoPerigo} onClick={() => void desativarProtecaoNaPagina()} disabled={carregando}>
+              Desativar proteção
+            </button>
+          </div>
+        )}
       </section>
 
       <section className={styles.painelOnboarding}>

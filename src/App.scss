@@ -245,6 +245,89 @@ body.tema-claro {
   }
 }
 
+.bloqueio-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $espaco-md;
+  background: rgba(11, 16, 18, 0.78);
+  backdrop-filter: blur(6px);
+}
+
+.bloqueio-card {
+  width: min(100%, 26rem);
+  border-radius: $raio-lg;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(180deg, rgba($cor-bg-secundaria, 0.98), rgba($cor-bg-primaria, 0.98));
+  padding: $espaco-lg;
+  box-shadow: $sombra-lg;
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-sm;
+
+  h1 {
+    margin: 0;
+    font-size: $tamanho-h4;
+  }
+}
+
+.bloqueio-eyebrow {
+  margin: 0;
+  color: var(--cor-acento-principal);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: $tamanho-pequeno;
+  font-weight: $peso-semibold;
+}
+
+.bloqueio-texto {
+  margin: 0;
+  color: $cor-texto-secundaria;
+}
+
+.bloqueio-form {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-xs;
+
+  label {
+    color: $cor-texto-secundaria;
+    font-size: $tamanho-pequeno;
+  }
+
+  input {
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: $raio-md;
+    background: rgba(255, 255, 255, 0.04);
+    color: $cor-texto-primaria;
+    padding: 0.75rem 0.85rem;
+  }
+
+  button {
+    margin-top: $espaco-xs;
+    border: 1px solid rgba($cor-acento-principal, 0.35);
+    border-radius: $raio-md;
+    background: rgba($cor-acento-principal, 0.18);
+    color: $cor-texto-primaria;
+    padding: 0.75rem 0.85rem;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.bloqueio-erro {
+  margin: 0;
+  color: var(--feedback-erro-texto);
+  font-size: $tamanho-pequeno;
+}
+
 .pagina {
   display: flex;
   flex-direction: column;
