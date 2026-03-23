@@ -11,10 +11,23 @@ import type {
   RegistroProteção,
 } from '../../tipos'
 import { NOME_BD, VERSAO_APP } from '../constantes'
+import {
+  cifrarPausa,
+  cifrarRegistro,
+  descifrarPausa,
+  descifrarRegistro,
+  ehEnvelopeCifrado,
+  type PausaCifrada,
+  type RegistroCifrado,
+} from './criptografiaDados'
+import { gerenciadorChaves } from '../seguranca/gerenciadorChaves'
+
+type RegistroPersistido = Registro | RegistroCifrado
+type PausaPersistida = Pausa | PausaCifrada
 
 class BancoCompasso extends Dexie {
-  registros!: Table<Registro, string>
-  pausas!: Table<Pausa, string>
+  registros!: Table<RegistroPersistido, string>
+  pausas!: Table<PausaPersistida, string>
   configuracoes!: Table<RegistroConfiguracao, 'principal'>
   protecao!: Table<RegistroProteção, 'principal'>
   backups!: Table<BackupLocal, number>
@@ -62,25 +75,90 @@ const normalizarPausa = (pausa: PausaLegada): Pausa => {
   }
 }
 
+const obterDEKSeDisponivel = (): CryptoKey | null => {
+  try {
+    return gerenciadorChaves.obterDEK()
+  } catch {
+    return null
+  }
+}
+
+const ehRegistroCifrado = (registro: RegistroPersistido): registro is RegistroCifrado => {
+  return typeof registro === 'object' && registro !== null && '_payload' in registro && ehEnvelopeCifrado(registro._payload)
+}
+
+const ehPausaCifrada = (pausa: PausaPersistida): pausa is PausaCifrada => {
+  return typeof pausa === 'object' && pausa !== null && '_payload' in pausa && ehEnvelopeCifrado(pausa._payload)
+}
+
+const normalizarRegistroPersistido = async (registro: RegistroPersistido, dek: CryptoKey | null): Promise<Registro | null> => {
+  if (!ehRegistroCifrado(registro)) {
+    return registro
+  }
+
+  if (!dek) {
+    return null
+  }
+
+  return descifrarRegistro(registro, dek)
+}
+
+const normalizarPausaPersistida = async (pausa: PausaPersistida, dek: CryptoKey | null): Promise<Pausa | null> => {
+  if (!ehPausaCifrada(pausa)) {
+    return normalizarPausa(pausa as PausaLegada)
+  }
+
+  if (!dek) {
+    return null
+  }
+
+  return descifrarPausa(pausa, dek)
+}
+
 export const consultasBD = {
   async obterRegistros() {
-    return bd.registros.orderBy('timestamp').reverse().toArray()
+    const dek = obterDEKSeDisponivel()
+    const registros = await bd.registros.orderBy('timestamp').reverse().toArray()
+    const normalizados = await Promise.all(registros.map((registro) => normalizarRegistroPersistido(registro, dek)))
+    return normalizados.filter((registro): registro is Registro => Boolean(registro))
   },
 
   async obterRegistrosRecentes(dias: number) {
     const desde = Date.now() - dias * 24 * 60 * 60 * 1000
-    return bd.registros.where('timestamp').aboveOrEqual(desde).sortBy('timestamp')
+    const dek = obterDEKSeDisponivel()
+    const registros = await bd.registros.where('timestamp').aboveOrEqual(desde).sortBy('timestamp')
+    const normalizados = await Promise.all(registros.map((registro) => normalizarRegistroPersistido(registro, dek)))
+    return normalizados.filter((registro): registro is Registro => Boolean(registro))
   },
 
   async obterRegistrosPorPeriodo(dataInicial: number, dataFinal: number) {
-    return bd.registros.where('timestamp').between(dataInicial, dataFinal, true, true).toArray()
+    const dek = obterDEKSeDisponivel()
+    const registros = await bd.registros.where('timestamp').between(dataInicial, dataFinal, true, true).toArray()
+    const normalizados = await Promise.all(registros.map((registro) => normalizarRegistroPersistido(registro, dek)))
+    return normalizados.filter((registro): registro is Registro => Boolean(registro))
   },
 
   async obterRegistroPorId(id: string) {
-    return bd.registros.get(id)
+    const dek = obterDEKSeDisponivel()
+    const registro = await bd.registros.get(id)
+
+    if (!registro) {
+      return undefined
+    }
+
+    return normalizarRegistroPersistido(registro, dek) ?? undefined
   },
 
   async salvarRegistro(registro: Registro) {
+    const metadadosProtecao = await consultasBD.obterMetadadosProtecao()
+
+    if (metadadosProtecao?.criptografiaDados) {
+      const dek = gerenciadorChaves.obterDEK()
+      const registroCifrado = await cifrarRegistro(registro, dek)
+      await bd.registros.put(registroCifrado)
+      return registro
+    }
+
     await bd.registros.put(registro)
     return registro
   },
@@ -90,20 +168,46 @@ export const consultasBD = {
   },
 
   async obterPausaAtiva() {
-    return (await bd.pausas.where('status').equals('ativa').first()) ?? null
+    const dek = obterDEKSeDisponivel()
+    const pausaAtiva = await bd.pausas.where('status').equals('ativa').first()
+
+    if (!pausaAtiva) {
+      return null
+    }
+
+    return (await normalizarPausaPersistida(pausaAtiva, dek)) ?? null
   },
 
   async obterHistoricoPausa(limite?: number) {
-    const pausasPersistidas = await bd.pausas.orderBy('iniciadoEm').reverse().toArray() as PausaLegada[]
-    const pausas = pausasPersistidas.map(normalizarPausa)
+    const dek = obterDEKSeDisponivel()
+    const pausasPersistidas = await bd.pausas.orderBy('iniciadoEm').reverse().toArray()
+    const pausas = (await Promise.all(pausasPersistidas.map((pausa) => normalizarPausaPersistida(pausa, dek))))
+      .filter((pausa): pausa is Pausa => Boolean(pausa))
+
     return typeof limite === 'number' ? pausas.slice(0, limite) : pausas
   },
 
   async obterPausaPorId(id: string) {
-    return bd.pausas.get(id)
+    const dek = obterDEKSeDisponivel()
+    const pausa = await bd.pausas.get(id)
+
+    if (!pausa) {
+      return undefined
+    }
+
+    return normalizarPausaPersistida(pausa, dek) ?? undefined
   },
 
   async salvarPausa(pausa: Pausa) {
+    const metadadosProtecao = await consultasBD.obterMetadadosProtecao()
+
+    if (metadadosProtecao?.criptografiaDados) {
+      const dek = gerenciadorChaves.obterDEK()
+      const pausaCifrada = await cifrarPausa(pausa, dek)
+      await bd.pausas.put(pausaCifrada)
+      return pausa
+    }
+
     await bd.pausas.put(pausa)
     return pausa
   },
@@ -181,10 +285,11 @@ export const consultasBD = {
   },
 
   async importarTudo(dados: PersistenciaApp) {
-    return bd.transaction('rw', bd.registros, bd.pausas, bd.configuracoes, async () => {
+    return bd.transaction('rw', bd.registros, bd.pausas, bd.configuracoes, bd.protecao, async () => {
       await bd.registros.clear()
       await bd.pausas.clear()
       await bd.configuracoes.clear()
+      await bd.protecao.clear()
 
       await bd.registros.bulkPut(dados.registros)
       await bd.pausas.bulkPut(dados.pausas.map((pausa) => normalizarPausa(pausa as PausaLegada)))
