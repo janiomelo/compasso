@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, afterEach } from 'vitest'
+import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest'
 import type { Registro, Pausa } from '../../../src/tipos'
 import {
   calcularFrequencia,
@@ -40,11 +40,18 @@ const criarPausa = (overrides: Partial<Pausa> = {}): Pausa => ({
 // ────────────────────────────────────────────────────────────
 
 describe('calcularFrequencia — edge cases', () => {
-  afterEach(() => vi.restoreAllMocks())
+  beforeEach(() => {
+    vi.useFakeTimers({ toFake: ['Date'] })
+    vi.setSystemTime(new Date('2026-03-22T12:00:00.000Z'))
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
+    vi.restoreAllMocks()
+  })
 
   it('ignora registros exatamente fora do limite do período', () => {
-    const agora = new Date('2026-03-22T12:00:00.000Z').getTime()
-    vi.spyOn(Date, 'now').mockReturnValue(agora)
+    const agora = Date.now()
 
     const dentroLimite = criarRegistro({ timestamp: agora - 6 * 24 * 60 * 60 * 1000 + 1000 })
     const foraLimite = criarRegistro({ timestamp: agora - 8 * 24 * 60 * 60 * 1000 })

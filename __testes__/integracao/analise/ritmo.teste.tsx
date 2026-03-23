@@ -25,13 +25,14 @@ describe('analise de ritmo', () => {
   const diaMs = 24 * 60 * 60 * 1000
 
   beforeEach(async () => {
-    vi.restoreAllMocks()
-    vi.spyOn(Date, 'now').mockImplementation(() => agoraMock)
+    vi.useFakeTimers({ toFake: ['Date'] })
+    vi.setSystemTime(agoraMock)
     await bd.delete()
     await bd.open()
   })
 
   afterEach(() => {
+    vi.useRealTimers()
     vi.restoreAllMocks()
   })
 
@@ -49,6 +50,7 @@ describe('analise de ritmo', () => {
     const criarNoDia = async (diasAtras: number, quantidade: number, metodo: 'vapor' | 'flor' = 'vapor') => {
       for (let i = 0; i < quantidade; i += 1) {
         agoraMock = base - diasAtras * diaMs + i * 60000
+        vi.setSystemTime(agoraMock)
         await act(async () => {
           await result.current.registro.criar({
             metodo,
@@ -67,6 +69,7 @@ describe('analise de ritmo', () => {
     await criarNoDia(1, 3)
 
     agoraMock = base
+  vi.setSystemTime(agoraMock)
     rerender()
 
     await waitFor(() => {
@@ -95,6 +98,7 @@ describe('analise de ritmo', () => {
 
     for (let i = 0; i < entradas.length; i += 1) {
       agoraMock = base - i * 3600000
+      vi.setSystemTime(agoraMock)
       await act(async () => {
         await result.current.registro.criar({
           metodo: entradas[i].metodo,
