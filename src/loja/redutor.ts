@@ -6,7 +6,7 @@ export const estadoInicial: EstadoApp = {
   pausaAtiva: null,
   historicoPausa: [],
   configuracoes: {
-    valorEconomia: 100, // R$ 100 por consumo típico
+    valorEconomia: 100,
     moedaEconomia: 'BRL',
     tema: 'escuro',
     temaAuto: true,
@@ -14,7 +14,16 @@ export const estadoInicial: EstadoApp = {
     sonsAtivos: true,
     autoBackup14Dias: true,
     diasRetencaoDados: 365,
+    protecaoAtiva: false,
+    timeoutBloqueio: 15 * 60 * 1000,
+    manterDesbloqueadoNestaSessao: false,
   } as Configuracoes,
+  protecao: {
+    ativado: false,
+    desbloqueado: false,
+    timeoutBloqueioMs: 15 * 60 * 1000,
+    manterDesbloqueadoNestaSessao: false,
+  },
   ui: {
     carregando: false,
     modal: { aberto: false },
@@ -70,6 +79,17 @@ export const redutor = (estado: EstadoApp, acao: AcaoApp): EstadoApp => {
           ...estado.configuracoes,
           ...acao.payload,
         },
+        protecao: {
+          ...estado.protecao,
+          timeoutBloqueioMs:
+            typeof acao.payload.timeoutBloqueio === 'number'
+              ? acao.payload.timeoutBloqueio
+              : estado.protecao.timeoutBloqueioMs,
+          manterDesbloqueadoNestaSessao:
+            typeof acao.payload.manterDesbloqueadoNestaSessao === 'boolean'
+              ? acao.payload.manterDesbloqueadoNestaSessao
+              : estado.protecao.manterDesbloqueadoNestaSessao,
+        },
       }
 
     case 'DEFINIR_CARREGANDO':
@@ -83,6 +103,50 @@ export const redutor = (estado: EstadoApp, acao: AcaoApp): EstadoApp => {
 
     case 'REIDRATAR_ESTADO':
       return acao.payload
+
+    case 'ATIVAR_PROTECAO':
+      return {
+        ...estado,
+        protecao: acao.payload,
+        configuracoes: {
+          ...estado.configuracoes,
+          protecaoAtiva: true,
+        },
+      }
+
+    case 'DESATIVAR_PROTECAO':
+      return {
+        ...estado,
+        protecao: {
+          ativado: false,
+          desbloqueado: false,
+          timeoutBloqueioMs: estado.protecao.timeoutBloqueioMs,
+          manterDesbloqueadoNestaSessao: false,
+        },
+        configuracoes: {
+          ...estado.configuracoes,
+          protecaoAtiva: false,
+        },
+      }
+
+    case 'BLOQUEAR_APP':
+      return {
+        ...estado,
+        protecao: {
+          ...estado.protecao,
+          desbloqueado: false,
+        },
+      }
+
+    case 'DESBLOQUEAR_APP':
+      return {
+        ...estado,
+        protecao: {
+          ...estado.protecao,
+          desbloqueado: true,
+          ultimoDesbloqueioEm: Date.now(),
+        },
+      }
 
     default:
       return estado

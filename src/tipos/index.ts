@@ -99,6 +99,9 @@ export interface Configuracoes {
   autoBackup14Dias: boolean;
   diasRetencaoDados?: number;
   onboarding?: EstadoOnboarding;
+  protecaoAtiva: boolean;
+  timeoutBloqueio: number;
+  manterDesbloqueadoNestaSessao: boolean;
 }
 
 export interface EstadoOnboarding {
@@ -129,6 +132,7 @@ export interface EstadoApp {
   pausaAtiva: Pausa | null;
   historicoPausa: Pausa[];
   configuracoes: Configuracoes;
+  protecao: EstadoProteção;
   ui: EstadoUI;
   metadados: {
     ultimaSincronizacao: number;
@@ -168,4 +172,65 @@ export type AcaoApp =
   | { tipo: 'ENCERRAR_PAUSA'; payload: Pausa }
   | { tipo: 'DEFINIR_CONFIGURACAO'; payload: Partial<Configuracoes> }
   | { tipo: 'DEFINIR_CARREGANDO'; payload: boolean }
-  | { tipo: 'REIDRATAR_ESTADO'; payload: EstadoApp };
+  | { tipo: 'REIDRATAR_ESTADO'; payload: EstadoApp }
+  | { tipo: 'ATIVAR_PROTECAO'; payload: EstadoProteção }
+  | { tipo: 'DESATIVAR_PROTECAO' }
+  | { tipo: 'BLOQUEAR_APP' }
+  | { tipo: 'DESBLOQUEAR_APP' };
+
+// ============================================================
+// PROTEÇÃO E SEGURANÇA
+// ============================================================
+
+/**
+ * Metadados de proteção persistidos no banco
+ * Não inclui a chave descriptografada (DEK) — fica em memória
+ */
+export interface MetadadosProteção {
+  salt: string; // Base64: salt para KDF
+  paramsKdf: ParametrosKDF;
+  dekCriptografada: string; // Base64: DEK cifrada com KEK
+  ivDek: string; // Base64: IV usado para cifrar a DEK
+  tagDek: string; // Base64: tag de autenticação da DEK
+  criptografiaDados: boolean;
+  ativoDesdeEm: number; // timestamp de quando foi ativado
+}
+
+export interface RegistroProteção {
+  chave: 'principal';
+  valor: MetadadosProteção;
+}
+
+/**
+ * Estado de proteção da aplicação em runtime
+ */
+export interface EstadoProteção {
+  ativado: boolean;
+  desbloqueado: boolean;
+  ultimoDesbloqueioEm?: number;
+  timeoutBloqueioMs: number; // ms de inatividade antes de bloquear
+  manterDesbloqueadoNestaSessao: boolean;
+}
+
+/**
+ * Parâmetros do algoritmo KDF
+ * Permitir evolução (ex: de PBKDF2 para Argon2id no futuro)
+ */
+export interface ParametrosKDF {
+  algoritmo: 'pbkdf2-sha256' | 'argon2id';
+  // PBKDF2
+  iteracoes?: number; // ex: 100000
+  // Argon2id
+  memoria?: number; // em KB
+  paralelismo?: number;
+  tempo?: number;
+}
+
+/**
+ * Chave em memória durante a sessão
+ * Nunca deve ser persistida
+ */
+export interface ChaveSessionProteção {
+  dek: CryptoKey; // Data Encryption Key (AES-256)
+  descartarEm: number; // timestamp quando deve limpar da memória
+}

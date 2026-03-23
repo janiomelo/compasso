@@ -50,6 +50,12 @@ const normalizarConfiguracoes = (configuracoes?: Configuracoes): Configuracoes =
     ...estadoInicial.configuracoes,
     ...configuracoes,
     onboarding: normalizarOnboarding(configuracoes.onboarding),
+    protecaoAtiva: Boolean(configuracoes.protecaoAtiva),
+    timeoutBloqueio:
+      typeof configuracoes.timeoutBloqueio === 'number'
+        ? configuracoes.timeoutBloqueio
+        : estadoInicial.configuracoes.timeoutBloqueio,
+    manterDesbloqueadoNestaSessao: Boolean(configuracoes.manterDesbloqueadoNestaSessao),
   }
 }
 
@@ -207,13 +213,20 @@ export async function importarDados(
 export async function hidratarEstado(): Promise<EstadoApp> {
   const { registros, pausas, configuracoes } = await consultasBD.obterEstadoPersistido()
   const pausaAtiva = pausas.find((pausa) => pausa.status === 'ativa') ?? null
+  const configuracoesNormalizadas = normalizarConfiguracoes(configuracoes)
 
   return {
     ...estadoInicial,
     registros,
     pausaAtiva,
     historicoPausa: pausas,
-    configuracoes: normalizarConfiguracoes(configuracoes),
+    configuracoes: configuracoesNormalizadas,
+    protecao: {
+      ativado: configuracoesNormalizadas.protecaoAtiva,
+      desbloqueado: !configuracoesNormalizadas.protecaoAtiva,
+      timeoutBloqueioMs: configuracoesNormalizadas.timeoutBloqueio,
+      manterDesbloqueadoNestaSessao: configuracoesNormalizadas.manterDesbloqueadoNestaSessao,
+    },
     metadados: {
       ...estadoInicial.metadados,
       ultimaSincronizacao: Date.now(),

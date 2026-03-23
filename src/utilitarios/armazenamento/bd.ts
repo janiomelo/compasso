@@ -2,11 +2,13 @@ import Dexie, { Table } from 'dexie'
 import type {
   BackupLocal,
   Configuracoes,
+  MetadadosProteção,
   OrigemBackup,
   Pausa,
   PersistenciaApp,
   Registro,
   RegistroConfiguracao,
+  RegistroProteção,
 } from '../../tipos'
 import { NOME_BD, VERSAO_APP } from '../constantes'
 
@@ -14,6 +16,7 @@ class BancoCompasso extends Dexie {
   registros!: Table<Registro, string>
   pausas!: Table<Pausa, string>
   configuracoes!: Table<RegistroConfiguracao, 'principal'>
+  protecao!: Table<RegistroProteção, 'principal'>
   backups!: Table<BackupLocal, number>
 
   constructor() {
@@ -30,6 +33,14 @@ class BancoCompasso extends Dexie {
       registros: 'id, timestamp, metodo, intencao',
       pausas: 'id, iniciadoEm, status',
       configuracoes: 'chave',
+      backups: '++id, criadoEm, origem',
+    })
+
+    this.version(3).stores({
+      registros: 'id, timestamp, metodo, intencao',
+      pausas: 'id, iniciadoEm, status',
+      configuracoes: 'chave',
+      protecao: 'chave',
       backups: '++id, criadoEm, origem',
     })
   }
@@ -108,6 +119,21 @@ export const consultasBD = {
     return registro?.valor
   },
 
+  async salvarMetadadosProtecao(metadados: MetadadosProteção) {
+    const registro: RegistroProteção = { chave: 'principal', valor: metadados }
+    await bd.protecao.put(registro)
+    return registro
+  },
+
+  async obterMetadadosProtecao() {
+    const registro = await bd.protecao.get('principal')
+    return registro?.valor
+  },
+
+  async limparMetadadosProtecao() {
+    await bd.protecao.delete('principal')
+  },
+
   async salvarBackup(dados: PersistenciaApp, origem: OrigemBackup = 'automatico') {
     const backup: BackupLocal = {
       criadoEm: Date.now(),
@@ -167,10 +193,11 @@ export const consultasBD = {
   },
 
   async limparTudo() {
-    return bd.transaction('rw', bd.registros, bd.pausas, bd.configuracoes, bd.backups, async () => {
+    return bd.transaction('rw', bd.registros, bd.pausas, bd.configuracoes, bd.protecao, bd.backups, async () => {
       await bd.registros.clear()
       await bd.pausas.clear()
       await bd.configuracoes.clear()
+      await bd.protecao.clear()
       await bd.backups.clear()
     })
   },
