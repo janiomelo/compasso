@@ -11,6 +11,12 @@ import {
 } from '../../../src/servicos/servicoDados'
 import type { Configuracoes } from '../../../src/tipos'
 import { VERSAO_APP } from '../../../src/utilitarios/constantes'
+import { derivarChavePBKDF2 } from '../../../src/utilitarios/seguranca/kdf'
+import { cifrar, exportarChave, gerarChaveDEK } from '../../../src/utilitarios/seguranca/criptografia'
+import { consultasBD } from '../../../src/utilitarios/armazenamento/bd'
+import { gerenciadorChaves } from '../../../src/utilitarios/seguranca/gerenciadorChaves'
+
+const bytesParaBase64 = (bytes: Uint8Array): string => btoa(String.fromCharCode(...bytes))
 
 const configuracoesBase: Configuracoes = {
   valorEconomia: 90,
@@ -21,6 +27,9 @@ const configuracoesBase: Configuracoes = {
   sonsAtivos: true,
   autoBackup14Dias: true,
   diasRetencaoDados: 180,
+  protecaoAtiva: false,
+  timeoutBloqueio: 30 * 60 * 1000,
+  manterDesbloqueadoNestaSessao: false,
 }
 
 describe('servicoDados: importacao e exportacao', () => {
@@ -29,11 +38,13 @@ describe('servicoDados: importacao e exportacao', () => {
   beforeEach(async () => {
     vi.restoreAllMocks()
     vi.spyOn(Date, 'now').mockImplementation(() => agoraMock)
+    gerenciadorChaves.limparDEK()
     await bd.delete()
     await bd.open()
   })
 
   afterEach(() => {
+    gerenciadorChaves.limparDEK()
     vi.restoreAllMocks()
   })
 
@@ -210,5 +221,67 @@ describe('servicoDados: importacao e exportacao', () => {
     // Se houve rollback, estado anterior permanece intacto.
     expect(estadoAposFalha.registros).toHaveLength(1)
     expect(estadoAposFalha.registros[0].metodo).toBe('vapor')
+  })
+
+  it('exporta e importa backup criptografado com senha quando protecao esta ativa', async () => {
+    const senha = 'senha-super-segura-123'
+
+    const resultadoKdf = await derivarChavePBKDF2(senha)
+    const dek = await gerarChaveDEK()
+    const dekRaw = await exportarChave(dek)
+    const dekCriptografada = await cifrar(dekRaw, resultadoKdf.kek)
+
+    await consultasBD.salvarMetadadosProtecao({
+      salt: bytesParaBase64(resultadoKdf.salt),
+      paramsKdf: {
+        algoritmo: resultadoKdf.parametros.algoritmo,
+        iteracoes: resultadoKdf.parametros.iteracoes,
+      },
+      dekCriptografada: bytesParaBase64(dekCriptografada.ciphertext),
+      ivDek: bytesParaBase64(dekCriptografada.iv),
+      tagDek: bytesParaBase64(dekCriptografada.tag),
+      criptografiaDados: true,
+      ativoDesdeEm: Date.now(),
+    })
+
+    gerenciadorChaves.guardarDEK(dek, 5 * 60 * 1000)
+
+    await salvarConfiguracoes({
+      ...configuracoesBase,
+      protecaoAtiva: true,
+    })
+
+    await criarRegistro({ metodo: 'vapor', intencao: 'foco', intensidade: 'media' })
+
+    const exportacao = await exportarDados()
+    expect(exportacao.nomeArquivo.endsWith('.enc.json.gz')).toBe(true)
+
+    await bd.transaction('rw', bd.registros, bd.pausas, bd.configuracoes, bd.protecao, async () => {
+      await bd.registros.clear()
+      await bd.pausas.clear()
+      await bd.configuracoes.clear()
+      await bd.protecao.clear()
+    })
+
+    gerenciadorChaves.limparDEK()
+
+    const resultadoImport = await importarDados(exportacao.conteudo, { senha })
+    expect(resultadoImport.sucesso).toBe(true)
+    expect(resultadoImport.erros).toHaveLength(0)
+
+    const restaurado = await hidratarEstado()
+    expect(restaurado.registros).toHaveLength(1)
+    expect(restaurado.registros[0].metodo).toBe('vapor')
+  })
+
+  it('falha ao importar backup criptografado sem senha e app bloqueado', async () => {
+    const senha = 'senha-super-segura-456'
+    const exportacao = await exportarDados({ senhaBkp: senha })
+
+    gerenciadorChaves.limparDEK()
+    const resultado = await importarDados(exportacao.conteudo)
+
+    expect(resultado.sucesso).toBe(false)
+    expect(resultado.erros.length).toBeGreaterThan(0)
   })
 })

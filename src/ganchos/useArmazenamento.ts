@@ -38,9 +38,13 @@ export const useArmazenamento = () => {
     (opcoes?: { origemPreferencial?: OrigemBackup }) => executar(() => restaurarBackupLocal(opcoes)),
     [executar],
   )
-  const exportarDadosPersistidos = useCallback(() => executar(() => exportarDados()), [executar])
+  const exportarDadosPersistidos = useCallback(
+    (opcoes?: { senhaBkp?: string }) => executar(() => exportarDados(opcoes)),
+    [executar],
+  )
   const importarDadosPersistidos = useCallback(
-    (arquivo: File | Blob | Uint8Array | ArrayBuffer) => executar(() => importarDados(arquivo)),
+    (arquivo: File | Blob | Uint8Array | ArrayBuffer, opcoes?: { senha?: string }) =>
+      executar(() => importarDados(arquivo, opcoes)),
     [executar],
   )
   const validarPersistenciaLocal = useCallback(() => executar(() => validarPersistencia()), [executar])
