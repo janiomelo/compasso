@@ -2,27 +2,34 @@ import { ChevronLeft, ExternalLink, ShieldCheck } from 'lucide-react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useApp, useArmazenamento } from '../../ganchos'
+import { useProteção } from '../../ganchos/useProtecao'
 import { VERSAO_POLITICA_PRIVACIDADE, VERSAO_TERMOS_USO } from '../../utilitarios/constantes'
 import styles from './pagina-onboarding.module.scss'
 
 const URL_SOBRE_PROJETO = 'https://github.com/janiomelo/compasso/blob/main/docs/transparencia/SOBRE-E-TRANSPARENCIA.md'
 const URL_POLITICA = 'https://github.com/janiomelo/compasso/blob/main/docs/transparencia/POLITICA-DE-PRIVACIDADE.md'
 const URL_TERMOS = 'https://github.com/janiomelo/compasso/blob/main/docs/transparencia/TERMOS-DE-USO.md'
+const URL_DADOS_SEGURANCA = 'https://github.com/janiomelo/compasso/blob/main/docs/transparencia/DADOS-LOCAIS-E-SEGURANCA.md'
 
-const TOTAL_ETAPAS = 5
+const TOTAL_ETAPAS = 6
 
 export const PaginaOnboarding = ({ modoRevisao = false }: { modoRevisao?: boolean }) => {
   const navegar = useNavigate()
   const { estado, despacho } = useApp()
   const { salvarConfiguracoes, carregando } = useArmazenamento()
+  const { ativarProtecao } = useProteção()
 
   const [etapaAtual, setEtapaAtual] = useState(1)
   const [confirmouMaioridade, setConfirmouMaioridade] = useState(false)
   const [aceitouTermosPrivacidade, setAceitouTermosPrivacidade] = useState(false)
+  const [querProtegerAgora, setQuerProtegerAgora] = useState(false)
+  const [senhaProtecao, setSenhaProtecao] = useState('')
+  const [confirmacaoSenhaProtecao, setConfirmacaoSenhaProtecao] = useState('')
   const [erro, setErro] = useState<string | null>(null)
 
   const avancar = () => {
     setErro(null)
+
     setEtapaAtual((etapa) => Math.min(TOTAL_ETAPAS, etapa + 1))
   }
 
@@ -31,7 +38,7 @@ export const PaginaOnboarding = ({ modoRevisao = false }: { modoRevisao?: boolea
     setEtapaAtual((etapa) => Math.max(1, etapa - 1))
   }
 
-  const concluirOnboarding = async () => {
+  const concluirOnboarding = async (ativarProtecaoAgora = false) => {
     if (modoRevisao) {
       navegar('/config', { replace: true })
       return
@@ -50,13 +57,38 @@ export const PaginaOnboarding = ({ modoRevisao = false }: { modoRevisao?: boolea
     try {
       setErro(null)
 
+      const protecaoAtivaNoFluxo = !modoRevisao && ativarProtecaoAgora
+
+      if (protecaoAtivaNoFluxo) {
+        if (senhaProtecao.length < 8) {
+          setErro('Use uma senha com pelo menos 8 caracteres para ativar a proteção.')
+          return
+        }
+
+        if (senhaProtecao !== confirmacaoSenhaProtecao) {
+          setErro('A confirmação da senha não confere.')
+          return
+        }
+      }
+
+      if (protecaoAtivaNoFluxo) {
+        await ativarProtecao(senhaProtecao)
+      }
+
       const novasConfiguracoes = {
         ...estado.configuracoes,
         onboarding,
+        protecaoAtiva: estado.configuracoes.protecaoAtiva || protecaoAtivaNoFluxo,
       }
 
       await salvarConfiguracoes(novasConfiguracoes)
-      despacho({ tipo: 'DEFINIR_CONFIGURACAO', payload: { onboarding } })
+      despacho({
+        tipo: 'DEFINIR_CONFIGURACAO',
+        payload: {
+          onboarding,
+          protecaoAtiva: estado.configuracoes.protecaoAtiva || protecaoAtivaNoFluxo,
+        },
+      })
       navegar('/', { replace: true })
     } catch {
       setErro('Não foi possível concluir o onboarding agora. Tente novamente em instantes.')
@@ -65,6 +97,13 @@ export const PaginaOnboarding = ({ modoRevisao = false }: { modoRevisao?: boolea
 
   return (
     <div className={styles.pagina}>
+      <div className={styles.marcaOnboarding} aria-label="Compasso">
+        <span className={styles.marcaOnboardingIcone}>
+          <img src="/brand/compasso-navbar.svg" alt="" aria-hidden="true" />
+        </span>
+        <span className={styles.marcaOnboardingTexto}>Compasso</span>
+      </div>
+
       <header className={styles.cabecalhoCompacto}>
         <span className={styles.eyebrow}>{modoRevisao ? 'Revisão do onboarding' : 'Primeiro acesso'}</span>
         <p className={styles.subtitulo}>Etapa {etapaAtual} de {TOTAL_ETAPAS}</p>
@@ -82,9 +121,9 @@ export const PaginaOnboarding = ({ modoRevisao = false }: { modoRevisao?: boolea
 
         {etapaAtual === 1 && (
           <article className={styles.etapa}>
-            <h1>Um espaço pessoal para acompanhar seu ritmo</h1>
+            <h1>Bem-vindo ao Compasso</h1>
             <p>
-              Registre momentos, acompanhe pausas e observe seu equilíbrio recente com uma rotina simples e privada por padrão.
+              Registre momentos, acompanhe pausas e observe seu ritmo com uma experiência simples e privada por padrão.
             </p>
             <div className={styles.acoes}>
               <button type="button" className={styles.botaoPrimario} onClick={avancar}>
@@ -113,7 +152,7 @@ export const PaginaOnboarding = ({ modoRevisao = false }: { modoRevisao?: boolea
                 Voltar
               </button>
               <button type="button" className={styles.botaoPrimario} onClick={avancar}>
-                Entender e continuar
+                Entendi e quero continuar
               </button>
             </div>
           </article>
@@ -125,7 +164,7 @@ export const PaginaOnboarding = ({ modoRevisao = false }: { modoRevisao?: boolea
             <ul>
               <li>Seus registros ficam neste dispositivo.</li>
               <li>O uso não depende de conta obrigatória nesta fase.</li>
-              <li>Você pode exportar, importar ou apagar os dados quando quiser.</li>
+              <li>Você pode exportar, importar ou apagar seus dados quando quiser.</li>
             </ul>
             <div className={styles.acoes}>
               <button type="button" className={styles.botaoSecundario} onClick={voltar}>
@@ -183,7 +222,7 @@ export const PaginaOnboarding = ({ modoRevisao = false }: { modoRevisao?: boolea
               <h1>Aceite e início</h1>
             </div>
             <p>
-              Para usar o Compasso, você precisa concordar com os Termos de Uso e a Política de Privacidade desta fase do projeto.
+              Para usar o Compasso, você precisa concordar com os Termos de Uso e a Política de Privacidade.
             </p>
 
             <label className={styles.checkboxLinha}>
@@ -214,11 +253,107 @@ export const PaginaOnboarding = ({ modoRevisao = false }: { modoRevisao?: boolea
               <button
                 type="button"
                 className={styles.botaoPrimario}
-                onClick={() => void concluirOnboarding()}
+                onClick={avancar}
                 disabled={(!modoRevisao && !aceitouTermosPrivacidade) || carregando}
               >
-                {modoRevisao ? 'Voltar para Configurações' : 'Entrar no Compasso'}
+                {modoRevisao ? 'Voltar para Configurações' : 'Continuar'}
               </button>
+            </div>
+          </article>
+        )}
+
+        {etapaAtual === 6 && (
+          <article className={styles.etapa}>
+            <div className={styles.tituloComIcone}>
+              <ShieldCheck size={20} />
+              <h1>Quer ativar proteção por senha?</h1>
+            </div>
+
+            <p>Se você ativar, seus dados locais ficam criptografados neste dispositivo.</p>
+
+            <div className={styles.blocoExplicacao}>
+              <p>O que isso significa:</p>
+              <ul>
+                <li>o app pedirá desbloqueio para abrir;</li>
+                <li>os dados protegidos não ficam legíveis sem a senha correta;</li>
+                <li>você pode ativar isso agora ou depois.</li>
+              </ul>
+            </div>
+
+            <a href={URL_DADOS_SEGURANCA} target="_blank" rel="noreferrer" className={styles.linkSecundario}>
+              <span>Entender como essa proteção funciona</span>
+              <ExternalLink size={14} />
+            </a>
+
+            {modoRevisao ? (
+              <p className={styles.observacaoProtecao}>
+                A proteção por senha pode ser ativada ou alterada em Configurações.
+              </p>
+            ) : (
+              <>
+                {querProtegerAgora && (
+                  <div className={styles.formProtecao}>
+                    <label htmlFor="onboarding-senha-protecao">Senha</label>
+                    <input
+                      id="onboarding-senha-protecao"
+                      type="password"
+                      value={senhaProtecao}
+                      onChange={(evento) => setSenhaProtecao(evento.target.value)}
+                      autoComplete="new-password"
+                      placeholder="Mínimo de 8 caracteres"
+                    />
+
+                    <label htmlFor="onboarding-confirmacao-senha-protecao">Confirmar senha</label>
+                    <input
+                      id="onboarding-confirmacao-senha-protecao"
+                      type="password"
+                      value={confirmacaoSenhaProtecao}
+                      onChange={(evento) => setConfirmacaoSenhaProtecao(evento.target.value)}
+                      autoComplete="new-password"
+                      placeholder="Repita a senha"
+                    />
+                  </div>
+                )}
+              </>
+            )}
+
+            <div className={styles.acoes}>
+              <button type="button" className={styles.botaoSecundario} onClick={voltar}>
+                <ChevronLeft size={16} />
+                Voltar
+              </button>
+
+              <div className={styles.acoesDireita}>
+                {!modoRevisao && !querProtegerAgora && (
+                  <>
+                    <button
+                      type="button"
+                      className={styles.botaoSecundario}
+                      onClick={() => {
+                        setQuerProtegerAgora(true)
+                        setErro(null)
+                      }}
+                    >
+                      Ativar agora
+                    </button>
+                    <button type="button" className={styles.botaoPrimario} onClick={() => void concluirOnboarding(false)}>
+                      Fazer isso depois
+                    </button>
+                  </>
+                )}
+
+                {modoRevisao && (
+                  <button type="button" className={styles.botaoPrimario} onClick={() => void concluirOnboarding(false)}>
+                    Voltar para Configurações
+                  </button>
+                )}
+
+                {!modoRevisao && querProtegerAgora && (
+                  <button type="button" className={styles.botaoPrimario} onClick={() => void concluirOnboarding(true)} disabled={carregando}>
+                    Ativar proteção e entrar
+                  </button>
+                )}
+              </div>
             </div>
           </article>
         )}

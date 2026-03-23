@@ -8,6 +8,36 @@
   gap: $espaco-md;
 }
 
+.marcaOnboarding {
+  display: inline-flex;
+  align-items: center;
+  gap: $espaco-xs;
+  align-self: flex-start;
+  padding: 0.45rem 0.7rem;
+  border-radius: $raio-pill;
+  border: 1px solid var(--borda-suave);
+  background: rgba($cor-acento-principal, 0.08);
+  color: var(--cor-texto-primaria);
+}
+
+.marcaOnboardingIcone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 1.2rem;
+    height: 1.2rem;
+    display: block;
+  }
+}
+
+.marcaOnboardingTexto {
+  font-size: $tamanho-pequeno;
+  font-weight: $peso-semibold;
+  letter-spacing: 0.01em;
+}
+
 .cabecalhoCompacto {
   display: flex;
   justify-content: space-between;
@@ -171,6 +201,50 @@
   display: flex;
   flex-wrap: wrap;
   gap: $espaco-sm;
+}
+
+.formProtecao {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-xs;
+
+  label {
+    color: var(--cor-texto-secundaria);
+    font-size: $tamanho-pequeno;
+  }
+
+  input {
+    border: 1px solid var(--borda-suave);
+    border-radius: $raio-md;
+    background: var(--superficie-cartao);
+    color: var(--cor-texto-primaria);
+    padding: 0.75rem 0.85rem;
+  }
+}
+
+.observacaoProtecao {
+  margin: 0;
+  border: 1px solid var(--borda-suave);
+  border-radius: $raio-md;
+  padding: 0.85rem 0.95rem;
+  background: var(--superficie-sutil);
+}
+
+.blocoExplicacao {
+  border: 1px solid var(--borda-suave);
+  border-radius: $raio-md;
+  padding: 0.95rem;
+  background: var(--superficie-sutil);
+
+  p {
+    margin: 0 0 $espaco-xs;
+    color: var(--cor-texto-primaria);
+    font-weight: $peso-semibold;
+  }
+
+  ul {
+    margin: 0;
+  }
 }
 
 .mensagemErro {

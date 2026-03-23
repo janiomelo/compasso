@@ -39,7 +39,7 @@ describe('Onboarding — fluxo inicial', () => {
 
     await waitFor(() => {
       expect(screen.getByText('Primeiro acesso')).toBeDefined()
-      expect(screen.getByText('Um espaço pessoal para acompanhar seu ritmo')).toBeDefined()
+      expect(screen.getByText('Bem-vindo ao Compasso')).toBeDefined()
     })
   })
 
@@ -48,7 +48,7 @@ describe('Onboarding — fluxo inicial', () => {
     render(<App />)
 
     await waitFor(() => {
-      expect(screen.getByText('Um espaço pessoal para acompanhar seu ritmo')).toBeDefined()
+      expect(screen.getByText('Bem-vindo ao Compasso')).toBeDefined()
     })
   })
 
@@ -57,21 +57,51 @@ describe('Onboarding — fluxo inicial', () => {
     render(<App />)
 
     await waitFor(() => {
-      expect(screen.getByText('Um espaço pessoal para acompanhar seu ritmo')).toBeDefined()
+      expect(screen.getByText('Bem-vindo ao Compasso')).toBeDefined()
     })
 
     fireEvent.click(screen.getByText('Começar'))
-    fireEvent.click(screen.getByText('Entender e continuar'))
+    fireEvent.click(screen.getByText('Entendi e quero continuar'))
     fireEvent.click(screen.getByRole('button', { name: 'Continuar' }))
 
     fireEvent.click(screen.getByLabelText('Confirmo que tenho 18 anos ou mais'))
     fireEvent.click(screen.getByRole('button', { name: 'Continuar' }))
 
     fireEvent.click(screen.getByLabelText('Li e aceito os Termos de Uso e a Política de Privacidade'))
-    fireEvent.click(screen.getByRole('button', { name: 'Entrar no Compasso' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Continuar' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Fazer isso depois' }))
 
     await waitFor(() => {
       expect(screen.getByText('Seu compasso recente')).toBeDefined()
+    })
+  })
+
+  it('deve permitir ativar protecao durante o onboarding', async () => {
+    window.history.pushState({}, '', '/onboarding')
+    render(<App />)
+
+    await waitFor(() => {
+      expect(screen.getByText('Bem-vindo ao Compasso')).toBeDefined()
+    })
+
+    fireEvent.click(screen.getByText('Começar'))
+    fireEvent.click(screen.getByText('Entendi e quero continuar'))
+    fireEvent.click(screen.getByRole('button', { name: 'Continuar' }))
+    fireEvent.click(screen.getByLabelText('Confirmo que tenho 18 anos ou mais'))
+    fireEvent.click(screen.getByRole('button', { name: 'Continuar' }))
+
+    fireEvent.click(screen.getByLabelText('Li e aceito os Termos de Uso e a Política de Privacidade'))
+    fireEvent.click(screen.getByRole('button', { name: 'Continuar' }))
+
+    fireEvent.click(screen.getByRole('button', { name: 'Ativar agora' }))
+    fireEvent.change(screen.getByLabelText('Senha'), { target: { value: 'senha-forte-123' } })
+    fireEvent.change(screen.getByLabelText('Confirmar senha'), { target: { value: 'senha-forte-123' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Ativar proteção e entrar' }))
+
+    await waitFor(async () => {
+      expect(screen.getByText('Seu compasso recente')).toBeDefined()
+      const configuracoes = await bd.configuracoes.get('principal')
+      expect(configuracoes?.valor.protecaoAtiva).toBe(true)
     })
   })
 
