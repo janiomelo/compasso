@@ -1,6 +1,6 @@
 # Dados Locais e Segurança — Compasso
 
-Última atualização: 22/03/2026
+Última atualização: 23/03/2026
 
 ## Objetivo
 
@@ -16,6 +16,14 @@ Isso inclui, entre outros:
 - pausas e histórico de pausas;
 - configurações de uso.
 
+Quando proteção local está ativa, os dados principais de registros e pausas passam a ser gravados com criptografia em repouso.
+
+## 1.1. Proteção por senha local
+
+- a pessoa usuária pode ativar senha local no app;
+- o desbloqueio é exigido após bloqueio manual ou inatividade;
+- a senha não cria conta remota e não transfere dados para servidor.
+
 ## 2. Exportação, importação e restauração
 
 Operações disponíveis no app:
@@ -24,11 +32,14 @@ Operações disponíveis no app:
 - importar arquivo;
 - restaurar backup.
 
+No estado atual, há suporte a pacote de exportação/importação criptografado, além do pacote plano.
+
 Essas operações dependem de ação explícita da pessoa usuária.
 
 ## 3. Backup
 
 - backup manual pode ser gerado no app;
+- backups podem ser exportados em formato criptografado quando proteção/senha estiver ativa;
 - backups exportados passam a depender do local onde forem guardados (dispositivo, pasta sincronizada, nuvem pessoal, etc.).
 
 ## 4. Apagar dados
@@ -47,6 +58,8 @@ A proteção real também depende de:
 - segurança do navegador;
 - configurações do sistema operacional;
 - cuidado com arquivos exportados.
+
+Mesmo com proteção local, não há promessa de segurança absoluta.
 
 ## 6. Transparência no produto
 

@@ -31,7 +31,7 @@ const LINKS = [
   },
   {
     titulo: 'Dados locais e segurança',
-    descricao: 'Página operacional com backup, exportação, importação, restauração e limpeza.',
+    descricao: 'Página operacional com backup, proteção por senha, criptografia local e ações de dados.',
     href: '/config/dados-locais-seguranca',
     externo: false,
     icone: ShieldCheck,
@@ -71,7 +71,7 @@ export const PaginaPrivacidadeTransparencia = () => {
         <span className={styles.eyebrow}>Configurações</span>
         <h1 className={styles.titulo}>Privacidade e transparência</h1>
         <p className={styles.subtitulo}>
-          O essencial sobre dados, escopo do produto e formas de verificação nesta fase do Compasso.
+          O essencial sobre dados, proteção local por senha e formas de verificação nesta fase do Compasso.
         </p>
       </header>
 
@@ -83,7 +83,7 @@ export const PaginaPrivacidadeTransparencia = () => {
           <h2>Resumo rápido</h2>
           <p>
             Seus dados ficam neste dispositivo por padrão. O Compasso não exige conta nesta fase e
-            não foi criado como ferramenta clínica ou terapêutica.
+            oferece proteção local com criptografia em repouso quando ativada.
           </p>
         </div>
       </section>
@@ -109,6 +109,8 @@ export const PaginaPrivacidadeTransparencia = () => {
           <h2>Tratamento de dados nesta fase</h2>
           <ul>
             <li>Armazenamento local neste navegador e dispositivo.</li>
+            <li>Proteção local por senha com bloqueio por inatividade.</li>
+            <li>Criptografia em repouso de registros e pausas quando proteção está ativa.</li>
             <li>Exportação manual sob seu controle.</li>
             <li>Importação e restauração por ação explícita da pessoa usuária.</li>
             <li>Sem conta obrigatória nesta fase.</li>

@@ -2,6 +2,11 @@
 
 Compasso é um web app mobile-first de autoconsciência e equilíbrio de hábitos, com foco em privacidade local, redução de danos e linguagem brasileira acessível.
 
+## Atualizações recentes
+
+- Fase 8.5: proteção local por senha, bloqueio automático por inatividade, criptografia em repouso e exportação/importação com suporte a pacote criptografado.
+- Fase 8.6 (em andamento): fluxo de registro migrado para árvore configurável de perguntas, com etapa de conclusão e evolução incremental guiada por configuração.
+
 ## Base do projeto
 
 Este README permanece como documento-base e ponto de entrada do repositorio.

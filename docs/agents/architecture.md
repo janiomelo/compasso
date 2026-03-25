@@ -1,6 +1,6 @@
 # Arquitetura técnica — Compasso
 
-**Última atualização:** março de 2026
+**Última atualização:** 23 de março de 2026
 
 ---
 
@@ -87,8 +87,16 @@ src/
 ### Persistência (`bd.ts`)
 
 - Instância única do Dexie.
-- Tabelas: `registros`, `pausas`, `configuracoes`, `backups`.
+- Tabelas: `registros`, `pausas`, `configuracoes`, `protecao`, `backups`.
 - Acesso via serviços ou hook `useArmazenamento`.
+
+### Segurança local e proteção por senha
+
+- Proteção local opcional por senha com derivação de chave via PBKDF2-SHA256.
+- Modelo DEK/KEK para separar chave de dados da chave derivada da senha.
+- Criptografia em repouso de registros e pausas com AES-256-GCM quando proteção está ativa.
+- Tela de bloqueio no app para exigir desbloqueio após inatividade ou bloqueio manual.
+- Exportação com suporte a pacote criptografado (`.enc.json.gz`) quando há proteção ativa ou senha de backup informada.
 
 ---
 
@@ -123,8 +131,8 @@ Todas as rotas são lazy-loaded com `React.lazy` + `Suspense`:
 
 - IndexedDB via Dexie para dados de domínio.
 - `localStorage` para timestamps de eventos operacionais (`CHAVES_EVENTOS`).
-- Exportação: JSON serializado + compressão gzip (pako) → arquivo `.json.gz`.
-- Importação: descompressão + validação de versão + migração de legado + rollback em falha.
+- Exportação: JSON serializado + compressão gzip (pako) e suporte a envelope criptografado AES-256-GCM (`.enc.json.gz`).
+- Importação: descompressão + validação de versão + suporte a pacote plano/criptografado + rollback em falha.
 - Backup automático e manual com política de retenção por origem.
 
 ---
@@ -134,4 +142,5 @@ Todas as rotas são lazy-loaded com `React.lazy` + `Suspense`:
 - `npm run type-check`: OK
 - `npm run lint`: OK (zero warnings)
 - `npm run build`: OK
-- `npm run coverage`: 98 testes passando; thresholds atingidos
+- `npm run coverage`: thresholds atingidos
+- Suíte recente validada: 22 arquivos de teste e 143 testes passando

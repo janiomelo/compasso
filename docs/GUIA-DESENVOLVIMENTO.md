@@ -40,6 +40,14 @@ npm install
 | `npm test` | Vitest em modo watch |
 | `npm run coverage` | Vitest + cobertura v8 (relatório em `coverage/`) |
 
+## Segurança local e criptografia (estado atual)
+
+- Proteção opcional por senha local com derivação PBKDF2-SHA256.
+- Criptografia em repouso de registros e pausas com AES-256-GCM quando proteção está ativa.
+- Bloqueio automático por inatividade e desbloqueio no app.
+- Exportação/importação com suporte a pacote criptografado (`.enc.json.gz`) além do pacote plano.
+- Modelo de chaves com separação DEK/KEK, mantendo foco em privacidade por padrão.
+
 ### Gate completo antes de commitar
 
 ```bash

@@ -1,6 +1,6 @@
 # Política de Privacidade — Compasso
 
-**Última atualização:** 22 de março de 2026
+**Última atualização:** 23 de março de 2026
 
 ## 1. Apresentação
 
@@ -31,6 +31,8 @@ Na fase atual do projeto, o Compasso foi desenhado para funcionar com **armazena
 Isso significa, em regra, que:
 
 - seus registros de uso, pausas e preferências ficam salvos **neste dispositivo e neste navegador**;
+- você pode ativar **proteção local por senha**;
+- com proteção ativa, registros e pausas passam a usar **criptografia em repouso**;
 - o Compasso **não exige conta obrigatória** para funcionar;
 - o Compasso **não depende, nesta fase, de envio rotineiro dos seus registros pessoais para um servidor próprio** para entregar o uso básico do produto.
 
@@ -43,6 +45,7 @@ Dependendo da forma como você usa o Compasso, o aplicativo pode tratar categori
 - registros de momentos lançados por você;
 - informações sobre pausas iniciadas, concluídas ou interrompidas;
 - método, intenção, intensidade e outros campos que você decidir preencher;
+- observações opcionais e dados de contexto informados por você;
 - preferências de interface, como tema e opções locais;
 - arquivos exportados ou importados por você;
 - dados técnicos mínimos necessários para manter persistência, integridade ou restauração local.
@@ -77,7 +80,9 @@ O Compasso adota, como diretriz, o princípio de que seus dados devem permanecer
 Por isso, na fase atual:
 
 - o armazenamento principal é local;
+- há suporte a proteção por senha local e bloqueio por inatividade no app;
 - exportações devem partir de ação voluntária sua;
+- exportações podem usar pacote criptografado quando proteção/senha estiver ativa;
 - importações e restaurações dependem de escolha explícita;
 - apagar dados locais deve ser uma ação disponível e clara.
 
@@ -90,6 +95,7 @@ Na arquitetura atual do produto, o Compasso busca **não compartilhar rotineiram
 Ainda assim, pode haver situações específicas em que dados sejam expostos a outros contextos, por exemplo:
 
 - quando você exporta um arquivo manualmente;
+- quando você compartilha externamente um arquivo exportado (plano ou criptografado);
 - quando você importa um backup;
 - quando você restaura dados exportados anteriormente;
 - quando o navegador, o sistema operacional, extensões ou outras ferramentas do seu ambiente interferem no armazenamento local;

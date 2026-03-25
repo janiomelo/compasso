@@ -65,6 +65,7 @@ export const PaginaSobreProjeto = () => {
           <ul>
             <li>Clareza acima de discurso vago.</li>
             <li>Dados sob controle da pessoa usuária.</li>
+            <li>Proteção local por senha e criptografia em repouso como compromisso de privacidade.</li>
             <li>Linguagem brasileira direta e respeitosa.</li>
             <li>Transparência verificável em documentação e produto.</li>
           </ul>

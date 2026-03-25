@@ -1,6 +1,6 @@
 # Sobre e Transparência — Compasso
 
-Última atualização: 22/03/2026
+Última atualização: 23/03/2026
 
 ## Por que o Compasso existe
 
@@ -23,6 +23,7 @@ O Compasso existe para apoiar autoconsciência e continuidade de hábitos com um
 
 - clareza acima de discurso vago;
 - dados sob controle da pessoa usuária;
+- proteção local por senha e criptografia em repouso como compromisso de privacidade por padrão;
 - linguagem brasileira direta e respeitosa;
 - transparência verificável em documentação e produto.
 

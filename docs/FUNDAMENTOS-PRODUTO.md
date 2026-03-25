@@ -162,10 +162,9 @@ O MVP deve validar utilidade, adesão ao check-in e interesse por pausas e econo
 
 Registro simples com poucos campos:
 
-- método: vapor, flor, extração ou equivalente;
-- objetivo: paz, foco, social, descanso, criatividade ou outro;
-- intensidade percebida: leve, média, alta;
-- humor antes e depois;
+- forma de uso: vaporizado, fumado, comestível ou outro;
+- intenção principal: paz, foco, social, descanso, criatividade ou outro;
+- intensidade percebida em três níveis: leve, média, alta;
 - observação opcional curta.
 
 #### 2. Monitor de pausa

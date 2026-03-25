@@ -58,5 +58,6 @@ Somente criar ADR quando houver decisão real e necessária para manutenção do
 ## Estado atual do projeto
 
 - **MVP:** concluído (Fases 1–7).
-- **Fase 8:** em andamento — linguagem visual iconográfica, intensidade em três níveis.
+- **Fase 8.5:** concluída — proteção por senha, bloqueio local e criptografia em repouso.
+- **Fase 8.6:** em andamento — árvore de registro configurável e evolução flexível das perguntas.
 - **Próximas decisões abertas:** ver `docs/DECISOES-EM-ABERTO.md`.

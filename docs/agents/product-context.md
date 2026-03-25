@@ -1,6 +1,6 @@
 # Contexto de produto — Compasso
 
-**Última atualização:** março de 2026
+**Última atualização:** 23 de março de 2026
 
 ---
 
@@ -62,7 +62,7 @@ Pessoa adulta brasileira que:
 
 ### Privacidade por padrão
 
-Dados do usuário ficam no dispositivo. Nunca enviados a servidor sem ação explícita e consentida. Nenhum rastreador, analytics externo ou cookie de terceiros.
+Dados do usuário ficam no dispositivo. Nunca enviados a servidor sem ação explícita e consentida. Nenhum rastreador, analytics externo ou cookie de terceiros. Quando proteção local está ativa, registros e pausas passam a ser gravados com criptografia em repouso.
 
 ### Offline-first no MVP
 
@@ -91,7 +91,8 @@ Nenhuma feature entra sem gate de qualidade completo. Progresso documentado por 
 | 5 | Concluída | PWA, offline, tema claro/escuro |
 | 6 | Concluída | Ritmo, economia, dicas de redução de danos |
 | 7 | Concluída | Cobertura de testes, lazy loading, documentação |
-| 8 | Em andamento | Linguagem visual iconográfica, intensidade em três níveis |
+| 8.5 | Concluída | Proteção por senha, bloqueio local, criptografia em repouso e exportação/importação com suporte criptografado |
+| 8.6 | Em andamento | Árvore de registro configurável, evolução incremental das perguntas e UX de conclusão |
 
 ---
 

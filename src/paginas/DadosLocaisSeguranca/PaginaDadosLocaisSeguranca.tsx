@@ -232,7 +232,7 @@ export const PaginaDadosLocaisSeguranca = () => {
         <h1 className={styles.titulo}>Dados locais e segurança</h1>
         <p className={styles.subtitulo}>
           Uma visão prática do que está salvo aqui, do que você pode fazer com esses dados e dos
-          limites honestos do armazenamento local.
+          limites honestos do armazenamento local com proteção por senha opcional.
         </p>
       </header>
 
@@ -327,6 +327,7 @@ export const PaginaDadosLocaisSeguranca = () => {
 
           <ul className={styles.listaExplicacao}>
             <li>Exportar cria um arquivo sob seu controle fora do app.</li>
+            <li>Se a proteção estiver ativa, a exportação pode gerar pacote criptografado.</li>
             <li>Importar substitui o conjunto atual pelos dados do arquivo escolhido.</li>
             <li>Restaurar aplica o backup local mais recente disponível.</li>
             <li>Apagar remove os dados deste navegador e deste dispositivo.</li>
@@ -383,6 +384,7 @@ export const PaginaDadosLocaisSeguranca = () => {
 
           <ul className={styles.listaExplicacao}>
             <li>Os dados locais dependem deste navegador e deste dispositivo.</li>
+            <li>A proteção por senha ajuda no acesso local, mas não substitui segurança do dispositivo.</li>
             <li>Arquivos exportados precisam ser guardados com cuidado.</li>
             <li>Limpar dados é irreversível se não houver backup disponível.</li>
           </ul>

@@ -1,6 +1,6 @@
 # Termos de Uso — Compasso
 
-Última atualização: 22/03/2026
+Última atualização: 23/03/2026
 
 ## 1. Escopo
 
@@ -27,6 +27,8 @@ A interpretação dos dados registrados no app deve ser tratada como apoio de au
 ## 4. Dados e funcionamento
 
 - o app opera com foco em armazenamento local nesta fase;
+- há proteção local por senha e bloqueio por inatividade como recurso opcional;
+- com proteção ativa, registros e pausas usam criptografia em repouso;
 - exportação/importação/restauração dependem de ação da pessoa usuária;
 - mudanças relevantes no modelo de dados (ex.: sincronização remota) devem ser comunicadas em documentação e política de privacidade.
 

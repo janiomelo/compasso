@@ -1,6 +1,6 @@
 # Política de Privacidade — Compasso
 
-**Última atualização:** 22 de março de 2026
+**Última atualização:** 23 de março de 2026
 
 ## Resumo rápido
 
@@ -9,6 +9,8 @@ O Compasso foi criado para ajudar no registro pessoal de ritmo, pausas e equilí
 Na fase atual do projeto:
 
 - seus registros ficam salvos **neste dispositivo e neste navegador**;
+- você pode ativar **proteção local por senha** no app;
+- com proteção ativa, registros e pausas passam a usar **criptografia em repouso**;
 - o Compasso **não exige conta** para funcionar;
 - o Compasso **não foi criado como ferramenta clínica, terapêutica ou médica**;
 - o Compasso **não serve para compra, venda ou intermediação de produtos**.
@@ -20,6 +22,7 @@ O aplicativo pode armazenar localmente informações que você decidir registrar
 - momentos lançados por você;
 - pausas iniciadas, concluídas ou interrompidas;
 - método, intenção e intensidade;
+- observações opcionais, quando você preencher;
 - preferências de interface, como tema;
 - arquivos exportados ou importados por você.
 
@@ -34,6 +37,7 @@ Isso significa que, em regra, o Compasso funciona como uma ferramenta pessoal e 
 Isso pode acontecer principalmente quando você decide:
 
 - exportar um arquivo;
+- exportar um arquivo criptografado por senha, quando aplicável;
 - importar um backup;
 - restaurar informações previamente salvas;
 - usar, no futuro, algum recurso opcional que envolva sincronização ou envio remoto.
