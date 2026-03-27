@@ -30,14 +30,14 @@ describe('servicoRegistro', () => {
   it('cria e recupera registros em ordem decrescente', async () => {
     agoraMock = new Date('2024-01-10T10:00:00.000Z').getTime()
     const primeiro = await criarRegistro({
-      metodo: 'vapor',
+      metodo: 'vaporizado',
       intencao: 'foco',
       intensidade: 'leve',
     })
 
     agoraMock = new Date('2024-01-11T10:00:00.000Z').getTime()
     const segundo = await criarRegistro({
-      metodo: 'flor',
+      metodo: 'fumado',
       intencao: 'descanso',
       intensidade: 'media',
     })
@@ -52,14 +52,14 @@ describe('servicoRegistro', () => {
   it('filtra registros por periodo e lista recentes', async () => {
     agoraMock = new Date('2024-01-01T12:00:00.000Z').getTime()
     await criarRegistro({
-      metodo: 'vapor',
+      metodo: 'vaporizado',
       intencao: 'social',
       intensidade: 'leve',
     })
 
     agoraMock = new Date('2024-01-05T12:00:00.000Z').getTime()
     const alvo = await criarRegistro({
-      metodo: 'extracao',
+      metodo: 'comestivel',
       intencao: 'criatividade',
       intensidade: 'alta',
     })
@@ -86,7 +86,7 @@ describe('servicoRegistro', () => {
   it('remove um registro persistido', async () => {
     agoraMock = new Date('2024-02-10T10:00:00.000Z').getTime()
     const registro = await criarRegistro({
-      metodo: 'flor',
+      metodo: 'fumado',
       intencao: 'paz',
       intensidade: 'leve',
     })

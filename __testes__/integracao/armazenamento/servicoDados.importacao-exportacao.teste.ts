@@ -57,7 +57,7 @@ describe('servicoDados: importacao e exportacao', () => {
     await salvarConfiguracoes(configuracoesBase)
 
     agoraMock = new Date('2026-03-22T10:00:00.000Z').getTime()
-    await criarRegistro({ metodo: 'vapor', intencao: 'foco', intensidade: 'media' })
+    await criarRegistro({ metodo: 'vaporizado', intencao: 'foco', intensidade: 'media' })
 
     agoraMock = new Date('2026-03-22T11:00:00.000Z').getTime()
     const pausa = await iniciarPausa({ duracaoPlanejada: 60 * 60 * 1000, valorEconomia: 12 })
@@ -160,7 +160,7 @@ describe('servicoDados: importacao e exportacao', () => {
 
   it('falha com arquivo corrompido sem alterar estado', async () => {
     await salvarConfiguracoes(configuracoesBase)
-    await criarRegistro({ metodo: 'flor', intencao: 'paz', intensidade: 'leve' })
+    await criarRegistro({ metodo: 'fumado', intencao: 'paz', intensidade: 'leve' })
 
     const estadoAntes = await hidratarEstado()
     expect(estadoAntes.registros).toHaveLength(1)
@@ -173,12 +173,12 @@ describe('servicoDados: importacao e exportacao', () => {
 
     const estadoDepois = await hidratarEstado()
     expect(estadoDepois.registros).toHaveLength(1)
-    expect(estadoDepois.registros[0].metodo).toBe('flor')
+    expect(estadoDepois.registros[0].metodo).toBe('fumado')
   })
 
   it('faz rollback transacional quando importacao falha durante escrita', async () => {
     await salvarConfiguracoes(configuracoesBase)
-    await criarRegistro({ metodo: 'vapor', intencao: 'foco', intensidade: 'media' })
+    await criarRegistro({ metodo: 'vaporizado', intencao: 'foco', intensidade: 'media' })
 
     const pacoteComFalhaDeEscrita = {
       versao: VERSAO_APP,
@@ -220,7 +220,7 @@ describe('servicoDados: importacao e exportacao', () => {
     const estadoAposFalha = await hidratarEstado()
     // Se houve rollback, estado anterior permanece intacto.
     expect(estadoAposFalha.registros).toHaveLength(1)
-    expect(estadoAposFalha.registros[0].metodo).toBe('vapor')
+    expect(estadoAposFalha.registros[0].metodo).toBe('vaporizado')
   })
 
   it('exporta e importa backup criptografado com senha quando protecao esta ativa', async () => {
@@ -251,7 +251,7 @@ describe('servicoDados: importacao e exportacao', () => {
       protecaoAtiva: true,
     })
 
-    await criarRegistro({ metodo: 'vapor', intencao: 'foco', intensidade: 'media' })
+    await criarRegistro({ metodo: 'vaporizado', intencao: 'foco', intensidade: 'media' })
 
     const exportacao = await exportarDados()
     expect(exportacao.nomeArquivo.endsWith('.enc.json.gz')).toBe(true)
@@ -271,7 +271,7 @@ describe('servicoDados: importacao e exportacao', () => {
 
     const restaurado = await hidratarEstado()
     expect(restaurado.registros).toHaveLength(1)
-    expect(restaurado.registros[0].metodo).toBe('vapor')
+    expect(restaurado.registros[0].metodo).toBe('vaporizado')
   })
 
   it('falha ao importar backup criptografado sem senha e app bloqueado', async () => {

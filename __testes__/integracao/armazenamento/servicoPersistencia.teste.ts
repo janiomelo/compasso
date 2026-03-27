@@ -68,7 +68,7 @@ describe('persistencia com Dexie', () => {
 
     agoraMock = new Date('2024-04-01T09:00:00.000Z').getTime()
     await criarRegistro({
-      metodo: 'vapor',
+      metodo: 'vaporizado',
       intencao: 'foco',
       intensidade: 'media',
     })
@@ -108,7 +108,7 @@ describe('persistencia com Dexie', () => {
 
     await salvarConfiguracoes(configuracoesBase)
     await criarRegistro({
-      metodo: 'flor',
+      metodo: 'fumado',
       intencao: 'descanso',
       intensidade: 'leve',
     })
@@ -122,7 +122,7 @@ describe('persistencia com Dexie', () => {
     await salvarConfiguracoes(configuracoesBase)
 
     agoraMock = new Date('2024-05-01T09:00:00.000Z').getTime()
-    await criarRegistro({ metodo: 'vapor', intencao: 'foco', intensidade: 'media' })
+    await criarRegistro({ metodo: 'vaporizado', intencao: 'foco', intensidade: 'media' })
 
     for (let indice = 0; indice < 6; indice += 1) {
       agoraMock = new Date(`2024-05-0${indice + 2}T10:00:00.000Z`).getTime()

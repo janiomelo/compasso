@@ -1,10 +1,10 @@
 // Constantes da Aplicação — Compasso
 
-// Métodos disponíveis
+// Formas de uso disponíveis
 export const METODOS = [
-  { id: 'vapor', nome: 'Vapor' },
-  { id: 'flor', nome: 'Flor' },
-  { id: 'extracao', nome: 'Extração' },
+  { id: 'vaporizado', nome: 'Vaporizado' },
+  { id: 'fumado', nome: 'Fumado' },
+  { id: 'comestivel', nome: 'Comestível' },
   { id: 'outro', nome: 'Outro' },
 ] as const
 

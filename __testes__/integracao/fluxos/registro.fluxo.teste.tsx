@@ -37,14 +37,14 @@ describe('fluxo de registros', () => {
 
     await act(async () => {
       await result.current.criar({
-        metodo: 'vapor',
+        metodo: 'vaporizado',
         intencao: 'foco',
         intensidade: 'media',
       })
     })
 
     expect(result.current.registros).toHaveLength(1)
-    expect(result.current.registros[0].metodo).toBe('vapor')
+    expect(result.current.registros[0].metodo).toBe('vaporizado')
   })
 
   it('registrosHoje filtra apenas registros do dia corrente', async () => {
@@ -57,19 +57,19 @@ describe('fluxo de registros', () => {
     await waitFor(() => expect(result.current.registros).toBeDefined())
 
     await act(async () => {
-      await result.current.criar({ metodo: 'flor', intencao: 'paz', intensidade: 'leve' })
+      await result.current.criar({ metodo: 'fumado', intencao: 'paz', intensidade: 'leve' })
     })
 
     // registro de hoje
     agoraMock = agoraReal
     await act(async () => {
-      await result.current.criar({ metodo: 'vapor', intencao: 'foco', intensidade: 'media' })
+      await result.current.criar({ metodo: 'vaporizado', intencao: 'foco', intensidade: 'media' })
     })
 
     // hoje: deve ter apenas 1
     await waitFor(() => {
       expect(result.current.registrosHoje).toHaveLength(1)
-      expect(result.current.registrosHoje[0].metodo).toBe('vapor')
+      expect(result.current.registrosHoje[0].metodo).toBe('vaporizado')
     })
   })
 

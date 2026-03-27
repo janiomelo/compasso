@@ -56,6 +56,31 @@ class BancoCompasso extends Dexie {
       protecao: 'chave',
       backups: '++id, criadoEm, origem',
     })
+
+    this.version(4)
+      .stores({
+        registros: 'id, timestamp, metodo, intencao',
+        pausas: 'id, iniciadoEm, status',
+        configuracoes: 'chave',
+        protecao: 'chave',
+        backups: '++id, criadoEm, origem',
+      })
+      .upgrade(async (tx) => {
+        const MAPA_METODO_LEGADO: Record<string, string> = {
+          vapor: 'vaporizado',
+          flor: 'fumado',
+          extracao: 'comestivel',
+        }
+        await tx
+          .table('registros')
+          .toCollection()
+          .modify((registro: Record<string, unknown>) => {
+            const metodo = registro['metodo'] as string
+            if (metodo in MAPA_METODO_LEGADO) {
+              registro['metodo'] = MAPA_METODO_LEGADO[metodo]
+            }
+          })
+      })
   }
 }
 
@@ -64,6 +89,17 @@ export const bd = new BancoCompasso()
 type PausaLegada = Omit<Pausa, 'duracaoPlanejada'> & {
   duracaoPlanejada?: number
   duracaoPlanjada?: number
+}
+
+const MAPA_METODO_LEGADO: Record<string, string> = {
+  vapor: 'vaporizado',
+  flor: 'fumado',
+  extracao: 'comestivel',
+}
+
+const normalizarMetodoLegado = (registro: Registro): Registro => {
+  const metodo = MAPA_METODO_LEGADO[registro.metodo] as Registro['metodo'] | undefined
+  return metodo ? { ...registro, metodo } : registro
 }
 
 const normalizarPausa = (pausa: PausaLegada): Pausa => {
@@ -291,7 +327,7 @@ export const consultasBD = {
       await bd.configuracoes.clear()
       await bd.protecao.clear()
 
-      await bd.registros.bulkPut(dados.registros)
+      await bd.registros.bulkPut(dados.registros.map(normalizarMetodoLegado))
       await bd.pausas.bulkPut(dados.pausas.map((pausa) => normalizarPausa(pausa as PausaLegada)))
       await bd.configuracoes.put({ chave: 'principal', valor: dados.configuracoes })
     })

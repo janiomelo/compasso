@@ -42,7 +42,7 @@ describe('criptografiaDados', () => {
       id: 'reg-1',
       timestamp: Date.now(),
       data: new Date(),
-      metodo: 'vapor',
+      metodo: 'vaporizado',
       intencao: 'foco',
       intensidade: 'media',
       notas: 'teste',

@@ -7,7 +7,7 @@ import type { EntradaRegistro } from '../../tipos'
 import { PERGUNTAS_REGISTRO } from './config/perguntasRegistro'
 
 const ESTADO_INICIAL: EntradaRegistro = {
-  metodo: 'vapor',
+  metodo: 'vaporizado',
   intencao: 'foco',
   intensidade: 'media',
   humorAntes: undefined,

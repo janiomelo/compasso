@@ -23,9 +23,9 @@ export const ROTULOS_TENDENCIA = {
 } as const
 
 /**
- * Converte ID de método para nome amigável
- * @param valor - ID do método (ex: 'vapor')
- * @returns Nome do método (ex: 'Vapor')
+ * Converte ID de forma de uso para nome amigável
+ * @param valor - ID da forma de uso (ex: 'vaporizado')
+ * @returns Nome da forma de uso (ex: 'Vaporizado')
  */
 export const rotularMetodo = (valor: string): string => {
   return METODOS.find((item) => item.id === valor)?.nome ?? valor

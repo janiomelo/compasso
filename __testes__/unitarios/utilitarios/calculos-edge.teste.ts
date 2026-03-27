@@ -159,11 +159,11 @@ describe('identificarPadroesUso — edge cases', () => {
 
   it('identifica corretamente com um único método', () => {
     const registros = [
-      criarRegistro({ metodo: 'extracao', intencao: 'paz', intensidade: 'leve' }),
-      criarRegistro({ metodo: 'extracao', intencao: 'paz', intensidade: 'leve' }),
+      criarRegistro({ metodo: 'comestivel', intencao: 'paz', intensidade: 'leve' }),
+      criarRegistro({ metodo: 'comestivel', intencao: 'paz', intensidade: 'leve' }),
     ]
     const padroes = identificarPadroesUso(registros)
-    expect(padroes.metodoPredominante).toBe('extracao')
+    expect(padroes.metodoPredominante).toBe('comestivel')
     expect(padroes.intensidadeMedia).toBe(3)
   })
 
@@ -283,7 +283,7 @@ describe('stress tests — 1000+ registros', () => {
   it('identificarPadroesUso não degrada com 1200 registros', () => {
     const registros = Array.from({ length: VOLUME }, (_, i) =>
       criarRegistro({
-        metodo: i % 2 === 0 ? 'vapor' : 'flor',
+        metodo: i % 2 === 0 ? 'vaporizado' : 'fumado',
         intencao: 'foco',
         intensidade: 'media',
       })
@@ -293,7 +293,7 @@ describe('stress tests — 1000+ registros', () => {
     const padroes = identificarPadroesUso(registros)
     const duracao = performance.now() - inicio
 
-    expect(padroes.metodoPredominante).toBe('vapor')
+    expect(padroes.metodoPredominante).toBe('vaporizado')
     expect(duracao).toBeLessThan(100)
   })
 
@@ -302,7 +302,7 @@ describe('stress tests — 1000+ registros', () => {
     const registros = Array.from({ length: VOLUME }, (_, i) =>
       criarRegistro({
         timestamp: agora - (i % 30) * 24 * 60 * 60 * 1000,
-        metodo: 'vapor',
+        metodo: 'vaporizado',
         intencao: 'foco',
       })
     )

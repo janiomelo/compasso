@@ -120,7 +120,7 @@ export const PaginaRitmo = () => {
       <section className={styles.bloco}>
         <h2 className={styles.bloco__titulo}>Formas mais usadas</h2>
         {metodosMaisUsados.length === 0 ? (
-          <p className={styles.vazio}>Ainda sem dados suficientes para montar um ranking de métodos.</p>
+          <p className={styles.vazio}>Ainda sem dados suficientes para montar um ranking de formas de uso.</p>
         ) : (
           <div className={styles.barras}>
             {metodosMaisUsados.map(([metodo, quantidade]) => (

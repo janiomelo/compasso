@@ -7,7 +7,7 @@ export interface Registro {
   id: string;
   timestamp: number;
   data: Date;
-  metodo: 'vapor' | 'flor' | 'extracao' | 'outro';
+  metodo: 'vaporizado' | 'fumado' | 'comestivel' | 'outro';
   intencao: 'paz' | 'foco' | 'social' | 'descanso' | 'criatividade' | 'outro';
   intensidade: 'leve' | 'media' | 'alta';
   humorAntes?: number;

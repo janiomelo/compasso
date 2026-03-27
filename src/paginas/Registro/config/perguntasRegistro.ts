@@ -20,9 +20,9 @@ export interface PerguntaRegistro {
 }
 
 export const OPCOES_FORMA_USO: OpcaoPerguntaRegistro[] = [
-  { id: 'vaporizado', rotulo: 'Vaporizado', valor: 'vapor' },
-  { id: 'fumado', rotulo: 'Fumado', valor: 'flor' },
-  { id: 'comestivel', rotulo: 'Comestível', valor: 'extracao' },
+  { id: 'vaporizado', rotulo: 'Vaporizado', valor: 'vaporizado' },
+  { id: 'fumado', rotulo: 'Fumado', valor: 'fumado' },
+  { id: 'comestivel', rotulo: 'Comestível', valor: 'comestivel' },
   { id: 'outro', rotulo: 'Outro', valor: 'outro' },
 ]
 

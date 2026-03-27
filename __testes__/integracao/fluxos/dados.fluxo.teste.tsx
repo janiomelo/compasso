@@ -44,7 +44,7 @@ describe('fluxo de dados (backup, exportacao e importacao)', () => {
       await result.current.salvarConfiguracoes(configuracoesBase)
     })
 
-    await criarRegistro({ metodo: 'vapor', intencao: 'foco', intensidade: 'media' })
+    await criarRegistro({ metodo: 'vaporizado', intencao: 'foco', intensidade: 'media' })
 
     await act(async () => {
       await result.current.fazerBackupLocal({ origem: 'manual' })
@@ -84,7 +84,7 @@ describe('fluxo de dados (backup, exportacao e importacao)', () => {
       await result.current.salvarConfiguracoes(configuracoesBase)
     })
 
-    await criarRegistro({ metodo: 'flor', intencao: 'paz', intensidade: 'leve' })
+    await criarRegistro({ metodo: 'fumado', intencao: 'paz', intensidade: 'leve' })
 
     let exportacao: Awaited<ReturnType<typeof result.current.exportarDados>> | null = null
 
@@ -111,6 +111,6 @@ describe('fluxo de dados (backup, exportacao e importacao)', () => {
     })
 
     expect(estadoFinal.registros).toHaveLength(1)
-    expect(estadoFinal.registros[0].metodo).toBe('flor')
+    expect(estadoFinal.registros[0].metodo).toBe('fumado')
   })
 })

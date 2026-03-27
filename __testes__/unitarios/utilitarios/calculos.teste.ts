@@ -21,7 +21,7 @@ describe('Cálculos', () => {
         id: '1',
         timestamp: agora - 1000 * 60 * 60 * 24 * 3, // 3 dias atrás
         data: new Date(agora - 1000 * 60 * 60 * 24 * 3),
-        metodo: 'vapor' as const,
+        metodo: 'vaporizado' as const,
         intencao: 'paz' as const,
         intensidade: 'leve' as const,
       },
@@ -29,7 +29,7 @@ describe('Cálculos', () => {
         id: '2',
         timestamp: agora - 1000 * 60 * 60 * 24 * 2, // 2 dias atrás
         data: new Date(agora - 1000 * 60 * 60 * 24 * 2),
-        metodo: 'flor' as const,
+        metodo: 'fumado' as const,
         intencao: 'foco' as const,
         intensidade: 'media' as const,
       },
@@ -37,7 +37,7 @@ describe('Cálculos', () => {
         id: '3',
         timestamp: agora - 1000 * 60 * 60 * 24 * 2, // 2 dias atrás (mesmo dia)
         data: new Date(agora - 1000 * 60 * 60 * 24 * 2),
-        metodo: 'vapor' as const,
+        metodo: 'vaporizado' as const,
         intencao: 'foco' as const,
         intensidade: 'media' as const,
       },
@@ -145,7 +145,7 @@ describe('Cálculos', () => {
 
     it('deve identificar método mais usado', () => {
       const stats = calcularEstatisticas(registrosAmostra, 7)
-      expect(stats.metodoMaisUsado).toBe('vapor') // 2 vezes
+      expect(stats.metodoMaisUsado).toBe('vaporizado') // 2 vezes
     })
   })
 

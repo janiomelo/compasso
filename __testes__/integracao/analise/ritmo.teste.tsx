@@ -47,7 +47,7 @@ describe('analise de ritmo', () => {
 
     await waitFor(() => expect(result.current.registro.registros).toBeDefined())
 
-    const criarNoDia = async (diasAtras: number, quantidade: number, metodo: 'vapor' | 'flor' = 'vapor') => {
+    const criarNoDia = async (diasAtras: number, quantidade: number, metodo: 'vaporizado' | 'fumado' = 'vaporizado') => {
       for (let i = 0; i < quantidade; i += 1) {
         agoraMock = base - diasAtras * diaMs + i * 60000
         vi.setSystemTime(agoraMock)
@@ -63,7 +63,7 @@ describe('analise de ritmo', () => {
 
     await criarNoDia(6, 1)
     await criarNoDia(5, 1)
-    await criarNoDia(4, 1, 'flor')
+    await criarNoDia(4, 1, 'fumado')
     await criarNoDia(3, 2)
     await criarNoDia(2, 2)
     await criarNoDia(1, 3)
@@ -89,11 +89,11 @@ describe('analise de ritmo', () => {
 
     await waitFor(() => expect(result.current.registro.registros).toBeDefined())
 
-    const entradas: Array<{ metodo: 'vapor' | 'flor'; intencao: 'foco' | 'paz' }> = [
-      { metodo: 'vapor', intencao: 'foco' },
-      { metodo: 'vapor', intencao: 'foco' },
-      { metodo: 'vapor', intencao: 'paz' },
-      { metodo: 'flor', intencao: 'foco' },
+    const entradas: Array<{ metodo: 'vaporizado' | 'fumado'; intencao: 'foco' | 'paz' }> = [
+      { metodo: 'vaporizado', intencao: 'foco' },
+      { metodo: 'vaporizado', intencao: 'foco' },
+      { metodo: 'vaporizado', intencao: 'paz' },
+      { metodo: 'fumado', intencao: 'foco' },
     ]
 
     for (let i = 0; i < entradas.length; i += 1) {
@@ -112,7 +112,7 @@ describe('analise de ritmo', () => {
 
     const padroes = identificarPadroesUso(result.current.registro.registros)
 
-    expect(padroes.metodoPredominante).toBe('vapor')
+    expect(padroes.metodoPredominante).toBe('vaporizado')
     expect(padroes.intencaoPredominante).toBe('foco')
     expect(['tarde', 'noite']).toContain(padroes.janelaMaisComum)
     expect(padroes.intensidadeMedia).toBeGreaterThan(0)
