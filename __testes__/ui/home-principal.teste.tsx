@@ -75,12 +75,13 @@ describe('Home Principal — UI Comportamental', () => {
     })
   })
 
-  it('renderiza CTA de Registro', async () => {
+  it('renderiza CTA de Registro com copy correto', async () => {
     render(<PaginaPrincipal />, { wrapper: envolverProvider })
 
     await waitFor(() => {
-      const ctas = screen.getAllByText('Registrar momento')
-      expect(ctas.length).toBeGreaterThan(0)
+      expect(screen.getByText('Novo registro')).toBeDefined()
+      const titulosCTA = screen.getAllByText('Registrar momento')
+      expect(titulosCTA.length).toBeGreaterThan(0)
     })
   })
 
@@ -104,6 +105,31 @@ describe('Home Principal — UI Comportamental', () => {
       // Verifica que há um elemento com '0' em algum lugar da página
       const texto0 = screen.queryByText('0')
       expect(texto0).toBeDefined()
+    })
+  })
+
+  it('cartão de economia exibe estado não configurado com default zero', async () => {
+    render(<PaginaPrincipal />, { wrapper: envolverProvider })
+
+    await waitFor(() => {
+      expect(screen.getByText('Economia não configurada')).toBeDefined()
+      expect(screen.getByText('Adicione um valor estimado por uso nas configurações.')).toBeDefined()
+    })
+  })
+
+  it('hero sem pausa ativa não exibe contagem de registros do dia', async () => {
+    render(<PaginaPrincipal />, { wrapper: envolverProvider })
+
+    await waitFor(() => {
+      expect(screen.queryByText(/registro.*hoje/i)).toBeNull()
+    })
+  })
+
+  it('hero sem pausa ativa não exibe linha de economia quando não configurada', async () => {
+    render(<PaginaPrincipal />, { wrapper: envolverProvider })
+
+    await waitFor(() => {
+      expect(screen.queryByText(/já acumulados/i)).toBeNull()
     })
   })
 })

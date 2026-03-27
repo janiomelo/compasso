@@ -29,6 +29,16 @@ export const useEconomia = () => {
     [taxaDiaria],
   )
 
+  const possuiHistoricoEconomia = useMemo(
+    () => historicoPausa.some((p) => p.status === 'concluida'),
+    [historicoPausa],
+  )
+
+  const economiaConfigurada = useMemo(
+    () => configuracoes.valorEconomia > 0,
+    [configuracoes.valorEconomia],
+  )
+
   // economia potencial da pausa ativa (calculado com o valorEconomia configurado)
   const economiaPotencialPausaAtiva = useMemo(() => {
     if (!estado.pausaAtiva) {
@@ -46,5 +56,7 @@ export const useEconomia = () => {
     economiaUltimaPausa,
     projecao30Dias,
     economiaPotencialPausaAtiva,
+    possuiHistoricoEconomia,
+    economiaConfigurada,
   }
 }

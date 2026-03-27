@@ -69,7 +69,7 @@ export const CartaoSeteDias: FC = () => {
  * Cartão de Economia Acumulada
  */
 export const CartaoEconomia: FC = () => {
-  const { totalAcumulado } = useEconomia()
+  const { totalAcumulado, possuiHistoricoEconomia, economiaConfigurada } = useEconomia()
   const { tendencia } = useRitmo(7)
 
   return (
@@ -78,8 +78,25 @@ export const CartaoEconomia: FC = () => {
         <span className={styles.cartao__icone}><Wallet size={16} /></span>
         <span className={styles.cartao__rotulo}>Economia acumulada</span>
       </div>
-      <strong className={styles.cartao__numero}>{formatarMoeda(totalAcumulado)}</strong>
-      <p className={styles.cartao__texto}>tendência atual: {ROTULOS_TENDENCIA[tendencia].replace(/^[↑↓→]\s/, '').toLowerCase()}</p>
+      {!economiaConfigurada ? (
+        <>
+          <strong className={styles.cartao__titulo}>Economia não configurada</strong>
+          <p className={styles.cartao__texto}>Adicione um valor estimado por uso nas configurações.</p>
+        </>
+      ) : possuiHistoricoEconomia ? (
+        <>
+          <strong className={styles.cartao__numero}>{formatarMoeda(totalAcumulado)}</strong>
+          <p className={styles.cartao__texto}>tendência atual: {ROTULOS_TENDENCIA[tendencia].replace(/^[↑↓→]\s/, '').toLowerCase()}</p>
+        </>
+      ) : (
+        <>
+          <strong className={styles.cartao__titulo}>Economia não iniciada</strong>
+          <p className={styles.cartao__texto}>Conclua uma pausa para acompanhar estimativas.</p>
+          <Link to="/pausa" className={styles.linkInline}>
+            Iniciar pausa <ArrowRight size={15} />
+          </Link>
+        </>
+      )}
     </article>
   )
 }

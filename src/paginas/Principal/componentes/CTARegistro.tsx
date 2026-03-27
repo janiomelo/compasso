@@ -9,8 +9,8 @@ import styles from '../pagina-principal.module.scss'
 export const CTARegistro: FC = () => (
   <Link to="/registro" className={styles.ctaRegistro}>
     <div>
-      <span className={styles.ctaRegistro__eyebrow}>Registrar momento</span>
-      <strong className={styles.ctaRegistro__titulo}>Registre como você está agora</strong>
+      <span className={styles.ctaRegistro__eyebrow}>Novo registro</span>
+      <strong className={styles.ctaRegistro__titulo}>Registrar momento</strong>
     </div>
     <span className={styles.ctaRegistro__icone}><Sparkles size={20} /></span>
   </Link>

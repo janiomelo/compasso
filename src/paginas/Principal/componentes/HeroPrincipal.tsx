@@ -3,14 +3,13 @@
 
 import { Link } from 'react-router-dom'
 import { PauseCircle } from 'lucide-react'
-import { usePausa, useRegistro, useEconomia } from '../../../ganchos'
+import { usePausa, useEconomia } from '../../../ganchos'
 import { formatarDuracao, formatarMoeda } from '../../../utilitarios/dados/formatacao'
 import styles from '../pagina-principal.module.scss'
 
 export const HeroPrincipal = () => {
   const { pausaAtiva, progresso } = usePausa()
-  const { registrosHoje } = useRegistro()
-  const { totalAcumulado } = useEconomia()
+  const { totalAcumulado, economiaConfigurada } = useEconomia()
 
   return (
     <section className={styles.hero}>
@@ -44,8 +43,9 @@ export const HeroPrincipal = () => {
               </div>
 
               <div className={styles.hero__metricas}>
-                <span>{registrosHoje.length} registro{registrosHoje.length !== 1 ? 's' : ''} hoje</span>
-                <span>{formatarMoeda(totalAcumulado)} já acumulados</span>
+                {economiaConfigurada && totalAcumulado > 0 && (
+                  <span>{formatarMoeda(totalAcumulado)} já acumulados</span>
+                )}
               </div>
             </>
           )}

@@ -6,7 +6,7 @@ export const estadoInicial: EstadoApp = {
   pausaAtiva: null,
   historicoPausa: [],
   configuracoes: {
-    valorEconomia: 100,
+    valorEconomia: 0,
     moedaEconomia: 'BRL',
     tema: 'escuro',
     temaAuto: true,
