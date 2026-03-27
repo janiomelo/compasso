@@ -18,6 +18,10 @@
   backdrop-filter: blur(18px);
   background: rgba($cor-bg-primaria, 0.82);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+  @media (max-width: $ponto-corte-tablet - 1px) {
+    backdrop-filter: none;
+  }
 }
 
 .app-header__linha {
@@ -30,10 +34,10 @@
   gap: $espaco-md;
 
   @media (max-width: $ponto-corte-tablet - 1px) {
-    grid-template-columns: 1fr auto;
-    grid-template-areas:
-      'marca atalho'
-      'nav nav';
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $espaco-sm 0;
   }
 }
 
@@ -44,10 +48,6 @@
   color: var(--cor-texto-primaria);
   font-size: $tamanho-h5;
   font-weight: $peso-bold;
-
-  @media (max-width: $ponto-corte-tablet - 1px) {
-    grid-area: marca;
-  }
 
   &:hover {
     color: var(--cor-texto-primaria);
@@ -78,11 +78,22 @@
   min-width: 0;
 
   @media (max-width: $ponto-corte-tablet - 1px) {
-    grid-area: nav;
-    overflow-x: auto;
-    justify-content: flex-start;
-    padding-bottom: $espaco-xs;
-    scrollbar-width: none;
+    margin-left: auto;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 30;
+    justify-content: space-around;
+    align-items: center;
+    gap: $espaco-xs;
+    padding: 0.35rem max($espaco-xs, env(safe-area-inset-left, 0px))
+      calc(0.35rem + env(safe-area-inset-bottom, 0px))
+      max($espaco-xs, env(safe-area-inset-right, 0px));
+    background: rgba($cor-bg-primaria, 0.9);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.26);
   }
 
   &::-webkit-scrollbar {
@@ -111,6 +122,20 @@
     text-decoration: none;
     background: rgba(255, 255, 255, 0.04);
   }
+
+  @media (max-width: $ponto-corte-tablet - 1px) {
+    flex: 1;
+    min-width: 0;
+    min-height: 3.25rem;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.4rem 0.25rem;
+    border-radius: $raio-md;
+    font-size: $tamanho-pequeno;
+    line-height: 1.1;
+    white-space: normal;
+  }
 }
 
 .app-nav__link--ativa {
@@ -129,10 +154,6 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.03);
   color: $cor-texto-secundaria;
-
-  @media (max-width: $ponto-corte-tablet - 1px) {
-    grid-area: atalho;
-  }
 
   &:hover {
     color: $cor-texto-primaria;
@@ -185,6 +206,14 @@ body.tema-claro {
   .app-header {
     background: rgba(244, 246, 246, 0.84);
     border-bottom-color: rgba(21, 32, 34, 0.08);
+  }
+
+  .app-nav {
+    @media (max-width: $ponto-corte-tablet - 1px) {
+      background: rgba(243, 247, 245, 0.94);
+      border-top-color: rgba(21, 32, 34, 0.14);
+      box-shadow: 0 -10px 24px rgba(22, 36, 39, 0.14);
+    }
   }
 
   .marca {
@@ -366,6 +395,10 @@ body.tema-claro {
   .principal {
     width: min(100%, calc(100% - 1.25rem));
     padding-top: $espaco-md;
+  }
+
+  .principal:not(.principal--onboarding) {
+    padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
   }
 
   .principal--onboarding {

@@ -170,6 +170,7 @@ const RotasAplicacao = ({ onboardingConcluido }: { onboardingConcluido: boolean 
           </Routes>
         </Suspense>
       </main>
+
     </div>
   )
 }
