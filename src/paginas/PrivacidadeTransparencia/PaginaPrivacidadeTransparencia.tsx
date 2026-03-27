@@ -11,8 +11,8 @@ import { Link } from 'react-router-dom'
 import styles from './pagina-privacidade-transparencia.module.scss'
 
 const URL_REPOSITORIO = 'https://github.com/janiomelo/compasso'
-const URL_POLITICA = 'https://github.com/janiomelo/compasso/blob/main/docs/transparencia/POLITICA-DE-PRIVACIDADE.md'
-const URL_TERMOS = 'https://github.com/janiomelo/compasso/blob/main/docs/transparencia/TERMOS-DE-USO.md'
+const URL_POLITICA = 'https://github.com/janiomelo/compasso/blob/master/docs/transparencia/POLITICA-DE-PRIVACIDADE.md'
+const URL_TERMOS = 'https://github.com/janiomelo/compasso/blob/master/docs/transparencia/TERMOS-DE-USO.md'
 
 const LINKS = [
   {

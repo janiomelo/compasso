@@ -106,7 +106,7 @@ export const PaginaLicencasCreditos = () => {
             </li>
             <li>
               <a
-                href="https://github.com/janiomelo/compasso/blob/main/THIRD_PARTY_NOTICES.md"
+                href="https://github.com/janiomelo/compasso/blob/master/THIRD_PARTY_NOTICES.md"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -115,7 +115,7 @@ export const PaginaLicencasCreditos = () => {
             </li>
             <li>
               <a
-                href="https://github.com/janiomelo/compasso/blob/main/docs/transparencia/assets-e-licencas.md"
+                href="https://github.com/janiomelo/compasso/blob/master/docs/transparencia/assets-e-licencas.md"
                 target="_blank"
                 rel="noreferrer"
               >
