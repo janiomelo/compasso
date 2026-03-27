@@ -6,10 +6,10 @@ import { useProteção } from '../../ganchos/useProtecao'
 import { VERSAO_POLITICA_PRIVACIDADE, VERSAO_TERMOS_USO } from '../../utilitarios/constantes'
 import styles from './pagina-onboarding.module.scss'
 
-const URL_SOBRE_PROJETO = 'https://github.com/janiomelo/compasso/blob/main/docs/transparencia/SOBRE-E-TRANSPARENCIA.md'
-const URL_POLITICA = 'https://github.com/janiomelo/compasso/blob/main/docs/transparencia/POLITICA-DE-PRIVACIDADE.md'
-const URL_TERMOS = 'https://github.com/janiomelo/compasso/blob/main/docs/transparencia/TERMOS-DE-USO.md'
-const URL_DADOS_SEGURANCA = 'https://github.com/janiomelo/compasso/blob/main/docs/transparencia/DADOS-LOCAIS-E-SEGURANCA.md'
+const URL_SOBRE_PROJETO = 'https://github.com/janiomelo/compasso/blob/master/docs/transparencia/SOBRE-E-TRANSPARENCIA.md'
+const URL_POLITICA = 'https://github.com/janiomelo/compasso/blob/master/docs/transparencia/POLITICA-DE-PRIVACIDADE.md'
+const URL_TERMOS = 'https://github.com/janiomelo/compasso/blob/master/docs/transparencia/TERMOS-DE-USO.md'
+const URL_DADOS_SEGURANCA = 'https://github.com/janiomelo/compasso/blob/master/docs/transparencia/DADOS-LOCAIS-E-SEGURANCA.md'
 
 const TOTAL_ETAPAS = 6
 
