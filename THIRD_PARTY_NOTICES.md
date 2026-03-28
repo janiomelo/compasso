@@ -20,8 +20,14 @@ As informacoes abaixo sao um ponto de partida para distribuicao e devem ser revi
 - TypeScript (`typescript`) - Apache-2.0
 - Sass (`sass`) - MIT
 - ESLint (`eslint`) - MIT
+- Terser (`terser`) - BSD-2-Clause
 - Vitest (`vitest`) - MIT
+- Vitest UI (`@vitest/ui`) - MIT
+- Vitest Coverage V8 (`@vitest/coverage-v8`) - MIT
 - Testing Library (`@testing-library/react`, `@testing-library/jest-dom`) - MIT
+- jsdom (`jsdom`) - MIT
+- fake-indexeddb (`fake-indexeddb`) - Apache-2.0
+- Type definitions Pako (`@types/pako`) - MIT
 
 ## Observacoes
 
