@@ -1,4 +1,4 @@
-import { BookOpen, Database, Info, Palette, ShieldCheck } from 'lucide-react'
+import { BookOpen, Database, Heart, Info, Palette, ShieldCheck } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useApp, useArmazenamento } from '../../ganchos'
@@ -275,6 +275,16 @@ export const PaginaConfig = () => {
           <span className={styles.itemNavegacaoTexto}>
             <strong>Sobre o projeto</strong>
             <small>Propósito, valores e responsabilidade pública do Compasso.</small>
+          </span>
+        </Link>
+
+        <Link to="/apoie" className={styles.itemNavegacao}>
+          <span className={styles.itemNavegacaoIcone}>
+            <Heart size={18} />
+          </span>
+          <span className={styles.itemNavegacaoTexto}>
+            <strong>Apoiar o Compasso</strong>
+            <small>Contribuição voluntária para manutenção e evolução do projeto.</small>
           </span>
         </Link>
         </div>

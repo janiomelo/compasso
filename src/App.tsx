@@ -69,6 +69,10 @@ const PaginaTermos = lazy(async () => {
   const { PaginaTermos: P } = await import('./paginas/Termos/PaginaTermos')
   return { default: P }
 })
+const PaginaApoie = lazy(async () => {
+  const { PaginaApoie: P } = await import('./paginas/Apoie/PaginaApoie')
+  return { default: P }
+})
 
 type ItemNavegacao = {
   para: string
@@ -86,7 +90,7 @@ const NAVEGACAO: ItemNavegacao[] = [
 
 const RotasAplicacao = ({ onboardingConcluido }: { onboardingConcluido: boolean }) => {
   const localizacao = useLocation()
-  const rotasPublicas = new Set(['/privacidade', '/como-funciona', '/projeto', '/termos', '/sobre'])
+  const rotasPublicas = new Set(['/privacidade', '/como-funciona', '/projeto', '/termos', '/sobre', '/apoie'])
   const emOnboarding = localizacao.pathname === '/onboarding'
   const emPaginaPublica = rotasPublicas.has(localizacao.pathname)
   const emModoRevisaoOnboarding =
@@ -159,6 +163,7 @@ const RotasAplicacao = ({ onboardingConcluido }: { onboardingConcluido: boolean 
             <Route path="/projeto" element={<PaginaProjeto />} />
             <Route path="/termos" element={<PaginaTermos />} />
             <Route path="/sobre" element={<Navigate to="/projeto" replace />} />
+            <Route path="/apoie" element={<PaginaApoie />} />
 
             <Route
               path="/onboarding"

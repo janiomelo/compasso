@@ -75,4 +75,15 @@ describe('Rotas públicas — SEO e descoberta', () => {
       expect(screen.queryByText('Primeiro acesso')).toBeNull()
     })
   })
+
+  it('deve abrir /apoie sem bloquear em onboarding', async () => {
+    window.history.pushState({}, '', '/apoie')
+
+    render(<App />)
+
+    await waitFor(() => {
+      expect(screen.getByText('Apoiar o Compasso')).toBeDefined()
+      expect(screen.queryByText('Primeiro acesso')).toBeNull()
+    })
+  })
 })
