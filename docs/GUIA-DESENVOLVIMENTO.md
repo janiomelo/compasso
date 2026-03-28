@@ -1,6 +1,6 @@
 # Compasso — guia do desenvolvedor
 
-> Documentação de produto e decisões de design em [`docs/PROJETO WEB APP.md`](docs/PROJETO%20WEB%20APP.md).
+> Documentação de produto e decisões de design em [`docs/PROJETO WEB APP.md`](PROJETO%20WEB%20APP.md).
 
 ---
 

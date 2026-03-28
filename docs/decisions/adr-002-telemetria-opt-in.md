@@ -3,7 +3,7 @@
 **Status:** Aprovado  
 **Data:** 28 de março de 2026  
 **Escopo:** Observabilidade, privacidade, conformidade legal  
-**Associado a:** [D-06: Telemetria na Fase 8](../../DECISOES-EM-ABERTO.md)
+**Associado a:** [D-06: Telemetria na Fase 8](../DECISOES-EM-ABERTO.md)
 
 ---
 
@@ -343,8 +343,8 @@ Estas questões devem responder "sim" após Fase 8.12 estar em produção:
 | Documento | Propósito |
 |---|---|
 | [ADR-001: Product Principles](adr-001-product-principles.md) | Princípios que esta ADR reforça |
-| [DECISOES-EM-ABERTO.md D-06](../../DECISOES-EM-ABERTO.md#d-06) | Decisão aberta que esta ADR resolve |
-| [Pagina de Privacidade no app](../../../src/paginas/Privacidade/conteudo.tsx) | Texto publico oficial sobre privacidade |
+| [DECISOES-EM-ABERTO.md D-06](../DECISOES-EM-ABERTO.md#d-06) | Decisão aberta que esta ADR resolve |
+| [Pagina de Privacidade no app](../../src/paginas/Privacidade/conteudo.tsx) | Texto publico oficial sobre privacidade |
 | [.github/instructions/product.instructions.md](../../.github/instructions/product.instructions.md) | Princípios e restrições do projeto |
 | [Umami Documentation](https://umami.is/docs) | Referência técnica |
 | [LGPD - Lei Geral de Proteção de Dados](https://www.gov.br/cidadania/pt-br/acesso-a-informacao/lgpd) | Conformidade Brasil |

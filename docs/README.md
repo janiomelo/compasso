@@ -11,7 +11,7 @@ Este indice centraliza a navegacao da documentacao do projeto.
 
 ## Trilhas de documentacao
 
-### 1) Produto e estratégia
+### 1) Produto e estrategia
 
 - `FUNDAMENTOS-PRODUTO.md` (canônico)
 - `DECISOES-EM-ABERTO.md` (canônico para backlog de decisoes)
@@ -48,7 +48,32 @@ Este indice centraliza a navegacao da documentacao do projeto.
 | `fases-desenvolvimento/` | ativo | Planejamento por fase |
 | `agents/` | ativo | Contexto para agentes |
 | `assets-e-licencas.md` | ativo | Compliance de origem/licencas |
-| `transparencia/` | legado | Diretorio de transicao (ponte para fontes ativas) |
+
+## Governanca continua
+
+### Ownership por tema
+
+| Tema | Responsavel primario | Fonte canônica |
+|---|---|---|
+| Produto e fundamentos | Produto | `FUNDAMENTOS-PRODUTO.md` |
+| Arquitetura e stack | Engenharia | `PROJETO WEB APP.md` |
+| Operacao de desenvolvimento | Engenharia | `GUIA-DESENVOLVIMENTO.md` |
+| Decisoes aprovadas | Engenharia + Produto | `decisions/` |
+| Compliance de licencas/assets | Engenharia | `assets-e-licencas.md` |
+| Planejamento de fases | Produto + Engenharia | `fases-desenvolvimento/` |
+
+### Check obrigatorio em PR de documentacao
+
+- [ ] Este tema ja possui fonte canônica definida em `docs/README.md`?
+- [ ] O texto novo evita duplicar conteudo existente?
+- [ ] Os links internos foram validados?
+- [ ] Se houve mudanca de direcao, ADR novo foi criado (sem reescrever ADR antigo)?
+
+### Revisao mensal de docs
+
+- Revisar links quebrados em `docs/**/*.md`.
+- Revisar arquivos obsoletos e converter em referencia para fonte canônica.
+- Atualizar este indice quando houver mudanca estrutural.
 
 ## Ordem recomendada de leitura
 

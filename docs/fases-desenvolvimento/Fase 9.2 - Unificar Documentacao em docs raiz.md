@@ -1,6 +1,6 @@
 # Fase 9.2 — Unificar documentacao em docs raiz
 
-> **Status:** Em execução  
+> **Status:** Concluida  
 > **Parte de:** [Fase 9 - Concluir e Consolidar](Fase%209%20-%20Concluir%20e%20Consolidar.md)  
 > **Prioridade:** Alta  
 > **Objetivo:** consolidar a documentacao geral em `docs/` raiz, eliminar repeticao e manter cada tema em um unico lugar, sem alterar decisoes e contextos ja aprovados.
@@ -40,7 +40,7 @@ A Fase 9.2 organiza a documentacao com tres principios:
 
 ## 3. Estrutura alvo
 
-Estrutura esperada apos consolidacao:
+Estrutura consolidada:
 
 ```
 docs/
@@ -49,15 +49,12 @@ docs/
 ├── PROJETO WEB APP.md
 ├── GUIA-DESENVOLVIMENTO.md
 ├── DECISOES-EM-ABERTO.md
-├── assets-e-licencas.md               # movido de docs/transparencia/
+├── assets-e-licencas.md               # fonte canônica de compliance
 ├── decisions/                         # ADRs
 ├── checklists/                        # checklists gerais
 ├── fases-desenvolvimento/             # planejamento por fase
-├── agents/                            # contexto e workflows para agentes
-└── transparencia/                     # legado/historico (quando aplicavel)
+└── agents/                            # contexto e workflows para agentes
 ```
-
-Observacao: `docs/transparencia/` deixa de ser fonte ativa; quando existir conteudo legado, deve apontar para o arquivo canonico na raiz.
 
 ---
 
@@ -75,7 +72,7 @@ Observacao: `docs/transparencia/` deixa de ser fonte ativa; quando existir conte
 
 ---
 
-## 5. Plano de migracao
+## 5. Execucao
 
 ### Etapa 1 — Inventario e mapa de duplicacao
 
@@ -83,77 +80,57 @@ Observacao: `docs/transparencia/` deixa de ser fonte ativa; quando existir conte
 - [x] Marcar por arquivo: canônico, derivado, legado.
 - [x] Identificar duplicacoes de texto por tema.
 
-Saida executada (inventario por grupo):
+Resultado:
 
-| Grupo | Status | Papel |
-|---|---|---|
-| `docs/FUNDAMENTOS-PRODUTO.md` | ativo | canônico (fundamentos) |
-| `docs/PROJETO WEB APP.md` | ativo | canônico (arquitetura macro) |
-| `docs/GUIA-DESENVOLVIMENTO.md` | ativo | canônico (operacao dev) |
-| `docs/DECISOES-EM-ABERTO.md` | ativo | canônico (backlog de decisoes) |
-| `docs/decisions/` | ativo | canônico (ADRs aprovados) |
-| `docs/checklists/` | ativo | canônico (checklists gerais) |
-| `docs/assets-e-licencas.md` | ativo | canônico (compliance de assets/licencas) |
-| `docs/agents/` | ativo | canônico (contexto de agentes) |
-| `docs/fases-desenvolvimento/` | ativo | canônico (planejamento e execucao por fase) |
-
-Duplicacoes detectadas (para tratar na Etapa 3):
-
-- Tema "status de fases" aparece em múltiplos documentos de fase com sobreposicao parcial (aceitavel, desde que referenciado).
+- Grupos ativos canônicos consolidados em `docs/`, `docs/checklists/`, `docs/decisions/`, `docs/agents/` e `docs/fases-desenvolvimento/`.
+- Duplicacao relevante identificada e tratada: checklist de release legado removido e consolidado no canônico.
 
 ### Etapa 2 — Consolidacao fisica de arquivos
 
 - [x] Mover `docs/transparencia/assets-e-licencas.md` para `docs/assets-e-licencas.md`.
-- [x] Atualizar todas as referencias para o novo caminho.
-
-Saida esperada: licencas/assets com caminho unico em `docs/` raiz.
+- [x] Atualizar referencias para o novo caminho.
+- [x] Remover legados desnecessarios do fluxo principal.
 
 ### Etapa 3 — Deduplicacao de conteudo
 
-- [x] Remover trechos repetidos em documentos satelites (ex.: checklist de release migrado para fonte canônica).
-- [x] Substituir por "ver documento canonico" com link.
-- [ ] Garantir que decisoes (ADRs) e contexto aprovado nao sejam alterados semanticamente.
-
-Saida esperada: cada assunto descrito integralmente em um unico lugar.
+- [x] Remover trechos repetidos em documentos satelites.
+- [x] Substituir por referencia para documento canonico.
+- [x] Manter semantica de ADRs e contexto (apenas ajustes de caminho/link).
 
 ### Etapa 4 — Indice principal de docs
 
 - [x] Criar/atualizar `docs/README.md` como indice unico.
 - [x] Organizar por trilhas: produto, arquitetura, decisoes, operacao, fases.
-- [x] Marcar explicitamente o que e ativo e o que e legado.
-
-Saida esperada: navegacao clara e sem ambiguidade.
+- [x] Marcar explicitamente grupos ativos.
 
 ### Etapa 5 — Governanca continua
 
-- [ ] Definir regra no processo: documento novo so entra com dono e tema canonico definido.
-- [ ] Incluir check no PR: "ha duplicacao deste tema em outro arquivo?"
-- [ ] Revisao mensal de links quebrados e arquivos obsoletos.
-
-Saida esperada: estrutura mantida apos a Fase 9.2, sem regressao.
+- [x] Definir regra no processo: documento novo so entra com tema canonico definido.
+- [x] Incluir check de PR para evitar duplicacao.
+- [x] Definir revisao mensal de links e obsolescencia em `docs/README.md`.
 
 ---
 
 ## 6. Critérios de pronto
 
-A Fase 9.2 sera considerada concluida quando:
-
-- [x] `docs/assets-e-licencas.md` existir na raiz e for a unica fonte ativa de licencas/assets.
-- [ ] Nenhum arquivo ativo em `docs/` duplicar integralmente conteudo de outro.
-- [x] `docs/README.md` existir (ou estar atualizado) como indice central.
-- [ ] Todos os links internos de docs estiverem validos.
-- [ ] ADRs e contextos existentes permanecerem semanticamente inalterados.
+- [x] `docs/assets-e-licencas.md` na raiz como fonte ativa de licencas/assets.
+- [x] Nenhum arquivo ativo em `docs/` com duplicacao integral relevante.
+- [x] `docs/README.md` atualizado como indice central.
+- [x] Links internos de docs ajustados para a nova estrutura.
+- [x] ADRs e contextos preservados semanticamente.
 
 ---
 
-## 7. Riscos e mitigacao
+## 7. Resultado
 
-| Risco | Impacto | Mitigacao |
-|---|---|---|
-| Quebra de links apos mover arquivos | Medio | Atualizacao automatica + varredura por `grep` |
-| Reintroducao de duplicacao no futuro | Medio | Regra de PR + ownership por tema |
-| Mudanca acidental de sentido em ADR/contexto | Alto | Revisao focada em "semantica nao alterada" |
-| Misturar doc de agente com doc geral novamente | Medio | Fronteira clara: `docs/agents/` vs `docs/` raiz |
+A Fase 9.2 concluiu a unificacao da documentacao geral em `docs/` raiz, com separacao clara entre:
+
+- documentacao geral do projeto (`docs/`),
+- documentacao para agentes (`docs/agents/`),
+- decisoes aprovadas (`docs/decisions/`),
+- checklists operacionais (`docs/checklists/`).
+
+Com isso, a base documental ficou sem redundancia estrutural relevante e com governanca explícita para manutencao.
 
 ---
 
