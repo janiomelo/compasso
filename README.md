@@ -1,4 +1,6 @@
-# 🧭 Compasso
+# <img src="public/brand/compasso-navbar.svg" alt="Compasso" height="32" style="vertical-align:middle"> Compasso
+
+**🌐 [acesso.digital](https://acesso.digital)**
 
 Compasso é um web app mobile-first de autoconsciência e equilíbrio de hábitos, com foco em privacidade local, redução de danos e linguagem brasileira acessível.
 
@@ -27,17 +29,17 @@ Compasso é um web app mobile-first de autoconsciência e equilíbrio de hábito
 | Fase | Objetivo | Status |
 |---|---|---|
 | **8** | MVP completo (registro, pausa, ritmo, economia, proteção, telemetria) | 🟢 Finalizando |
-| **9** | Consolidação e testes (QA completo, performance, documentação final) | ⏳ Próximo |
+| **9** | Consolidação e testes (QA, docs unificados, performance, checklist de release) | ⏳ Próximo |
 | **10** | Lançamento público (deploy, divulgação, suporte inicial) | 📋 Planejado |
 
 ## Base do projeto
 
-Este README permanece como documento-base e ponto de entrada do repositorio.
+Este README permanece como documento-base e ponto de entrada do repositório.
 Ele resume a proposta do produto, os princípios de construção e como navegar no restante da documentação.
 
 ### Proposta
 
-- Ajudar a pessoa usuaria a registrar contexto de uso com rapidez.
+- Ajudar a pessoa usuária a registrar contexto de uso com rapidez.
 - Mostrar padrões de ritmo e pausas sem tom moralista.
 - Tornar ganhos de bem-estar e economia visíveis.
 - Incentivar autonomia e consistência no dia a dia.
@@ -104,7 +106,7 @@ Instrução por domínio:
 - `.github/instructions/testing.instructions.md` — Padrões de teste (Vitest, cobertura)
 - `.github/instructions/docs.instructions.md` — Documentação transparente
 
-**Princípio:** se uma mudança afeta produto ou design, começar com ADR em `docs/agents/decisions/`. Se toca em código, revisar instrução relevante antes de starts commit.
+**Princípio:** se uma mudança afeta produto ou design, começar com ADR em `docs/agents/decisions/`. Se toca em código, revisar a instrução relevante antes de fazer commit.
 
 ## Início rápido (desenvolvimento)
 
