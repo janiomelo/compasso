@@ -1,4 +1,16 @@
-import { Activity, CalendarDays, Lightbulb, TrendingDown, TrendingUp } from 'lucide-react'
+import {
+  Activity,
+  CalendarDays,
+  HeartHandshake,
+  HelpCircle,
+  Lightbulb,
+  Moon,
+  Sparkles,
+  Target,
+  TrendingDown,
+  TrendingUp,
+  Users,
+} from 'lucide-react'
 import { useMemo } from 'react'
 import { useEconomia, useRegistro, useRitmo } from '../../ganchos'
 import {
@@ -7,7 +19,7 @@ import {
   MAPA_INTENSIDADE,
 } from '../../utilitarios/apresentacao/rotulos'
 import { calcularValorPercebido } from '../../utilitarios/dados/calculos'
-import { formatarDataHora, formatarNumero } from '../../utilitarios/dados/formatacao'
+import { formatarNumero } from '../../utilitarios/dados/formatacao'
 import styles from './pagina-ritmo.module.scss'
 
 const ROTULOS_TENDENCIA_CURTOS = {
@@ -16,9 +28,18 @@ const ROTULOS_TENDENCIA_CURTOS = {
   estavel: 'Estável',
 } as const
 
+const ICONES_INTENCAO = {
+  paz: HeartHandshake,
+  foco: Target,
+  social: Users,
+  descanso: Moon,
+  criatividade: Sparkles,
+  outro: HelpCircle,
+} as const
+
 export const PaginaRitmo = () => {
   const { frequencia7Dias, tendencia, estatisticas } = useRitmo(7)
-  const { registros, registrosRecentes } = useRegistro()
+  const { registros } = useRegistro()
   const { totalAcumulado } = useEconomia()
 
   const intensidadeMedia = useMemo(() => {
@@ -61,8 +82,20 @@ export const PaginaRitmo = () => {
   }, [registros])
 
   const maiorFrequenciaMetodo = metodosMaisUsados[0]?.[1] ?? 1
-  const recentes = registrosRecentes(5)
   const valorPercebido = useMemo(() => calcularValorPercebido(registros, totalAcumulado), [registros, totalAcumulado])
+
+  const intencoesAgrupadas = useMemo(() => {
+    const mapa = registros.reduce<Record<string, number>>((acumulado, registro) => {
+      acumulado[registro.intencao] = (acumulado[registro.intencao] ?? 0) + 1
+      return acumulado
+    }, {})
+
+    return Object.entries(mapa)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 6)
+  }, [registros])
+
+  const maiorFrequenciaIntencao = intencoesAgrupadas[0]?.[1] ?? 1
 
   return (
     <div className={styles.pagina}>
@@ -142,28 +175,42 @@ export const PaginaRitmo = () => {
       </section>
 
       <section className={styles.bloco}>
-        <h2 className={styles.bloco__titulo}>Últimos registros</h2>
-        {recentes.length === 0 ? (
-          <p className={styles.vazio}>Quando você registrar os primeiros momentos, eles aparecerão aqui.</p>
+        <h2 className={styles.bloco__titulo}>Intenções que mais aparecem</h2>
+        {intencoesAgrupadas.length === 0 ? (
+          <p className={styles.vazio}>Quando você registrar os primeiros momentos, as intenções mais frequentes aparecem aqui.</p>
         ) : (
-          <ul className={styles.listaRegistros}>
-            {recentes.map((registro) => (
-              <li key={registro.id} className={styles.itemRegistro}>
-                <div className={styles.itemRegistro__topo}>
-                  <strong>{rotularMetodo(registro.metodo)}</strong>
-                  <span>{rotularIntencao(registro.intencao)}</span>
-                </div>
-                <span className={styles.itemRegistro__data}>{formatarDataHora(registro.timestamp)}</span>
-                <div className={styles.itemRegistro__trilho}>
-                  <div
-                    className={styles.itemRegistro__valor}
-                    style={{ width: `${MAPA_INTENSIDADE[registro.intensidade] * 10}%` }}
-                  />
-                </div>
-                <span className={styles.itemRegistro__rodape}>{MAPA_INTENSIDADE[registro.intensidade]}/10</span>
-              </li>
-            ))}
-          </ul>
+          <div className={styles.gradeIntencoes}>
+            {intencoesAgrupadas.map(([intencao, quantidade]) => {
+              const Icone = ICONES_INTENCAO[intencao as keyof typeof ICONES_INTENCAO] ?? HelpCircle
+              const percentual = (quantidade / maiorFrequenciaIntencao) * 100
+
+              return (
+                <article key={intencao} className={styles.cartaoIntencao}>
+                  <div className={styles.cartaoIntencao__topo}>
+                    <span className={styles.cartaoIntencao__icone}>
+                      <Icone size={18} aria-hidden="true" />
+                    </span>
+                    <span className={styles.cartaoIntencao__quantidade}>
+                      {quantidade} momento{quantidade !== 1 ? 's' : ''}
+                    </span>
+                  </div>
+
+                  <strong className={styles.cartaoIntencao__titulo}>{rotularIntencao(intencao)}</strong>
+
+                  <div className={styles.cartaoIntencao__trilho}>
+                    <div
+                      className={styles.cartaoIntencao__valor}
+                      style={{ width: `${percentual}%` }}
+                    />
+                  </div>
+
+                  <span className={styles.cartaoIntencao__apoio}>
+                    {Math.round((quantidade / registros.length) * 100)}% dos registros visíveis
+                  </span>
+                </article>
+              )
+            })}
+          </div>
         )}
       </section>
     </div>

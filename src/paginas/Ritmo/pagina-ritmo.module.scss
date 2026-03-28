@@ -48,7 +48,7 @@
 
 .cartaoMetrica,
 .bloco,
-.itemRegistro {
+.cartaoIntencao {
   background: var(--superficie-cartao);
   border: 1px solid var(--borda-suave);
   border-radius: 1.5rem;
@@ -241,7 +241,7 @@
 }
 
 .barraLinha__trilho,
-.itemRegistro__trilho {
+.cartaoIntencao__trilho {
   width: 100%;
   height: 0.45rem;
   border-radius: $raio-pill;
@@ -250,49 +250,72 @@
 }
 
 .barraLinha__valor,
-.itemRegistro__valor {
+.cartaoIntencao__valor {
   height: 100%;
   border-radius: $raio-pill;
   background: linear-gradient(90deg, $cor-acento-principal 0%, $cor-acento-secundaria 100%);
 }
 
-.listaRegistros {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
+.gradeIntencoes {
+  display: grid;
   gap: $espaco-sm;
-}
 
-.itemRegistro {
-  padding: 1rem 1.1rem;
-  display: flex;
-  flex-direction: column;
-  gap: $espaco-xs;
-}
+  @include media-tablet {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 
-.itemRegistro__topo {
-  display: flex;
-  justify-content: space-between;
-  gap: $espaco-sm;
-  color: var(--cor-texto-primaria);
-
-  span {
-    color: var(--cor-texto-secundaria);
+  @include media-desktop {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
-.itemRegistro__data,
-.itemRegistro__rodape,
+.cartaoIntencao {
+  padding: 1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-sm;
+}
+
+.cartaoIntencao__topo {
+  display: flex;
+  justify-content: space-between;
+  gap: $espaco-sm;
+  align-items: center;
+}
+
+.cartaoIntencao__icone {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba($cor-acento-principal, 0.12);
+  color: var(--cor-acento-principal);
+}
+
+.cartaoIntencao__quantidade {
+  color: var(--cor-texto-terciaria);
+  font-size: $tamanho-pequeno;
+}
+
+.cartaoIntencao__titulo {
+  color: var(--cor-texto-primaria);
+  font-size: $tamanho-h5;
+}
+
+.cartaoIntencao__apoio {
+  color: var(--cor-texto-terciaria);
+  font-size: $tamanho-pequeno;
+}
+
 .vazio {
   color: var(--cor-texto-terciaria);
 }
 
 @media (max-width: $ponto-corte-tablet - 1px) {
-  .itemRegistro__topo,
+  .cartaoIntencao__topo,
   .barraLinha__rotulo {
-    flex-direction: column;
     align-items: flex-start;
   }
 }
