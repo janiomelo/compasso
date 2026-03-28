@@ -1,13 +1,15 @@
 import { BookOpen, Database, Heart, Info, Palette, ShieldCheck } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useApp, useArmazenamento } from '../../ganchos'
+import { useApp, useArmazenamento, useTelemetria, useConsentimentoTelemetria } from '../../ganchos'
 import { useProteção } from '../../ganchos/useProtecao'
 import styles from './pagina-config.module.scss'
 
 export const PaginaConfig = () => {
   const { estado, despacho } = useApp()
   const { carregando, salvarConfiguracoes } = useArmazenamento()
+  const { rastrearEvento } = useTelemetria()
+  const { consentimentoTelemetria, definirConsentimentoTelemetria, carregandoConsentimentoTelemetria } = useConsentimentoTelemetria()
   const {
     ativarProtecao,
     desativarProtecao,
@@ -154,6 +156,17 @@ export const PaginaConfig = () => {
       : 'Bloqueio automático por inatividade reativado.')
   }
 
+  const alternarTelemetria = async (novoEstado: boolean) => {
+    limparFeedback()
+
+    await definirConsentimentoTelemetria(novoEstado)
+    rastrearEvento('alterou_consentimento_telemetria', { consentido: novoEstado })
+
+    setMensagem(novoEstado
+      ? 'Telemetria ativada. Vamos coletar contadores de uso anônimos.'
+      : 'Telemetria desativada. O app continuará funcionando normalmente.')
+  }
+
   const temaEfetivo = useMemo(() => {
     if (!estado.configuracoes.temaAuto) {
       return estado.configuracoes.tema
@@ -288,6 +301,78 @@ export const PaginaConfig = () => {
           </span>
         </Link>
         </div>
+      </section>
+
+      <section className={styles.painelProtecao}>
+        <div className={styles.painelLinksTopo}>
+          <ShieldCheck size={18} />
+          <h2>Privacidade e dados</h2>
+        </div>
+
+        <p className={styles.painelLinksResumo}>
+          Controle a coleta de dados de uso anônimos e entenda como funcionam.
+        </p>
+
+        <div style={{
+          padding: '1rem',
+          borderRadius: '0.5rem',
+          border: '1px solid var(--cor-borda)',
+          backgroundColor: 'var(--cor-fundo-secundario)',
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+            gap: '1rem',
+            marginBottom: '0.75rem',
+          }}>
+            <div>
+              <h3 style={{ margin: '0 0 0.25rem 0', fontSize: '1rem', fontWeight: '600' }}>
+                Telemetria anônima
+              </h3>
+              <p style={{ margin: '0', fontSize: '0.875rem', color: 'var(--cor-texto-secundario)' }}>
+                Contadores de uso agregados. Sem dados pessoais ou conteúdo.
+              </p>
+            </div>
+            <label style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              cursor: consentimentoTelemetria === null ? 'not-allowed' : 'pointer',
+              opacity: carregandoConsentimentoTelemetria ? 0.5 : 1,
+            }}>
+              <input
+                type="checkbox"
+                checked={consentimentoTelemetria === true}
+                onChange={(evento) => void alternarTelemetria(evento.target.checked)}
+                disabled={carregandoConsentimentoTelemetria}
+                style={{ cursor: 'pointer' }}
+              />
+              <span style={{
+                fontSize: '0.875rem',
+                fontWeight: '500',
+                color: consentimentoTelemetria === true
+                  ? 'var(--cor-sucesso, #22c55e)'
+                  : consentimentoTelemetria === false
+                  ? 'var(--cor-texto-secundario)'
+                  : 'var(--cor-texto-secundario)',
+              }}>
+                {consentimentoTelemetria === true ? 'Ativada' : 'Desativada'}
+              </span>
+            </label>
+          </div>
+
+          <p style={{ margin: '0.75rem 0 0 0', fontSize: '0.8rem', color: 'var(--cor-texto-terciario)' }}>
+            Coletado: páginas visitadas, pausas iniciadas, momentos registrados.
+          </p>
+        </div>
+
+        <Link to="/saiba-mais/telemetria" className={styles.itemNavegacao} style={{ marginTop: '1rem' }} target="_blank" rel="noopener noreferrer">
+          <span className={styles.itemNavegacaoTexto}>
+            <strong>Saiba mais sobre telemetria</strong>
+            <small>O que coletamos, como funciona offline e como desativar.</small>
+          </span>
+        </Link>
       </section>
 
       <section className={styles.painelProtecao}>

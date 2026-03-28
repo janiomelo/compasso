@@ -102,6 +102,10 @@ export interface Configuracoes {
   protecaoAtiva: boolean;
   timeoutBloqueio: number;
   manterDesbloqueadoNestaSessao: boolean;
+  telemetria?: {
+    consentido: boolean | null;
+    atualizadoEm: number;
+  };
 }
 
 export interface EstadoOnboarding {

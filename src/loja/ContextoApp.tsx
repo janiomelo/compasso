@@ -2,6 +2,7 @@ import React, { useEffect, useReducer, createContext, ReactNode } from 'react'
 import { EstadoApp, AcaoApp } from '../tipos'
 import { useArmazenamento } from '../ganchos/useArmazenamento'
 import { redutor, estadoInicial } from './redutor'
+import { iniciarUmami } from '../utilitarios/telemetria/umami'
 
 export interface ContextoAppType {
   estado: EstadoApp
@@ -55,6 +56,12 @@ export const ProvedorApp: React.FC<ProvedorAppProps> = ({ children }) => {
       ativo = false
     }
   }, [carregarEstadoInicial])
+
+  useEffect(() => {
+    if (!estado.ui.carregando && estado.configuracoes.telemetria) {
+      iniciarUmami(estado.configuracoes.telemetria.consentido === true)
+    }
+  }, [estado.ui.carregando, estado.configuracoes.telemetria])
 
   return (
     <ContextoApp.Provider value={{ estado, despacho }}>

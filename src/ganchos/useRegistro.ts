@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import { useApp } from './useApp'
 import { useArmazenamento } from './useArmazenamento'
+import { useTelemetria } from './useTelemetria'
 import {
   criarRegistro as criarRegistroServico,
   atualizarRegistro as atualizarRegistroServico,
@@ -11,16 +12,21 @@ import type { EntradaRegistro, Registro } from '../tipos'
 export const useRegistro = () => {
   const { estado, despacho } = useApp()
   const { fazerBackupLocal } = useArmazenamento()
+  const { rastrearEvento } = useTelemetria()
 
   const criar = useCallback(
     async (dados: EntradaRegistro): Promise<Registro> => {
       const novoRegistro = await criarRegistroServico(dados)
 
       despacho({ tipo: 'ADICIONAR_REGISTRO', payload: novoRegistro })
+      rastrearEvento('registrou_momento', {
+        intencao: novoRegistro.intencao,
+        intensidade: novoRegistro.intensidade,
+      })
 
       return novoRegistro
     },
-    [despacho],
+    [despacho, rastrearEvento],
   )
 
   const atualizar = useCallback(

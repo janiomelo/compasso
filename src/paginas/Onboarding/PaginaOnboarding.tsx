@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useApp, useArmazenamento } from '../../ganchos'
 import { useProteção } from '../../ganchos/useProtecao'
+import { useTelemetria } from '../../ganchos/useTelemetria'
 import { VERSAO_POLITICA_PRIVACIDADE, VERSAO_TERMOS_USO } from '../../utilitarios/constantes'
 import styles from './pagina-onboarding.module.scss'
 
@@ -10,18 +11,24 @@ const URL_SOBRE_PROJETO = '/projeto'
 const URL_POLITICA = '/privacidade'
 const URL_TERMOS = '/termos'
 const URL_DADOS_SEGURANCA = '/como-funciona'
+const URL_SAIBA_MAIS_TELEMETRIA = '/saiba-mais/telemetria'
 
-const TOTAL_ETAPAS = 6
+const TOTAL_ETAPAS = 7
 
 export const PaginaOnboarding = ({ modoRevisao = false }: { modoRevisao?: boolean }) => {
   const navegar = useNavigate()
   const { estado, despacho } = useApp()
   const { salvarConfiguracoes, carregando } = useArmazenamento()
   const { ativarProtecao } = useProteção()
+  const { rastrearEvento } = useTelemetria()
 
   const [etapaAtual, setEtapaAtual] = useState(1)
   const [confirmouMaioridade, setConfirmouMaioridade] = useState(false)
   const [aceitouTermosPrivacidade, setAceitouTermosPrivacidade] = useState(false)
+  const [telemetriaAtiva, setTelemetriaAtiva] = useState(() => {
+    const consentimentoAtual = estado.configuracoes.telemetria?.consentido
+    return modoRevisao ? consentimentoAtual === true : consentimentoAtual ?? true
+  })
   const [querProtegerAgora, setQuerProtegerAgora] = useState(false)
   const [senhaProtecao, setSenhaProtecao] = useState('')
   const [confirmacaoSenhaProtecao, setConfirmacaoSenhaProtecao] = useState('')
@@ -56,6 +63,10 @@ export const PaginaOnboarding = ({ modoRevisao = false }: { modoRevisao?: boolea
       versaoTermos: VERSAO_TERMOS_USO,
       versaoPolitica: VERSAO_POLITICA_PRIVACIDADE,
     }
+    const telemetria = {
+      consentido: telemetriaAtiva,
+      atualizadoEm: agora,
+    }
 
     try {
       setErro(null)
@@ -81,6 +92,7 @@ export const PaginaOnboarding = ({ modoRevisao = false }: { modoRevisao?: boolea
       const novasConfiguracoes = {
         ...estado.configuracoes,
         onboarding,
+        telemetria,
         protecaoAtiva: estado.configuracoes.protecaoAtiva || protecaoAtivaNoFluxo,
       }
 
@@ -89,8 +101,13 @@ export const PaginaOnboarding = ({ modoRevisao = false }: { modoRevisao?: boolea
         tipo: 'DEFINIR_CONFIGURACAO',
         payload: {
           onboarding,
+          telemetria,
           protecaoAtiva: estado.configuracoes.protecaoAtiva || protecaoAtivaNoFluxo,
         },
+      })
+      rastrearEvento('conclusao_onboarding', {
+        etapas: TOTAL_ETAPAS,
+        telemetriaAtiva,
       })
       navegar('/', { replace: true })
     } catch {
@@ -135,7 +152,14 @@ export const PaginaOnboarding = ({ modoRevisao = false }: { modoRevisao?: boolea
               <li>Perceber padrões com mais clareza.</li>
             </ul>
             <div className={styles.acoes}>
-              <button type="button" className={styles.botaoPrimario} onClick={avancar}>
+              <button
+                type="button"
+                className={styles.botaoPrimario}
+                onClick={() => {
+                  rastrearEvento('clique_comece')
+                  avancar()
+                }}
+              >
                 Começar
               </button>
               <a href={URL_SOBRE_PROJETO} className={styles.linkSecundario} target="_blank" rel="noreferrer">
@@ -272,6 +296,53 @@ export const PaginaOnboarding = ({ modoRevisao = false }: { modoRevisao?: boolea
         )}
 
         {etapaAtual === 6 && (
+          <article className={styles.etapa}>
+            <div className={styles.tituloComIcone}>
+              <ShieldCheck size={20} />
+              <h1>Telemetria anônima</h1>
+            </div>
+
+            <p>Coletamos eventos de uso anônimos para melhorar o app.</p>
+
+            <div className={styles.blocoExplicacao}>
+              <p>Coletamos:</p>
+              <ul>
+                <li>páginas visitadas;</li>
+                <li>conclusão do onboarding;</li>
+                <li>início de pausa e registro de momento.</li>
+              </ul>
+            </div>
+
+            <a href={URL_SAIBA_MAIS_TELEMETRIA} target="_blank" rel="noreferrer" className={styles.linkSecundario}>
+              <span>Saiba mais</span>
+              <ExternalLink size={14} />
+            </a>
+
+            <div className={styles.acoes}>
+              <button type="button" className={styles.botaoSecundario} onClick={voltar}>
+                <ChevronLeft size={16} />
+                Voltar
+              </button>
+
+              <div className={styles.acoesDireita}>
+                {!modoRevisao && (
+                  <button
+                    type="button"
+                    className={styles.botaoSecundario}
+                    onClick={() => setTelemetriaAtiva((atual) => !atual)}
+                  >
+                    {telemetriaAtiva ? 'Desativar telemetria' : 'Ativar telemetria'}
+                  </button>
+                )}
+                <button type="button" className={styles.botaoPrimario} onClick={avancar}>
+                  Continuar
+                </button>
+              </div>
+            </div>
+          </article>
+        )}
+
+        {etapaAtual === 7 && (
           <article className={styles.etapa}>
             <div className={styles.tituloComIcone}>
               <ShieldCheck size={20} />

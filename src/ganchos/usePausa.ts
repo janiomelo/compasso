@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useApp } from './useApp'
+import { useTelemetria } from './useTelemetria'
 import {
   iniciarPausa as iniciarPausaServico,
   encerrarPausa as encerrarPausaServico,
@@ -11,6 +12,7 @@ const INTERVALO_CRONOMETRO_MS = 1000
 
 export const usePausa = () => {
   const { estado, despacho } = useApp()
+  const { rastrearEvento } = useTelemetria()
   const [progresso, setProgresso] = useState<ProgressoPausa | null>(null)
   const intervaloRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
@@ -61,10 +63,13 @@ export const usePausa = () => {
       const pausa = await iniciarPausaServico(dados)
 
       despacho({ tipo: 'INICIAR_PAUSA', payload: pausa })
+      rastrearEvento('iniciou_pausa', {
+        duracaoPlanejadaMs: pausa.duracaoPlanejada,
+      })
 
       return pausa
     },
-    [despacho],
+    [despacho, rastrearEvento],
   )
 
   const encerrar = useCallback(

@@ -1,7 +1,7 @@
 import { Activity, Home, PauseCircle, PlusCircle, Settings2 } from 'lucide-react'
 import { FormEvent, lazy, Suspense, useEffect, useMemo, useState } from 'react'
 import { BrowserRouter as Roteador, NavLink, Routes, Route, Link, Navigate, useLocation } from 'react-router-dom'
-import { useApp } from './ganchos'
+import { useApp, useTelemetria } from './ganchos'
 import { useProteção } from './ganchos/useProtecao'
 import { ProvedorApp } from './loja/ContextoApp'
 import { AvisoOffline } from './componentes/comum/AvisoOffline'
@@ -73,6 +73,12 @@ const PaginaApoie = lazy(async () => {
   const { PaginaApoie: P } = await import('./paginas/Apoie/PaginaApoie')
   return { default: P }
 })
+const PaginaSaibaMaisTelemetria = lazy(async () => {
+  const { PaginaSaibaMaisTelemetria: P } = await import(
+    './paginas/SaibaMaisTelemetria/PaginaSaibaMaisTelemetria'
+  )
+  return { default: P }
+})
 
 type ItemNavegacao = {
   para: string
@@ -90,7 +96,16 @@ const NAVEGACAO: ItemNavegacao[] = [
 
 const RotasAplicacao = ({ onboardingConcluido }: { onboardingConcluido: boolean }) => {
   const localizacao = useLocation()
-  const rotasPublicas = new Set(['/privacidade', '/como-funciona', '/projeto', '/termos', '/sobre', '/apoie'])
+  const { rastrearPageview } = useTelemetria()
+  const rotasPublicas = new Set([
+    '/privacidade',
+    '/como-funciona',
+    '/projeto',
+    '/termos',
+    '/sobre',
+    '/apoie',
+    '/saiba-mais/telemetria',
+  ])
   const emOnboarding = localizacao.pathname === '/onboarding'
   const emPaginaPublica = rotasPublicas.has(localizacao.pathname)
   const emModoRevisaoOnboarding =
@@ -103,6 +118,10 @@ const RotasAplicacao = ({ onboardingConcluido }: { onboardingConcluido: boolean 
 
     return elemento
   }
+
+  useEffect(() => {
+    rastrearPageview(`${localizacao.pathname}${localizacao.search}`)
+  }, [localizacao.pathname, localizacao.search, rastrearPageview])
 
   return (
     <div className="app">
@@ -164,6 +183,7 @@ const RotasAplicacao = ({ onboardingConcluido }: { onboardingConcluido: boolean 
             <Route path="/termos" element={<PaginaTermos />} />
             <Route path="/sobre" element={<Navigate to="/projeto" replace />} />
             <Route path="/apoie" element={<PaginaApoie />} />
+            <Route path="/saiba-mais/telemetria" element={<PaginaSaibaMaisTelemetria />} />
 
             <Route
               path="/onboarding"

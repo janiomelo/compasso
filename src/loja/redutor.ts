@@ -17,6 +17,10 @@ export const estadoInicial: EstadoApp = {
     protecaoAtiva: false,
     timeoutBloqueio: 15 * 60 * 1000,
     manterDesbloqueadoNestaSessao: false,
+    telemetria: {
+      consentido: null,
+      atualizadoEm: 0,
+    },
   } as Configuracoes,
   protecao: {
     ativado: false,
