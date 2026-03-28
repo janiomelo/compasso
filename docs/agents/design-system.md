@@ -48,7 +48,7 @@ CSS custom properties em `src/estilos/globals.scss`:
 | `--borda-sutil` | Divisores e bordas de card |
 | `--sombra-card` | Sombra de cards elevados |
 
-Aplicados via atributo `data-tema` no `<html>`. Decisões relacionadas devem ser registradas em `docs/agents/decisions/` somente quando houver necessidade real.
+Aplicados via atributo `data-tema` no `<html>`. Decisões relacionadas devem ser registradas em `docs/decisions/` somente quando houver necessidade real.
 
 ---
 
@@ -158,4 +158,4 @@ Antes de usar um ícone novo, verificar se existe na versão instalada via `node
 
 ## Decisões de UI e informação
 
-Quando houver mudança relevante de direção (ex.: hierarquia de informação entre telas institucionais e operacionais), registrar ADR específico em `docs/agents/decisions/`.
+Quando houver mudança relevante de direção (ex.: hierarquia de informação entre telas institucionais e operacionais), registrar ADR específico em `docs/decisions/`.

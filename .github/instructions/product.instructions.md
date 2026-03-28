@@ -53,4 +53,4 @@ Pessoa adulta brasileira que consome algo recorrentemente e quer mais equilíbri
 
 - Dados não saem do dispositivo sem ação explícita e consentida do usuário.
 - Nenhuma tela deve exibir IDs técnicos, enums ou chaves de banco diretamente.
-- Qualquer exceção às restrições de privacidade exige ADR em `docs/agents/decisions/`.
+- Qualquer exceção às restrições de privacidade exige ADR em `docs/decisions/`.

@@ -35,7 +35,7 @@ Para contexto completo de produto, arquitetura e decisões:
 
 - Dados do usuário ficam em IndexedDB local (via Dexie). Nunca enviar para servidor externo.
 - Nenhum rastreador, analytics externo ou cookie de terceiros.
-- Qualquer exceção a essa regra exige ADR documentado em `docs/agents/decisions/`.
+- Qualquer exceção a essa regra exige ADR documentado em `docs/decisions/`.
 
 ### Qualidade
 

@@ -44,6 +44,6 @@ Use este checklist antes de considerar uma funcionalidade pronta para merge.
 
 ## Documentação
 
-- [ ] Se for nova decisão arquitetural: ADR criado em `docs/agents/decisions/`.
+- [ ] Se for nova decisão arquitetural: ADR criado em `docs/decisions/`.
 - [ ] Se for nova funcionalidade visível ao usuário: documentos de transparência atualizados se necessário.
 - [ ] Arquitetura ou estrutura de pastas atualizada em `docs/agents/architecture.md` se houver mudança.

@@ -79,7 +79,7 @@ Após o MVP estar em produção e estável (Fase 9 concluída), possíveis evolu
 ### Product & Strategy
 
 - Fundamentos completos do produto: `docs/FUNDAMENTOS-PRODUTO.md`
-- Decisões arquiteturais (ADR): `docs/agents/decisions/`
+- Decisões arquiteturais (ADR): `docs/decisions/`
 - Roadmap de fases e planejamento: `docs/fases-desenvolvimento/`
 - Decisões em aberto e progresso: `docs/DECISOES-EM-ABERTO.md`
 
@@ -106,7 +106,7 @@ Instrução por domínio:
 - `.github/instructions/testing.instructions.md` — Padrões de teste (Vitest, cobertura)
 - `.github/instructions/docs.instructions.md` — Documentação transparente
 
-**Princípio:** se uma mudança afeta produto ou design, começar com ADR em `docs/agents/decisions/`. Se toca em código, revisar a instrução relevante antes de fazer commit.
+**Princípio:** se uma mudança afeta produto ou design, começar com ADR em `docs/decisions/`. Se toca em código, revisar a instrução relevante antes de fazer commit.
 
 ## Início rápido (desenvolvimento)
 

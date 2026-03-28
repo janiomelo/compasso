@@ -386,7 +386,7 @@ VITE_UMAMI_WEBSITE_ID=
 
 | Arquivo | Tipo | Descrição |
 |---|---|---|
-| `docs/agents/decisions/adr-002-telemetria-opt-in.md` | Novo | Decisão arquitetural |
+| `docs/decisions/adr-002-telemetria-opt-in.md` | Novo | Decisão arquitetural |
 | `src/paginas/Privacidade/conteudo.tsx` | Modificação | Atualizar texto público de privacidade com telemetria |
 | `src/paginas/PrivacidadeTransparencia/PaginaPrivacidadeTransparencia.tsx` | Modificação | Adicionar atalho para explicação de telemetria |
 | `src/paginas/SaibaMaisTelemetria/PaginaSaibaMaisTelemetria.tsx` | Novo | Página simples: quais dados, como usamos e por quê |
@@ -442,7 +442,7 @@ VITE_UMAMI_WEBSITE_ID=
 
 ## Referências
 
-- [ADR-001: Product Principles](../agents/decisions/adr-001-product-principles.md)
+- [ADR-001: Product Principles](../decisions/adr-001-product-principles.md)
 - [Decisão D-06: Telemetria na Fase 8](../DECISOES-EM-ABERTO.md#d-06)
 - [Umami Documentation](https://umami.is/docs)
 - [Página pública de Privacidade no app](../../src/paginas/Privacidade/conteudo.tsx)

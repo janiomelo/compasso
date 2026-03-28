@@ -1,6 +1,9 @@
 # Compasso — documentação para agentes de IA
 
-Este diretório concentra o contexto de produto, arquitetura e decisões do projeto Compasso para uso por agentes de IA (GitHub Copilot e similares).
+Este diretório concentra o contexto de produto, arquitetura e design do projeto Compasso para uso por agentes de IA (GitHub Copilot e similares).
+
+> **Decisões arquiteturais (ADRs)** estão em [`docs/decisions/`](../decisions/).  
+> **Checklists de desenvolvimento** estão em [`docs/checklists/`](../checklists/).
 
 ---
 
@@ -20,27 +23,15 @@ Este diretório concentra o contexto de produto, arquitetura e decisões do proj
 | `workflows/implementation-flow.md` | Fluxo de implementação, revisão e merge |
 | `workflows/testing-validation.md` | Estratégia de testes e critérios de validação |
 
-### Checklists
-
-| Arquivo | Propósito |
-|---|---|
-| `checklists/feature-checklist.md` | Verificação antes de considerar uma feature pronta |
-| `checklists/release-checklist.md` | Verificação antes de um release público |
-
-### Decisões (ADRs)
-
-| Arquivo | Decisão |
-|---|---|
-| `decisions/adr-001-product-principles.md` | Resumo de decisões que exigem esclarecimento técnico no repositório |
-
 ---
 
 ## Como usar este diretório
 
 - **Antes de implementar qualquer feature:** leia `product-context.md` e `architecture.md`.
 - **Antes de criar componentes ou telas:** leia `design-system.md`.
-- **Antes de uma decisão arquitetural ou de produto relevante:** crie um ADR em `decisions/`.
-- **Para fluxos recorrentes:** consulte `workflows/` e `checklists/`.
+- **Antes de uma decisão arquitetural ou de produto relevante:** crie um ADR em [`docs/decisions/`](../decisions/).
+- **Para verificar qualidade antes de merge ou release:** consulte [`docs/checklists/`](../checklists/).
+- **Para fluxos recorrentes de desenvolvimento:** consulte `workflows/`.
 
 ---
 

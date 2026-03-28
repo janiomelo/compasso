@@ -214,7 +214,7 @@ Apenas **5 eventos anônimos**, sem dados sensíveis:
 **Arquivos novos:**
 - `src/utilitarios/telemetria/` (3 arquivos)
 - `src/ganchos/useTelemetria.ts`, `useConsentimentoTelemetria.ts`
-- `docs/agents/decisions/adr-002-telemetria-opt-in.md` (este arquivo)
+- `docs/decisions/adr-002-telemetria-opt-in.md` (este arquivo)
 - ~10 arquivos de teste
 
 **Arquivos modificados:**

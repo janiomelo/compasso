@@ -45,7 +45,7 @@ Objetivo: registrar decisoes pendentes com dono, prazo e impacto para evitar blo
   - Config +1 toggle (privacidade)
   - Melhor observabilidade de adoção
 - **Ações derivadas:**
-  - [x] Criar ADR-002 (referência: `docs/agents/decisions/adr-002-telemetria-opt-in.md`)
+  - [x] Criar ADR-002 (referência: `docs/decisions/adr-002-telemetria-opt-in.md`)
   - [ ] Criar documentação Fase 8.12 (referência: `docs/fases-desenvolvimento/Fase 8.12 - Telemetria com Umami.md`)
   - [ ] Criar conta Umami e gerar Website ID
   - [ ] Atualizar pagina publica de privacidade no app (`src/paginas/Privacidade/conteudo.tsx`)

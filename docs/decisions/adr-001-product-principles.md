@@ -92,4 +92,4 @@ Novos ADRs só devem ser criados quando houver:
 - impacto técnico claro no repositório,
 - necessidade de rastreabilidade para manutenção futura.
 
-Rascunhos vazios não devem ser mantidos em `docs/agents/decisions/`.
+Rascunhos vazios não devem ser mantidos em `docs/decisions/`.

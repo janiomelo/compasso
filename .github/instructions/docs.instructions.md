@@ -35,7 +35,7 @@ docs/agents/
 ## ADRs (registros de decisão)
 
 - Toda decisão relevante de produto, arquitetura ou design deve ter um ADR.
-- Arquivo: `docs/agents/decisions/adr-NNN-slug-descritivo.md`.
+- Arquivo: `docs/decisions/adr-NNN-slug-descritivo.md`.
 - Usar o template padrão: contexto → decisão → alternativas → consequências → data.
 - ADRs são imutáveis após aprovação. Para reverter, criar novo ADR referenciando o anterior.
 - Situações que **exigem** ADR:
