@@ -1,6 +1,6 @@
 # <img src="public/brand/compasso-navbar.svg" alt="Compasso" height="32" style="vertical-align:middle"> Compasso
 
-**🌐 [acesso.digital](https://acesso.digital)**
+**🌐 [compasso.digital](https://compasso.digital)**
 
 Compasso é um web app mobile-first de autoconsciência e equilíbrio de hábitos, com foco em privacidade local, redução de danos e linguagem brasileira acessível.
 
