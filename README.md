@@ -1,11 +1,34 @@
-# Compasso
+# 🧭 Compasso
 
 Compasso é um web app mobile-first de autoconsciência e equilíbrio de hábitos, com foco em privacidade local, redução de danos e linguagem brasileira acessível.
 
-## Atualizações recentes
+## Status atual
 
-- Fase 8.5: proteção local por senha, bloqueio automático por inatividade, criptografia em repouso e exportação/importação com suporte a pacote criptografado.
-- Fase 8.6 (em andamento): fluxo de registro migrado para árvore configurável de perguntas, com etapa de conclusão e evolução incremental guiada por configuração.
+**Fase 8.12** (Final do MVP) — Telemetria anônima com Umami ativada por padrão, com transparência clara e desativação fácil.
+
+### O que já está pronto (MVP)
+
+- ✅ Registro de momentos com intenção e intensidade
+- ✅ Pausa programada com duração customizável
+- ✅ Dashboard de ritmo e economia
+- ✅ Proteção local por senha + bloqueio automático
+- ✅ Exportação/importação criptografada de dados
+- ✅ **Telemetria privada:** Umami com dados anônimos, desativação simples em Configurações
+
+### O que não entra no MVP
+
+- ❌ Compartilhamento de dados com outros usuários
+- ❌ Comunidade ou redes sociais
+- ❌ Subscrição ou modelo freemium
+- ❌ Backend com conta obrigatória
+
+### Roadmap
+
+| Fase | Objetivo | Status |
+|---|---|---|
+| **8** | MVP completo (registro, pausa, ritmo, economia, proteção, telemetria) | 🟢 Finalizando |
+| **9** | Consolidação e testes (QA completo, performance, documentação final) | ⏳ Próximo |
+| **10** | Lançamento público (deploy, divulgação, suporte inicial) | 📋 Planejado |
 
 ## Base do projeto
 
@@ -27,22 +50,61 @@ Ele resume a proposta do produto, os princípios de construção e como navegar 
 
 ### Princípios de construção
 
-- Privacidade por padrão (dados locais).
-- Offline-first no MVP.
-- Experiência simples, amigável e sem julgamento.
-- Evolução incremental com testes e gate de qualidade.
+- **Privacidade por padrão:** dados ficam no dispositivo; sem backend obrigatório; sem rastreador invasivo.
+- **Offline-first:** app funciona completamente desconectado; sincronização é adicional.
+- **Sem julgamento:** interface não qualifica "uso bom" ou "uso ruim"; foco em autonomia.
+- **Linguagem brasileira:** português com acentuação; sem anglicismos desnecessários.
+- **Evolução incremental:** nenhuma feature sem gate de qualidade (type-check, lint, tests, coverage).
+
+### O que vem depois do lançamento (Fase 10+)
+
+Após o MVP estar em produção e estável (Fase 9 concluída), possíveis evoluções incluem:
+
+- 📊 Análise avançada de telemetria (funis, segmentação, AB tests)
+- 📈 Relatórios e insights personalizados
+- 🔄 Sincronização opcional via cloud (com criptografia E2E)
+- ⚙️ Customização pro-ativa de fluxos de pausa
+- 🌍 Suporte a múltiplos idiomas
+
+**Garantias:**
+- ✅ Nenhuma coleta de dados acontece sem consentimento claro
+- ✅ Compartilhamento com terceiros nunca será forçado
+- ✅ Dados pessoais permanecerão sob controle do usuário
+- ✅ Privacy-first é princípio inegociável, não feature marketável
 
 ## Mapa de documentação
 
-- Fundamentos completos do produto (conteúdo original integral): `docs/FUNDAMENTOS-PRODUTO.md`
-- Arquitetura técnica e fases de execução: `docs/PROJETO WEB APP.md`
+### Product & Strategy
+
+- Fundamentos completos do produto: `docs/FUNDAMENTOS-PRODUTO.md`
+- Decisões arquiteturais (ADR): `docs/agents/decisions/`
+- Roadmap de fases e planejamento: `docs/fases-desenvolvimento/`
+- Decisões em aberto e progresso: `docs/DECISOES-EM-ABERTO.md`
+
+### Technical & Development
+
+- Arquitetura técnica e visão geral: `docs/PROJETO WEB APP.md`
 - Guia técnico de desenvolvimento (setup, comandos, cobertura): `docs/GUIA-DESENVOLVIMENTO.md`
-- Compliance de origem de assets e licenças de terceiros: `docs/transparencia/assets-e-licencas.md`
-- Política de privacidade (resumo): `docs/transparencia/POLITICA-DE-PRIVACIDADE.md`
-- Política de privacidade (completa): `docs/transparencia/POLITICA-DE-PRIVACIDADE-COMPLETA.md`
-- Sobre e transparência: `docs/transparencia/SOBRE-E-TRANSPARENCIA.md`
-- Termos de uso: `docs/transparencia/TERMOS-DE-USO.md`
-- Dados locais e segurança: `docs/transparencia/DADOS-LOCAIS-E-SEGURANCA.md`
+- Design system e linguagem visual: `docs/agents/design-system.md`
+- Product context completo: `docs/agents/product-context.md`
+
+### Transparência & Legal
+
+- **Compliance de assets e licenças:** `docs/transparencia/assets-e-licencas.md`
+
+**Nota:** Política de privacidade, termos de uso e explicações de dados estão dentro da aplicação nas páginas públicas (`/privacidade`, `/termos`, `/como-funciona`) e são a fonte da verdade. Esta documentação no `/docs` é apenas de referência histórica.
+
+## Para contribuidores
+
+Instrução por domínio:
+
+- `.github/instructions/product.instructions.md` — Contexto de produto e tom
+- `.github/instructions/implementation.instructions.md` — Padrões de código (React, TS, arquitetura)
+- `.github/instructions/ui.instructions.md` — Componentes, estilos, acessibilidade
+- `.github/instructions/testing.instructions.md` — Padrões de teste (Vitest, cobertura)
+- `.github/instructions/docs.instructions.md` — Documentação transparente
+
+**Princípio:** se uma mudança afeta produto ou design, começar com ADR em `docs/agents/decisions/`. Se toca em código, revisar instrução relevante antes de starts commit.
 
 ## Início rápido (desenvolvimento)
 
