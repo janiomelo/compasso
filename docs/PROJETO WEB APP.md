@@ -1056,19 +1056,24 @@ __testes__/
 ```
 # .env.example
 
-# App
+# App Metadata
 VITE_NOME_APP=Compasso
-VITE_VERSAO_APP=1.0.0
+VITE_VERSAO_APP=0.1.0
 VITE_AMBIENTE=desenvolvimento
 
-# Features
-VITE_ATIVAR_ANALYTICS=false
-VITE_ATIVAR_PWA=true
+# Telemetria (Umami)
+# Obtenha em https://umami.is/docs/websites
+# Deixar vazio para desativar coleta
+VITE_UMAMI_WEBSITE_ID=
 
 # Storage
 VITE_NOME_BD=CompassoBD
 VITE_VERSAO_BD=1
 ```
+
+Observacoes atuais:
+
+- `VITE_UMAMI_WEBSITE_ID` e usado pela camada de telemetria; vazio desativa coleta.
 
 ---
 
