@@ -1,6 +1,39 @@
-import { ChevronLeft, Compass, HeartHandshake, Info, Shield, Sparkles, UserCircle2 } from 'lucide-react'
+import { BookOpen, ChevronLeft, Compass, FileText, Lock, Scale, ShieldCheck } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import styles from './pagina-sobre-projeto.module.scss'
+
+const LINKS = [
+  {
+    titulo: 'Sobre e transparência (texto completo)',
+    descricao: 'Propósito, valores, mantenedor e contexto público do projeto.',
+    href: '/projeto',
+    icone: FileText,
+  },
+  {
+    titulo: 'Política de privacidade',
+    descricao: 'Documento completo sobre tratamento de dados nesta fase.',
+    href: '/privacidade',
+    icone: Lock,
+  },
+  {
+    titulo: 'Termos de uso',
+    descricao: 'Escopo do app, limites e responsabilidades.',
+    href: '/termos',
+    icone: Scale,
+  },
+  {
+    titulo: 'Dados locais e segurança',
+    descricao: 'Como armazenamento local, backup e proteção funcionam.',
+    href: '/como-funciona',
+    icone: ShieldCheck,
+  },
+  {
+    titulo: 'Licenças e créditos',
+    descricao: 'Origem de assets, notices e bibliotecas desta fase.',
+    href: '/config/licencas-creditos',
+    icone: BookOpen,
+  },
+] as const
 
 export const PaginaSobreProjeto = () => {
   return (
@@ -14,7 +47,7 @@ export const PaginaSobreProjeto = () => {
         <span className={styles.eyebrow}>Configurações</span>
         <h1 className={styles.titulo}>Sobre o projeto</h1>
         <p className={styles.subtitulo}>
-          Origem, valores e responsabilidade pública do projeto nesta fase.
+          Resumo rápido com links diretos para os textos oficiais do Compasso.
         </p>
       </header>
 
@@ -23,92 +56,31 @@ export const PaginaSobreProjeto = () => {
           <Compass size={24} />
         </div>
         <div>
-          <h2>Por que ele existe</h2>
+          <h2>Resumo</h2>
           <p>
-            O Compasso existe para apoiar autoconsciência e continuidade de hábitos com uma
-            abordagem prática, local-first e sem julgamento.
+            O Compasso é um utilitário pessoal com foco em autonomia, privacidade por padrão e
+            linguagem sem julgamento. Para leitura completa, use os links abaixo.
           </p>
         </div>
       </section>
 
       <article className={styles.blocoLeitura}>
         <section className={styles.secaoTexto}>
-          <div className={styles.cartaoTopo}>
-            <Info size={18} />
-            <h2>O que o Compasso é</h2>
-          </div>
+          <h2>Textos oficiais</h2>
           <ul>
-            <li>Ferramenta pessoal de registro de ritmo, pausas e contexto de uso.</li>
-            <li>Produto orientado a autonomia, redução de danos e privacidade por padrão.</li>
-            <li>Projeto em evolução incremental, com documentação pública.</li>
+            {LINKS.map((item) => {
+              const Icone = item.icone
+
+              return (
+                <li key={item.titulo}>
+                  <Link to={item.href}>
+                    <Icone size={14} aria-hidden="true" /> {item.titulo}
+                  </Link>
+                  <p>{item.descricao}</p>
+                </li>
+              )
+            })}
           </ul>
-        </section>
-
-        <section className={styles.secaoTexto}>
-          <div className={styles.cartaoTopo}>
-            <Shield size={18} />
-            <h2>O que o Compasso não é</h2>
-          </div>
-          <ul>
-            <li>Não é ferramenta clínica.</li>
-            <li>Não substitui acompanhamento profissional.</li>
-            <li>Não intermedeia compra, venda ou produtos.</li>
-            <li>Não promete resultado terapêutico.</li>
-          </ul>
-        </section>
-
-        <section className={styles.secaoTexto}>
-          <div className={styles.cartaoTopo}>
-            <Sparkles size={18} />
-            <h2>Valores do projeto</h2>
-          </div>
-          <ul>
-            <li>Clareza acima de discurso vago.</li>
-            <li>Dados sob controle da pessoa usuária.</li>
-            <li>Proteção local por senha e criptografia em repouso como compromisso de privacidade.</li>
-            <li>Linguagem brasileira direta e respeitosa.</li>
-            <li>Transparência verificável em documentação e produto.</li>
-          </ul>
-        </section>
-
-        <section className={styles.secaoTexto}>
-          <div className={styles.cartaoTopo}>
-            <UserCircle2 size={18} />
-            <h2>Quem mantém o projeto</h2>
-          </div>
-          <p>
-            <strong>Janio Melo</strong>, identificado publicamente como janiomelo.dev, é o responsável atual pelo projeto.
-          </p>
-          <p>
-            Canal oficial: <a href="mailto:contato@compasso.digital">contato@compasso.digital</a>
-          </p>
-          <p>
-            Site: <a href="https://compasso.digital" target="_blank" rel="noreferrer">compasso.digital</a>
-          </p>
-        </section>
-
-        <section className={styles.secaoTexto}>
-          <div className={styles.cartaoTopo}>
-            <HeartHandshake size={18} />
-            <h2>Financiamento nesta fase</h2>
-          </div>
-          <ul>
-            <li>Projeto independente.</li>
-            <li>Sem monetização ativa nesta fase.</li>
-            <li>Apoio/doações e modelo pago continuam em aberto para decisão futura.</li>
-          </ul>
-        </section>
-
-        <section className={styles.secaoTexto}>
-          <div className={styles.cartaoTopo}>
-            <Compass size={18} />
-            <h2>Responsável atual</h2>
-          </div>
-          <p>
-            Janio Melo. Com 10 anos de experiência no desenvolvimento de softwares comerciais,
-            atua na criação de soluções tecnológicas para o terceiro setor e atualmente coordena a
-            área de produtos na Mandua Tecnologia.
-          </p>
         </section>
       </article>
     </div>

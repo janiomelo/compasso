@@ -113,15 +113,6 @@ export const PaginaLicencasCreditos = () => {
                 THIRD_PARTY_NOTICES.md
               </a>
             </li>
-            <li>
-              <a
-                href="https://github.com/janiomelo/compasso/blob/master/docs/transparencia/assets-e-licencas.md"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Documento-base de assets e licenças
-              </a>
-            </li>
           </ul>
         </section>
       </article>

@@ -53,6 +53,22 @@ const PaginaOnboarding = lazy(async () => {
   const { PaginaOnboarding: P } = await import('./paginas/Onboarding/PaginaOnboarding')
   return { default: P }
 })
+const PaginaPrivacidade = lazy(async () => {
+  const { PaginaPrivacidade: P } = await import('./paginas/Privacidade/PaginaPrivacidade')
+  return { default: P }
+})
+const PaginaComoFunciona = lazy(async () => {
+  const { PaginaComoFunciona: P } = await import('./paginas/ComoFunciona/PaginaComoFunciona')
+  return { default: P }
+})
+const PaginaProjeto = lazy(async () => {
+  const { PaginaProjeto: P } = await import('./paginas/Projeto/PaginaProjeto')
+  return { default: P }
+})
+const PaginaTermos = lazy(async () => {
+  const { PaginaTermos: P } = await import('./paginas/Termos/PaginaTermos')
+  return { default: P }
+})
 
 type ItemNavegacao = {
   para: string
@@ -70,7 +86,9 @@ const NAVEGACAO: ItemNavegacao[] = [
 
 const RotasAplicacao = ({ onboardingConcluido }: { onboardingConcluido: boolean }) => {
   const localizacao = useLocation()
+  const rotasPublicas = new Set(['/privacidade', '/como-funciona', '/projeto', '/termos', '/sobre'])
   const emOnboarding = localizacao.pathname === '/onboarding'
+  const emPaginaPublica = rotasPublicas.has(localizacao.pathname)
   const emModoRevisaoOnboarding =
     emOnboarding && new URLSearchParams(localizacao.search).get('revisar') === '1'
 
@@ -84,7 +102,7 @@ const RotasAplicacao = ({ onboardingConcluido }: { onboardingConcluido: boolean 
 
   return (
     <div className="app">
-      {!emOnboarding && (
+      {!emOnboarding && !emPaginaPublica && (
         <header className="app-header">
           <div className="app-header__linha">
             <Link to="/" className="marca" aria-label="Ir para a página inicial do Compasso">
@@ -127,7 +145,7 @@ const RotasAplicacao = ({ onboardingConcluido }: { onboardingConcluido: boolean 
         </header>
       )}
 
-      {!emOnboarding && <AvisoOffline />}
+      {!emOnboarding && !emPaginaPublica && <AvisoOffline />}
 
       <main className={emOnboarding ? 'principal principal--onboarding' : 'principal'}>
         <Suspense
@@ -136,6 +154,12 @@ const RotasAplicacao = ({ onboardingConcluido }: { onboardingConcluido: boolean 
           }
         >
           <Routes>
+            <Route path="/privacidade" element={<PaginaPrivacidade />} />
+            <Route path="/como-funciona" element={<PaginaComoFunciona />} />
+            <Route path="/projeto" element={<PaginaProjeto />} />
+            <Route path="/termos" element={<PaginaTermos />} />
+            <Route path="/sobre" element={<Navigate to="/projeto" replace />} />
+
             <Route
               path="/onboarding"
               element={

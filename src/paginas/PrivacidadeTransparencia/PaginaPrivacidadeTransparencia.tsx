@@ -11,28 +11,28 @@ import { Link } from 'react-router-dom'
 import styles from './pagina-privacidade-transparencia.module.scss'
 
 const URL_REPOSITORIO = 'https://github.com/janiomelo/compasso'
-const URL_POLITICA = 'https://github.com/janiomelo/compasso/blob/master/docs/transparencia/POLITICA-DE-PRIVACIDADE.md'
-const URL_TERMOS = 'https://github.com/janiomelo/compasso/blob/master/docs/transparencia/TERMOS-DE-USO.md'
+const URL_POLITICA = '/privacidade'
+const URL_TERMOS = '/termos'
 
 const LINKS = [
   {
     titulo: 'Política de Privacidade',
-    descricao: 'Versão pública resumida do tratamento de dados e dos limites atuais do produto.',
+    descricao: 'Texto oficial completo sobre dados e privacidade nesta fase.',
     href: URL_POLITICA,
-    externo: true,
+    externo: false,
     icone: Lock,
   },
   {
     titulo: 'Termos de Uso',
-    descricao: 'Escopo do app, limites de uso e responsabilidades nesta fase do projeto.',
+    descricao: 'Escopo do app, limites de uso e responsabilidades.',
     href: URL_TERMOS,
-    externo: true,
+    externo: false,
     icone: Scale,
   },
   {
     titulo: 'Dados locais e segurança',
-    descricao: 'Página operacional com backup, proteção por senha, criptografia local e ações de dados.',
-    href: '/config/dados-locais-seguranca',
+    descricao: 'Texto oficial sobre armazenamento local, backup e segurança.',
+    href: '/como-funciona',
     externo: false,
     icone: ShieldCheck,
   },
@@ -53,7 +53,7 @@ const LINKS = [
   {
     titulo: 'Sobre o projeto',
     descricao: 'Propósito, valores, mantenedor atual e contexto público do Compasso.',
-    href: '/config/sobre-projeto',
+    href: '/projeto',
     externo: false,
     icone: FileText,
   },
@@ -71,7 +71,7 @@ export const PaginaPrivacidadeTransparencia = () => {
         <span className={styles.eyebrow}>Configurações</span>
         <h1 className={styles.titulo}>Privacidade e transparência</h1>
         <p className={styles.subtitulo}>
-          O essencial sobre dados, proteção local por senha e formas de verificação nesta fase do Compasso.
+          Resumo curto com atalhos para os textos oficiais e fontes públicas do projeto.
         </p>
       </header>
 
@@ -87,64 +87,6 @@ export const PaginaPrivacidadeTransparencia = () => {
           </p>
         </div>
       </section>
-
-      <article className={styles.blocoLeitura}>
-        <section className={styles.secaoTexto}>
-          <h2>Hoje, o Compasso é</h2>
-          <p>
-            Um utilitário pessoal para registrar ritmo, pausas e contexto de uso, com foco em autonomia, privacidade por padrão e continuidade prática.
-          </p>
-        </section>
-
-        <section className={styles.secaoTexto}>
-          <h2>Hoje, o Compasso não é</h2>
-          <ul>
-            <li>Não é ferramenta clínica.</li>
-            <li>Não substitui orientação profissional.</li>
-            <li>Não intermedeia compra e venda.</li>
-          </ul>
-        </section>
-
-        <section className={styles.secaoTexto}>
-          <h2>Tratamento de dados nesta fase</h2>
-          <ul>
-            <li>Armazenamento local neste navegador e dispositivo.</li>
-            <li>Proteção local por senha com bloqueio por inatividade.</li>
-            <li>Criptografia em repouso de registros e pausas quando proteção está ativa.</li>
-            <li>Exportação manual sob seu controle.</li>
-            <li>Importação e restauração por ação explícita da pessoa usuária.</li>
-            <li>Sem conta obrigatória nesta fase.</li>
-          </ul>
-        </section>
-
-        <section className={styles.secaoTexto}>
-          <h2>Como verificar</h2>
-          <ul>
-            <li>Projeto aberto com documentação pública.</li>
-            <li>Política de privacidade e termos de uso acessíveis.</li>
-            <li>Licenças, notices e créditos documentados.</li>
-            <li>Repositório oficial disponível para consulta.</li>
-          </ul>
-        </section>
-
-        <section className={styles.secaoTexto}>
-          <h2>Contato e responsabilidade</h2>
-          <p>
-            Responsável atual pelo projeto: <strong>Janio Melo</strong>.
-          </p>
-          <p>
-            Canal oficial: <a href="mailto:contato@compasso.digital">contato@compasso.digital</a>
-          </p>
-        </section>
-
-        <section className={styles.secaoTexto}>
-          <h2>Quando isso muda</h2>
-          <p>
-            Mudanças relevantes em armazenamento, sincronização, conta ou tratamento remoto de
-            dados devem refletir em documentação pública e nas páginas de confiança do produto.
-          </p>
-        </section>
-      </article>
 
       <section className={styles.secaoLinks}>
         <div className={styles.secaoTopo}>

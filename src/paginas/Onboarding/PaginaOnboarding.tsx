@@ -6,10 +6,10 @@ import { useProteção } from '../../ganchos/useProtecao'
 import { VERSAO_POLITICA_PRIVACIDADE, VERSAO_TERMOS_USO } from '../../utilitarios/constantes'
 import styles from './pagina-onboarding.module.scss'
 
-const URL_SOBRE_PROJETO = 'https://github.com/janiomelo/compasso/blob/master/docs/transparencia/SOBRE-E-TRANSPARENCIA.md'
-const URL_POLITICA = 'https://github.com/janiomelo/compasso/blob/master/docs/transparencia/POLITICA-DE-PRIVACIDADE.md'
-const URL_TERMOS = 'https://github.com/janiomelo/compasso/blob/master/docs/transparencia/TERMOS-DE-USO.md'
-const URL_DADOS_SEGURANCA = 'https://github.com/janiomelo/compasso/blob/master/docs/transparencia/DADOS-LOCAIS-E-SEGURANCA.md'
+const URL_SOBRE_PROJETO = '/projeto'
+const URL_POLITICA = '/privacidade'
+const URL_TERMOS = '/termos'
+const URL_DADOS_SEGURANCA = '/como-funciona'
 
 const TOTAL_ETAPAS = 6
 
@@ -26,6 +26,9 @@ export const PaginaOnboarding = ({ modoRevisao = false }: { modoRevisao?: boolea
   const [senhaProtecao, setSenhaProtecao] = useState('')
   const [confirmacaoSenhaProtecao, setConfirmacaoSenhaProtecao] = useState('')
   const [erro, setErro] = useState<string | null>(null)
+
+  const confirmouMaioridadeMarcado = modoRevisao ? true : confirmouMaioridade
+  const aceitouTermosPrivacidadeMarcado = modoRevisao ? true : aceitouTermosPrivacidade
 
   const avancar = () => {
     setErro(null)
@@ -135,9 +138,8 @@ export const PaginaOnboarding = ({ modoRevisao = false }: { modoRevisao?: boolea
               <button type="button" className={styles.botaoPrimario} onClick={avancar}>
                 Começar
               </button>
-              <a href={URL_SOBRE_PROJETO} target="_blank" rel="noreferrer" className={styles.linkSecundario}>
+              <a href={URL_SOBRE_PROJETO} className={styles.linkSecundario} target="_blank" rel="noreferrer">
                 <span>Entender melhor o projeto</span>
-                <ExternalLink size={14} />
               </a>
             </div>
           </article>
@@ -178,9 +180,8 @@ export const PaginaOnboarding = ({ modoRevisao = false }: { modoRevisao?: boolea
                 Voltar
               </button>
               <div className={styles.acoesDireita}>
-                <a href={URL_POLITICA} target="_blank" rel="noreferrer" className={styles.linkSecundario}>
+                <a href={URL_POLITICA} className={styles.linkSecundario} target="_blank" rel="noreferrer">
                   <span>Ler política de privacidade</span>
-                  <ExternalLink size={14} />
                 </a>
                 <button type="button" className={styles.botaoPrimario} onClick={avancar}>
                   Continuar
@@ -198,8 +199,9 @@ export const PaginaOnboarding = ({ modoRevisao = false }: { modoRevisao?: boolea
             <label className={styles.checkboxLinha}>
               <input
                 type="checkbox"
-                checked={confirmouMaioridade}
+                checked={confirmouMaioridadeMarcado}
                 onChange={(evento) => setConfirmouMaioridade(evento.target.checked)}
+                disabled={modoRevisao}
               />
               <span>Confirmo que tenho 18 anos ou mais</span>
             </label>
@@ -213,7 +215,7 @@ export const PaginaOnboarding = ({ modoRevisao = false }: { modoRevisao?: boolea
                 type="button"
                 className={styles.botaoPrimario}
                 onClick={avancar}
-                disabled={!modoRevisao && !confirmouMaioridade}
+                disabled={!modoRevisao && !confirmouMaioridadeMarcado}
               >
                 Continuar
               </button>
@@ -234,18 +236,19 @@ export const PaginaOnboarding = ({ modoRevisao = false }: { modoRevisao?: boolea
             <label className={styles.checkboxLinha}>
               <input
                 type="checkbox"
-                checked={aceitouTermosPrivacidade}
+                checked={aceitouTermosPrivacidadeMarcado}
                 onChange={(evento) => setAceitouTermosPrivacidade(evento.target.checked)}
+                disabled={modoRevisao}
               />
               <span>Li e aceito os Termos de Uso e a Política de Privacidade</span>
             </label>
 
             <div className={styles.linksLinha}>
-              <a href={URL_TERMOS} target="_blank" rel="noreferrer" className={styles.linkSecundario}>
+              <a href={URL_TERMOS} className={styles.linkSecundario} target="_blank" rel="noreferrer">
                 <span>Termos de Uso</span>
                 <ExternalLink size={14} />
               </a>
-              <a href={URL_POLITICA} target="_blank" rel="noreferrer" className={styles.linkSecundario}>
+              <a href={URL_POLITICA} className={styles.linkSecundario} target="_blank" rel="noreferrer">
                 <span>Política de Privacidade</span>
                 <ExternalLink size={14} />
               </a>
@@ -260,7 +263,7 @@ export const PaginaOnboarding = ({ modoRevisao = false }: { modoRevisao?: boolea
                 type="button"
                 className={styles.botaoPrimario}
                 onClick={avancar}
-                disabled={(!modoRevisao && !aceitouTermosPrivacidade) || carregando}
+                disabled={(!modoRevisao && !aceitouTermosPrivacidadeMarcado) || carregando}
               >
                 {modoRevisao ? 'Voltar para Configurações' : 'Continuar'}
               </button>

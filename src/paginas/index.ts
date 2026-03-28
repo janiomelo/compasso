@@ -8,3 +8,7 @@ export { PaginaPrivacidadeTransparencia } from './PrivacidadeTransparencia/Pagin
 export { PaginaDadosLocaisSeguranca } from './DadosLocaisSeguranca/PaginaDadosLocaisSeguranca'
 export { PaginaLicencasCreditos } from './LicencasCreditos/PaginaLicencasCreditos'
 export { PaginaSobreProjeto } from './SobreProjeto/PaginaSobreProjeto'
+export { PaginaPrivacidade } from './Privacidade/PaginaPrivacidade'
+export { PaginaComoFunciona } from './ComoFunciona/PaginaComoFunciona'
+export { PaginaProjeto } from './Projeto/PaginaProjeto'
+export { PaginaTermos } from './Termos/PaginaTermos'

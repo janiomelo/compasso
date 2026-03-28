@@ -1,0 +1,156 @@
+@use '../../estilos/variaveis' as *;
+
+.pagina {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-md;
+}
+
+.marca,
+.acoesTopo,
+.acoesCalcado,
+.blocoLeitura {
+  width: min(100%, 56rem);
+}
+
+.marca {
+  display: inline-flex;
+  align-items: center;
+  gap: $espaco-xs;
+  width: fit-content;
+  padding: 0.45rem 0.7rem;
+  border-radius: $raio-pill;
+  border: 1px solid var(--borda-suave);
+  background: rgba($cor-acento-principal, 0.08);
+  color: var(--cor-texto-primaria);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+    color: var(--cor-texto-primaria);
+  }
+}
+
+.marcaIcone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 1.2rem;
+    height: 1.2rem;
+    display: block;
+  }
+}
+
+.marcaTexto {
+  font-size: $tamanho-pequeno;
+  font-weight: $peso-semibold;
+  letter-spacing: 0.01em;
+}
+
+.acoesTopo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $espaco-sm;
+}
+
+.acoesCalcado {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: $espaco-sm;
+  margin-top: $espaco-md;
+}
+
+.botaoVoltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: fit-content;
+  border: 1px solid var(--borda-suave);
+  border-radius: $raio-md;
+  background: var(--superficie-cartao);
+  color: var(--cor-texto-primaria);
+  min-height: 2.5rem;
+  padding: 0.55rem 0.8rem;
+  cursor: pointer;
+
+  &:hover {
+    border-color: rgba($cor-acento-principal, 0.36);
+  }
+}
+
+.linkInicio {
+  color: var(--cor-texto-secundaria);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+    color: var(--cor-texto-primaria);
+  }
+}
+
+.blocoLeitura {
+  border: 1px solid var(--borda-suave);
+  background: var(--superficie-cartao);
+  border-radius: 1.1rem;
+  padding: clamp(1rem, 3.2vw, 1.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-md;
+
+  h1,
+  h2,
+  p,
+  ul {
+    margin: 0;
+  }
+
+  h1 {
+    font-size: clamp(1.45rem, 4.6vw, 2rem);
+    letter-spacing: -0.015em;
+    color: var(--cor-texto-primaria);
+  }
+
+  h2 {
+    margin-top: $espaco-sm;
+    color: var(--cor-texto-primaria);
+    font-size: clamp(1.05rem, 3.2vw, 1.3rem);
+  }
+
+  p,
+  li {
+    color: var(--cor-texto-secundaria);
+    line-height: 1.5;
+  }
+
+  ul {
+    padding-left: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: $espaco-xs;
+  }
+}
+
+@media (max-width: $ponto-corte-tablet - 1px) {
+  .acoesTopo {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .acoesCalcado {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .botaoVoltar,
+  .linkInicio {
+    width: 100%;
+  }
+
+  .linkInicio {
+    text-align: center;
+  }
+}
