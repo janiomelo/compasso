@@ -1,4 +1,4 @@
-const CACHE_NOME = 'compasso-cache-v1'
+const CACHE_NOME = 'compasso-cache-v2'
 const RECURSOS_INICIAIS = [
   '/',
   '/index.html',
@@ -40,18 +40,39 @@ self.addEventListener('fetch', (evento) => {
   }
 
   if (request.mode === 'navigate') {
-    evento.respondWith(
-      fetch(request)
-        .then((resposta) => {
-          const copia = resposta.clone()
-          caches.open(CACHE_NOME).then((cache) => cache.put(request, copia))
+    evento.respondWith((async () => {
+      const cache = await caches.open(CACHE_NOME)
+
+      try {
+        const resposta = await fetch(request)
+
+        if (resposta.ok) {
+          cache.put(request, resposta.clone())
           return resposta
-        })
-        .catch(async () => {
-          const cache = await caches.open(CACHE_NOME)
-          return (await cache.match(request)) || (await cache.match('/index.html'))
-        })
-    )
+        }
+
+        // Em hospedagem estática, refresh de rota SPA pode responder 404: serve o shell do app.
+        const fallbackCache = await cache.match('/index.html')
+        if (fallbackCache) {
+          return fallbackCache
+        }
+
+        const indexRede = await fetch('/index.html')
+        if (indexRede.ok) {
+          cache.put('/index.html', indexRede.clone())
+          return indexRede
+        }
+
+        return resposta
+      } catch {
+        const fallbackCache = await cache.match('/index.html')
+        if (fallbackCache) {
+          return fallbackCache
+        }
+
+        return new Response('Offline', { status: 503 })
+      }
+    })())
     return
   }
 
