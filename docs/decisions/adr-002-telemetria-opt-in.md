@@ -44,7 +44,7 @@ Conforme [adr-001-product-principles.md](adr-001-product-principles.md) e [.gith
 
 ### 2.3 Precedentes
 
-- [Política de Privacidade](../../transparencia/POLITICA-DE-PRIVACIDADE-COMPLETA.md) já menciona "Se esse modelo mudar no futuro — por exemplo, com […] **analytics** […] — esta política deverá ser atualizada."
+- [Política de Privacidade (conteúdo público na aplicação)](../../src/paginas/Privacidade/conteudo.tsx) já menciona "Se esse modelo mudar no futuro — por exemplo, com […] **analytics** […] — esta política deverá ser atualizada."
 - Roadmap público em [.github/instructions/product.instructions.md](../../.github/instructions/product.instructions.md) lista "Próximas: Telemetria opt-in" como pós-MVP.
 
 ---

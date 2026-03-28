@@ -28,7 +28,7 @@ Use este checklist antes de um release público ou entrega de milestone.
 - [ ] Nenhum dado enviado a servidor externo.
 - [ ] Nenhum rastreador ou analytics externo presente.
 - [ ] Todas as dependências com impacto em privacidade têm ADR aprovado.
-- [ ] `docs/transparencia/` atualizado se houver mudança de comportamento relevante para o usuário.
+- [ ] Páginas públicas da aplicação (`/privacidade`, `/termos`, `/como-funciona`) revisadas se houver mudança de comportamento relevante para o usuário.
 
 ## PWA
 
@@ -40,7 +40,7 @@ Use este checklist antes de um release público ou entrega de milestone.
 ## Documentação
 
 - [ ] `docs/agents/architecture.md` reflete o estado atual.
-- [ ] `docs/agents/README.md` referencia todos os documentos existentes.
+- [ ] `docs/README.md` e `docs/agents/README.md` refletem a estrutura atual sem links quebrados.
 - [ ] ADRs de decisões desta fase criados e referenciados.
 - [ ] `docs/PROJETO WEB APP.md` atualizado com o que foi concluído na fase.
 - [ ] `README.md` (raiz) atualizado se houver mudança no mapa de documentação.

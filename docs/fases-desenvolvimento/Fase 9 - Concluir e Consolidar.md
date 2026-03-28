@@ -14,6 +14,7 @@ Ao concluir esta fase, o produto deve estar:
 
 - ✅ Com cobertura de testes atingindo os thresholds mínimos
 - ✅ Com documentação para agentes unificada e não-conflitante
+- ✅ Com documentação geral em `docs/` consolidada e sem redundância
 - ✅ Com documentação pública dentro da aplicação revisada e atualizada
 - ✅ Com checklist de release completo e validado
 - ✅ Com pipeline de deploy confiável e reproduzível
@@ -46,19 +47,21 @@ Para manter o foco, são explicitamente excluídas:
 | F9-07 | a11y | média | média | — | Revisão de acessibilidade básica (WCAG AA nas telas principais) |
 | F9-08 | perf | baixa | baixa | — | Revisão de performance (LCP, bundle size, lazy loading) |
 | F9-09 | docs | baixa | baixa | F9-01, F9-02 | README.md final revisado com status "pronto para lançamento" |
+| F9-10 | docs | alta | média | F9-01 | Unificação da documentação geral em `docs/` raiz concluída (ver Fase 9.2) |
 
 ---
 
 ## 4. Ordem recomendada
 
 1. **F9-01** — Unificar documentação para agentes (base para tudo que vem depois)
-2. **F9-04** — Sincronizar `.github/instructions/` com decisões atuais
-3. **F9-02** — Fechar gaps de cobertura de testes
-4. **F9-05** — Limpar decisões em aberto
-5. **F9-03** — Revisar checklist de release
-6. **F9-06** — Conferir pipeline de deploy
-7. **F9-07 + F9-08** — Revisões de qualidade (acessibilidade e performance)
-8. **F9-09** — README final pronto para lançamento
+2. **F9-10** — Unificar documentação geral em `docs/` raiz (ver Fase 9.2)
+3. **F9-04** — Sincronizar `.github/instructions/` com decisões atuais
+4. **F9-02** — Fechar gaps de cobertura de testes
+5. **F9-05** — Limpar decisões em aberto
+6. **F9-03** — Revisar checklist de release
+7. **F9-06** — Conferir pipeline de deploy
+8. **F9-07 + F9-08** — Revisões de qualidade (acessibilidade e performance)
+9. **F9-09** — README final pronto para lançamento
 
 ---
 
@@ -68,15 +71,17 @@ A Fase 9 está concluída quando:
 
 - [ ] `npm run type-check && npm run lint && npm run build && npm run coverage` passam sem erros
 - [ ] Toda documentação para agentes está unificada (ver Fase 9.1)
+- [ ] Documentação geral em `docs/` raiz está consolidada e sem duplicação (ver Fase 9.2)
 - [ ] Nenhuma decisão em aberto bloqueia o lançamento
 - [ ] Checklist de release da Fase 10 está pronto
-- [ ] Deploy manual funcionário para ambiente de produção
+- [ ] Deploy manual funcionando para ambiente de produção
 
 ---
 
 ## 6. Referências
 
 - [Fase 8 - Backlog Priorizado](Fase%208%20-%20Backlog%20Priorizado.md)
-- [Fase 9.1 - Unificar Documentação para Agentes](Fase%209.1%20-%20Unificar%20Documentação%20para%20Agentes.md)
+- [Fase 9.1 - Unificar Documentação para Agentes](Fase%209.1%20-%20Unificar%20Documenta%C3%A7%C3%A3o%20para%20Agentes.md)
+- [Fase 9.2 - Unificar documentacao em docs raiz](Fase%209.2%20-%20Unificar%20Documentacao%20em%20docs%20raiz.md)
 - [docs/DECISOES-EM-ABERTO.md](../DECISOES-EM-ABERTO.md)
 - [docs/agents/README.md](../agents/README.md)

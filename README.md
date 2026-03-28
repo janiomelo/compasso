@@ -92,7 +92,7 @@ Após o MVP estar em produção e estável (Fase 9 concluída), possíveis evolu
 
 ### Transparência & Legal
 
-- **Compliance de assets e licenças:** `docs/transparencia/assets-e-licencas.md`
+- **Compliance de assets e licenças:** `docs/assets-e-licencas.md`
 
 **Nota:** Política de privacidade, termos de uso e explicações de dados estão dentro da aplicação nas páginas públicas (`/privacidade`, `/termos`, `/como-funciona`) e são a fonte da verdade. Esta documentação no `/docs` é apenas de referência histórica.
 

@@ -4,31 +4,31 @@ applyTo: "docs/**,*.md"
 
 # Documentação — Compasso
 
-> Para estrutura completa de documentação do agente: `docs/agents/README.md`
+> Índice principal de documentação: `docs/README.md`
 
 ---
 
 ## Princípios
 
-- Documentação é parte do produto. Deve ser mantida junto com o código.
-- Documentos de produto ficam em `docs/agents/` (contexto para agentes de IA).
-- Documentos de transparência pública ficam em `docs/transparencia/`.
-- Documentos técnicos de uso geral ficam em `docs/` diretamente.
+- Documentação é parte do produto e deve evoluir junto com o código.
+- Cada assunto deve ter **uma única fonte canônica**.
+- Arquivos satélites devem **referenciar** a fonte canônica, sem duplicar texto.
+- Decisões aprovadas (ADR) não devem ser reescritas; mudanças de direção exigem novo ADR.
 
 ---
 
-## Estrutura dos documentos de agente
+## Fonte canônica por domínio
 
-```
-docs/agents/
-  README.md              # mapa geral e ponto de entrada
-  product-context.md     # contexto completo de produto
-  architecture.md        # arquitetura técnica
-  design-system.md       # sistema de design e padrões visuais
-  workflows/             # fluxos de trabalho recorrentes
-  checklists/            # listas de verificação operacionais
-  decisions/             # ADRs (Architecture Decision Records)
-```
+| Domínio | Fonte canônica |
+|---|---|
+| Produto (contexto completo para implementação) | `docs/agents/product-context.md` |
+| Arquitetura técnica | `docs/agents/architecture.md` |
+| Design system e UI | `docs/agents/design-system.md` |
+| Decisões abertas | `docs/DECISOES-EM-ABERTO.md` |
+| ADRs (decisões aprovadas) | `docs/decisions/` |
+| Checklists operacionais | `docs/checklists/` |
+| Planejamento por fase | `docs/fases-desenvolvimento/` |
+| Licenças e origem de assets | `docs/assets-e-licencas.md` |
 
 ---
 
@@ -36,37 +36,28 @@ docs/agents/
 
 - Toda decisão relevante de produto, arquitetura ou design deve ter um ADR.
 - Arquivo: `docs/decisions/adr-NNN-slug-descritivo.md`.
-- Usar o template padrão: contexto → decisão → alternativas → consequências → data.
-- ADRs são imutáveis após aprovação. Para reverter, criar novo ADR referenciando o anterior.
-- Situações que **exigem** ADR:
-  - Qualquer envio de dado para servidor externo.
-  - Mudança de estratégia de persistência.
-  - Adição de dependência de terceiro com impacto em privacidade.
-  - Mudança de estratégia de tema ou design system.
+- Estrutura mínima: contexto → decisão → alternativas → consequências → data.
+- ADR aprovado é imutável: para revisão de direção, criar novo ADR referenciando o anterior.
+
+Situações que exigem ADR:
+
+- Qualquer envio de dados para serviço externo.
+- Mudança de estratégia de persistência.
+- Inclusão de dependência com impacto em privacidade.
+- Mudança de estratégia de tema/design system.
 
 ---
 
 ## Padrões de escrita
 
-- Português correto com acentuação e cedilha.
-- Parágrafos curtos. Uma ideia por parágrafo.
-- Tabelas para comparações, listas para enumerações simples.
-- Sem jargão desnecessário. Se o termo técnico for inevitável, explicar na primeira ocorrência.
-- Títulos descritivos: o leitor deve entender o conteúdo da seção sem precisar lê-la.
+- Português claro, com acentuação e cedilha.
+- Parágrafos curtos e objetivos.
+- Tabelas para comparação; listas para enumerações.
+- Evitar jargão desnecessário.
 
 ---
 
-## Documentos de transparência pública
+## Transparência pública
 
-Esses arquivos são referenciados na interface do produto. Qualquer mudança impacta o usuário final:
-
-| Arquivo | Propósito |
-|---|---|
-| `docs/transparencia/POLITICA-DE-PRIVACIDADE.md` | Resumo acessível |
-| `docs/transparencia/POLITICA-DE-PRIVACIDADE-COMPLETA.md` | Versão completa |
-| `docs/transparencia/TERMOS-DE-USO.md` | Termos de uso |
-| `docs/transparencia/DADOS-LOCAIS-E-SEGURANCA.md` | Explicação técnica acessível |
-| `docs/transparencia/SOBRE-E-TRANSPARENCIA.md` | Identidade e responsabilidade |
-| `docs/transparencia/assets-e-licencas.md` | Compliance de origem e licenças |
-
-Mudanças nesses arquivos devem ser revisadas com o mesmo cuidado de mudanças de UI.
+- Conteúdo público para usuários (privacidade, termos, dados locais, projeto) está dentro da aplicação e é a fonte da verdade.
+- Em `docs/`, manter apenas documentação de apoio técnico, compliance e rastreabilidade.

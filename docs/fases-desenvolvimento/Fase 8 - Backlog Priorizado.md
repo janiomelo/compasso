@@ -13,7 +13,7 @@ Transformar pendencias evolutivas da Fase 7 em entregas rastreaveis e testaveis,
 | ID | Tipo | Prioridade | Esforco | Dependencias | Criterio de pronto |
 |---|---|---|---|---|---|
 | F8-01 | chore | alta | baixa | nenhuma | CI roda `npm run coverage` e falha se threshold nao atingir o minimo |
-| F8-02 | docs | alta | baixa | F8-01 | checklist de release criado e versionado em `docs/CHECKLIST-RELEASE-MVP.md` |
+| F8-02 | docs | alta | baixa | F8-01 | checklist de release criado e versionado em `docs/checklists/release-checklist.md` |
 | F8-03 | docs | alta | baixa | nenhuma | decisoes abertas registradas com responsavel e prazo |
 | F8-04 | feat | media | media | F8-01 | `public/robots.txt` e `public/sitemap.xml` publicados |
 | F8-05 | feat | media | media | nenhuma | metadados base (title/description/og) revisados no `index.html` |
