@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Compasso</title>
+    <script>
+      (function () {
+        try {
+          sessionStorage.setItem(
+            'compasso.retorno404',
+            window.location.pathname + window.location.search + window.location.hash,
+          )
+        } catch (erro) {
+          // Sem storage disponível: segue para home sem restaurar rota.
+        }
+
+        window.location.replace('/')
+      })()
+    </script>
+  </head>
+  <body></body>
+</html>
