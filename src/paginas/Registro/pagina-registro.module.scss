@@ -65,6 +65,10 @@
   gap: $espaco-lg;
 }
 
+.etapa--conclusao {
+  gap: 0;
+}
+
 .etapa__titulo {
   margin: 0;
   font-size: clamp(1.6rem, 4vw, 2.2rem);
@@ -129,21 +133,27 @@
 }
 
 .listaOpcoes {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: $espaco-sm;
+
+  @include media-tablet {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 .opcaoLista {
   width: 100%;
-  min-height: 4.25rem;
+  min-height: 4rem;
   border-radius: 1rem;
-  padding: 0.95rem 1.1rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: $tamanho-h6;
+  padding: 0.85rem 0.95rem;
+  display: grid;
+  gap: 0.4rem;
+  justify-items: start;
+  align-content: space-between;
+  font-size: $tamanho-corpo;
   font-weight: $peso-semibold;
+  text-align: left;
 }
 
 .opcaoLista--ativa {
@@ -236,6 +246,34 @@
   gap: $espaco-md;
 }
 
+.finalizacao__topo {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-sm;
+
+  @include media-tablet {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+
+.finalizacao__texto {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+
+  strong {
+    color: var(--cor-texto-primaria);
+    font-size: $tamanho-h6;
+  }
+
+  span {
+    color: var(--cor-texto-secundaria);
+    font-size: $tamanho-pequeno;
+  }
+}
+
 .campoLabel {
   display: flex;
   flex-direction: column;
@@ -276,36 +314,80 @@
   flex-direction: column;
   gap: $espaco-md;
   border: 1px solid var(--borda-suave);
-  border-radius: 1rem;
-  padding: 1rem;
-  background: var(--superficie-sutil);
+  border-radius: 1.5rem;
+  padding: clamp(1.25rem, 4vw, 1.75rem);
+  background:
+    radial-gradient(circle at top right, rgba($cor-acento-principal, 0.16), transparent 28%),
+    var(--superficie-sutil);
 }
 
-.resumoConclusao__sucesso {
+.resumoConclusao__eyebrow {
   margin: 0;
-  color: var(--cor-texto-primaria);
+  color: $cor-acento-principal;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: $tamanho-pequeno;
   font-weight: $peso-semibold;
 }
 
-.resumoConclusao__lista {
+.resumoConclusao__titulo {
   margin: 0;
-  display: grid;
+  color: var(--cor-texto-primaria);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  letter-spacing: -0.03em;
+}
+
+.resumoConclusao__descricao {
+  margin: 0;
+  color: var(--cor-texto-secundaria);
+}
+
+.resumoConclusao__chips {
+  display: flex;
+  flex-wrap: wrap;
   gap: $espaco-sm;
+}
 
-  div {
-    display: grid;
-    gap: 0.2rem;
-  }
+.resumoConclusao__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.5rem;
+  padding: 0.65rem 0.9rem;
+  border-radius: $raio-pill;
+  background: rgba($cor-acento-principal, 0.12);
+  border: 1px solid rgba($cor-acento-principal, 0.18);
+  color: var(--cor-texto-primaria);
+  font-size: $tamanho-pequeno;
+  font-weight: $peso-semibold;
+}
 
-  dt {
-    font-size: $tamanho-pequeno;
-    color: var(--cor-texto-terciaria);
-  }
+.resumoConclusao__observacao {
+  display: flex;
+  align-items: flex-start;
+  gap: $espaco-sm;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: var(--superficie-elevada);
+  border: 1px solid var(--borda-suave);
 
-  dd {
+  p {
     margin: 0;
-    color: var(--cor-texto-primaria);
+    color: var(--cor-texto-secundaria);
+    line-height: 1.5;
   }
+}
+
+.resumoConclusao__observacaoIcone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: rgba($cor-acento-principal, 0.12);
+  color: var(--cor-acento-principal);
+  flex-shrink: 0;
 }
 
 .mensagemSucesso {
@@ -324,6 +406,10 @@
   display: flex;
   justify-content: space-between;
   gap: $espaco-sm;
+
+  @media (max-width: $ponto-corte-tablet - 1px) {
+    flex-direction: column-reverse;
+  }
 }
 
 .botaoPrimario,
@@ -359,6 +445,16 @@
   border: 1px solid var(--borda-suave);
   background: var(--superficie-sutil);
   color: var(--cor-texto-primaria);
+}
+
+@media (max-width: $ponto-corte-tablet - 1px) {
+  .opcaoLista__icone {
+    justify-self: end;
+  }
+
+  .acoes > * {
+    width: 100%;
+  }
 }
 
 @media (max-width: $ponto-corte-tablet - 1px) {

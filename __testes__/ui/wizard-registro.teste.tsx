@@ -35,25 +35,27 @@ describe('Wizard de Registro — UI', () => {
     expect(screen.getByText('Qual foi a forma de uso?')).toBeDefined()
     expect(screen.getByText('Vaporizado')).toBeDefined()
     expect(screen.getByText('Fumado')).toBeDefined()
-    expect(screen.getByText('Continuar')).toBeDefined()
+    expect(screen.queryByText('Continuar')).toBeNull()
+    expect(screen.getByRole('button', { name: 'Vaporizado' }).getAttribute('aria-pressed')).toBe('false')
+    expect(screen.getByRole('button', { name: 'Fumado' }).getAttribute('aria-pressed')).toBe('false')
   })
 
-  it('avança para a etapa de intenção', async () => {
+  it('avança automaticamente para a etapa de intenção ao escolher forma de uso', async () => {
     render(<PaginaRegistro />, { wrapper: envolverProvider })
 
     fireEvent.click(screen.getByText('Vaporizado'))
-    fireEvent.click(screen.getByText('Continuar'))
 
     await waitFor(() => {
       expect(screen.getByText('Qual era sua intenção?')).toBeDefined()
     })
+
+    expect(screen.getByRole('button', { name: 'Foco' }).getAttribute('aria-pressed')).toBe('false')
   })
 
   it('volta da etapa de intenção para método', async () => {
     render(<PaginaRegistro />, { wrapper: envolverProvider })
 
     fireEvent.click(screen.getByText('Vaporizado'))
-    fireEvent.click(screen.getByText('Continuar'))
 
     await waitFor(() => {
       expect(screen.getByText('Qual era sua intenção?')).toBeDefined()
@@ -66,34 +68,98 @@ describe('Wizard de Registro — UI', () => {
     })
   })
 
-  it('completa o fluxo e exibe tela de conclusão', async () => {
+  it('avança automaticamente até a etapa de observação nas escolhas principais', async () => {
     render(<PaginaRegistro />, { wrapper: envolverProvider })
 
     fireEvent.click(screen.getByText('Vaporizado'))
-    fireEvent.click(screen.getByText('Continuar'))
 
     await waitFor(() => {
       expect(screen.getByText('Qual era sua intenção?')).toBeDefined()
     })
+
     fireEvent.click(screen.getByText('Foco'))
-    fireEvent.click(screen.getByText('Continuar'))
 
     await waitFor(() => {
       expect(screen.getByText('Qual foi a intensidade?')).toBeDefined()
     })
+
     fireEvent.click(screen.getByText('Alta'))
-    fireEvent.click(screen.getByText('Continuar'))
 
     await waitFor(() => {
-      expect(screen.getByText('Quer adicionar uma observação?')).toBeDefined()
+      expect(screen.getByText('Algo a mais para guardar deste momento?')).toBeDefined()
+      expect(screen.getByText('Adicionar observação')).toBeDefined()
+    })
+  })
+
+  it('abre a observação sob demanda e permite concluir sem escrever nada', async () => {
+    render(<PaginaRegistro />, { wrapper: envolverProvider })
+
+    fireEvent.click(screen.getByText('Vaporizado'))
+
+    await waitFor(() => {
+      expect(screen.getByText('Qual era sua intenção?')).toBeDefined()
     })
 
-    fireEvent.click(screen.getByText('Continuar'))
+    fireEvent.click(screen.getByText('Foco'))
 
     await waitFor(() => {
-      expect(screen.getByText('Momento registrado')).toBeDefined()
+      expect(screen.getByText('Qual foi a intensidade?')).toBeDefined()
+    })
+
+    fireEvent.click(screen.getByText('Alta'))
+
+    await waitFor(() => {
+      expect(screen.getByText('Adicionar observação')).toBeDefined()
+    })
+
+    expect(screen.queryByPlaceholderText('Escreva algo, se quiser')).toBeNull()
+
+    fireEvent.click(screen.getByText('Adicionar observação'))
+
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText('Escreva algo, se quiser')).toBeDefined()
+    })
+
+    fireEvent.click(screen.getByText('Fechar observação'))
+
+    await waitFor(() => {
+      expect(screen.queryByPlaceholderText('Escreva algo, se quiser')).toBeNull()
+    })
+
+    fireEvent.click(screen.getByText('Concluir registro'))
+
+    await waitFor(() => {
+      expect(screen.getByText('Seu momento foi registrado')).toBeDefined()
       expect(screen.getByText('Ir para o início')).toBeDefined()
       expect(screen.getByText('Registrar outro momento')).toBeDefined()
+    })
+  })
+
+  it('permite voltar mesmo após o autoavanço até a etapa inicial', async () => {
+    render(<PaginaRegistro />, { wrapper: envolverProvider })
+
+    fireEvent.click(screen.getByText('Vaporizado'))
+
+    await waitFor(() => {
+      expect(screen.getByText('Qual era sua intenção?')).toBeDefined()
+    })
+
+    fireEvent.click(screen.getByText('Relaxar'))
+
+    await waitFor(() => {
+      expect(screen.getByText('Qual foi a intensidade?')).toBeDefined()
+    })
+
+    fireEvent.click(screen.getByText('Voltar'))
+
+    await waitFor(() => {
+      expect(screen.getByText('Qual era sua intenção?')).toBeDefined()
+    })
+
+    fireEvent.click(screen.getByText('Voltar'))
+
+    await waitFor(() => {
+      expect(screen.getByText('Qual foi a forma de uso?')).toBeDefined()
     })
   })
 })

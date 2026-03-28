@@ -21,8 +21,10 @@ interface RegistroEtapaRendererProps {
   pergunta: PerguntaRegistro
   form: EntradaRegistro
   atualizar: <K extends keyof EntradaRegistro>(campo: K, valor: EntradaRegistro[K]) => void
+  atualizarComAutoAvanco: <K extends keyof EntradaRegistro>(campo: K, valor: EntradaRegistro[K]) => void
   observacaoAberta: boolean
   abrirObservacao: () => void
+  fecharObservacao: () => void
   registroConcluido: EntradaRegistro | null
 }
 
@@ -62,8 +64,10 @@ export const RegistroEtapaRenderer = ({
   pergunta,
   form,
   atualizar,
+  atualizarComAutoAvanco,
   observacaoAberta,
   abrirObservacao,
+  fecharObservacao,
   registroConcluido,
 }: RegistroEtapaRendererProps) => {
   if (pergunta.tipo === 'escolha-unica' && pergunta.id === 'forma-uso') {
@@ -78,7 +82,8 @@ export const RegistroEtapaRenderer = ({
               key={opcao.id}
               type="button"
               className={styles.opcao + (ativo ? ' ' + styles['opcao--ativa'] : '')}
-              onClick={() => atualizar('metodo', opcao.valor as EntradaRegistro['metodo'])}
+              aria-pressed={ativo}
+              onClick={() => atualizarComAutoAvanco('metodo', opcao.valor as EntradaRegistro['metodo'])}
             >
               <span className={styles.opcao__icone}><Icone size={32} aria-hidden="true" /></span>
               <span className={styles.opcao__titulo}>{opcao.rotulo}</span>
@@ -101,7 +106,8 @@ export const RegistroEtapaRenderer = ({
               key={opcao.id}
               type="button"
               className={styles.opcaoLista + (ativo ? ' ' + styles['opcaoLista--ativa'] : '')}
-              onClick={() => atualizar('intencao', opcao.valor as EntradaRegistro['intencao'])}
+              aria-pressed={ativo}
+              onClick={() => atualizarComAutoAvanco('intencao', opcao.valor as EntradaRegistro['intencao'])}
             >
               <span>{opcao.rotulo}</span>
               <span className={styles.opcaoLista__icone}><Icone size={21} aria-hidden="true" /></span>
@@ -124,7 +130,7 @@ export const RegistroEtapaRenderer = ({
                 key={opcao.id}
                 type="button"
                 className={styles.intensidade__opcao + (ativo ? ' ' + styles['intensidade__opcao--ativa'] : '')}
-                onClick={() => atualizar('intensidade', opcao.valor as EntradaRegistro['intensidade'])}
+                onClick={() => atualizarComAutoAvanco('intensidade', opcao.valor as EntradaRegistro['intensidade'])}
               >
                 <strong>{opcao.rotulo}</strong>
                 <span>{opcao.descricao ?? descricaoIntensidade[opcao.valor as keyof typeof descricaoIntensidade]}</span>
@@ -139,13 +145,24 @@ export const RegistroEtapaRenderer = ({
   if (pergunta.tipo === 'texto-opcional') {
     return (
       <div className={styles.finalizacao}>
-        {!observacaoAberta && !(form.notas ?? '').trim() && (
-          <button type="button" className={styles.botaoSecundario} onClick={abrirObservacao}>
-            Adicionar observação
-          </button>
-        )}
+        <div className={styles.finalizacao__topo}>
+          <div className={styles.finalizacao__texto}>
+            <strong>Observação opcional</strong>
+            <span>Se quiser, adicione um detalhe rápido antes de concluir.</span>
+          </div>
 
-        {(observacaoAberta || (form.notas ?? '').trim().length > 0) && (
+          {!observacaoAberta ? (
+            <button type="button" className={styles.botaoSecundario} onClick={abrirObservacao}>
+              Adicionar observação
+            </button>
+          ) : (
+            <button type="button" className={styles.botaoSecundario} onClick={fecharObservacao}>
+              Fechar observação
+            </button>
+          )}
+        </div>
+
+        {observacaoAberta && (
           <label className={styles.campoLabel}>
             Observação opcional
             <textarea
@@ -155,6 +172,7 @@ export const RegistroEtapaRenderer = ({
               maxLength={500}
               rows={5}
               placeholder="Escreva algo, se quiser"
+              autoFocus
             />
             <span className={styles.contador}>{(form.notas ?? '').length}/500</span>
           </label>
@@ -182,28 +200,35 @@ export const RegistroEtapaRenderer = ({
 
     return (
       <div className={styles.resumoConclusao}>
-        <p className={styles.resumoConclusao__sucesso}>Seu registro foi salvo com sucesso.</p>
+        <span className={styles.resumoConclusao__eyebrow}>Registro criado</span>
+        <h2 className={styles.resumoConclusao__titulo}>Seu momento foi registrado</h2>
+        <p className={styles.resumoConclusao__descricao}>
+          {formaUso} · {intencao} · Intensidade {registroConcluido ? chaveResumoIntensidade[registroConcluido.intensidade] : '-'}
+        </p>
 
-        <dl className={styles.resumoConclusao__lista}>
-          <div>
-            <dt>Forma de uso</dt>
-            <dd>{formaUso}</dd>
+        <div className={styles.resumoConclusao__chips}>
+          <span className={styles.resumoConclusao__chip}>
+            <Wind size={16} aria-hidden="true" />
+            {formaUso}
+          </span>
+          <span className={styles.resumoConclusao__chip}>
+            <Target size={16} aria-hidden="true" />
+            {intencao}
+          </span>
+          <span className={styles.resumoConclusao__chip}>
+            <Sparkles size={16} aria-hidden="true" />
+            Intensidade {registroConcluido ? chaveResumoIntensidade[registroConcluido.intensidade] : '-'}
+          </span>
+        </div>
+
+        {registroConcluido?.notas && (
+          <div className={styles.resumoConclusao__observacao}>
+            <span className={styles.resumoConclusao__observacaoIcone}>
+              <Info size={16} aria-hidden="true" />
+            </span>
+            <p>{registroConcluido.notas}</p>
           </div>
-          <div>
-            <dt>Intenção</dt>
-            <dd>{intencao}</dd>
-          </div>
-          <div>
-            <dt>Intensidade</dt>
-            <dd>{registroConcluido ? chaveResumoIntensidade[registroConcluido.intensidade] : '-'}</dd>
-          </div>
-          {registroConcluido?.notas && (
-            <div>
-              <dt>Observação</dt>
-              <dd>{registroConcluido.notas}</dd>
-            </div>
-          )}
-        </dl>
+        )}
       </div>
     )
   }

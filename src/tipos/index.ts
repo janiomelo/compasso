@@ -19,8 +19,8 @@ export interface Registro {
 }
 
 export interface EntradaRegistro {
-  metodo: Registro['metodo'];
-  intencao: Registro['intencao'];
+  metodo?: Registro['metodo'];
+  intencao?: Registro['intencao'];
   intensidade: Registro['intensidade'];
   humorAntes?: number;
   humorDepois?: number;

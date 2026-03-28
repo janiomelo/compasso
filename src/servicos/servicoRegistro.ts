@@ -10,6 +10,14 @@ const criarId = () => {
 }
 
 export async function criarRegistro(dados: EntradaRegistro): Promise<Registro> {
+  if (!dados.metodo) {
+    throw new Error('Forma de uso obrigatória')
+  }
+
+  if (!dados.intencao) {
+    throw new Error('Intenção obrigatória')
+  }
+
   const agora = Date.now()
 
   const registro: Registro = {
@@ -17,6 +25,8 @@ export async function criarRegistro(dados: EntradaRegistro): Promise<Registro> {
     timestamp: agora,
     data: new Date(agora),
     ...dados,
+    metodo: dados.metodo,
+    intencao: dados.intencao,
   }
 
   return consultasBD.salvarRegistro(registro)

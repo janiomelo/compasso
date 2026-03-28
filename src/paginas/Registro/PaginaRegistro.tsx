@@ -10,12 +10,14 @@ export const PaginaRegistro = () => {
   const {
     form,
     atualizar,
+    atualizarComAutoAvanco,
     etapaAtual,
     observacaoAberta,
     registroConcluido,
     avancar,
     voltar,
     abrirObservacao,
+    fecharObservacao,
     registrarOutro,
     handleSubmit,
     aguardando,
@@ -25,6 +27,7 @@ export const PaginaRegistro = () => {
   const etapa = PERGUNTAS_REGISTRO[etapaAtual]
   const estaNaConclusao = etapa.tipo === 'conclusao'
   const estaNaObservacao = etapa.id === 'observacao'
+  const usaAutoAvanco = ['forma-uso', 'intencao', 'intensidade'].includes(etapa.id)
 
   return (
     <div className={styles.pagina}>
@@ -35,25 +38,33 @@ export const PaginaRegistro = () => {
       </header>
 
       <form className={styles.formulario} onSubmit={handleSubmit} noValidate>
-        <div className={styles.progresso} aria-label="Progresso do registro">
-          {PERGUNTAS_REGISTRO.map((_, indice) => (
-            <span
-              key={indice}
-              className={styles.progresso__item + (indice <= etapaAtual ? ' ' + styles['progresso__item--ativo'] : '')}
-            />
-          ))}
-        </div>
+        {!estaNaConclusao && (
+          <div className={styles.progresso} aria-label="Progresso do registro">
+            {PERGUNTAS_REGISTRO.slice(0, -1).map((_, indice) => (
+              <span
+                key={indice}
+                className={styles.progresso__item + (indice <= etapaAtual ? ' ' + styles['progresso__item--ativo'] : '')}
+              />
+            ))}
+          </div>
+        )}
 
-        <section className={styles.etapa}>
-          <h2 className={styles.etapa__titulo}>{etapa.titulo}</h2>
-          <p className={styles.etapa__descricao}>{etapa.descricao}</p>
+        <section className={styles.etapa + (estaNaConclusao ? ' ' + styles['etapa--conclusao'] : '')}>
+          {!estaNaConclusao && (
+            <>
+              <h2 className={styles.etapa__titulo}>{etapa.titulo}</h2>
+              <p className={styles.etapa__descricao}>{etapa.descricao}</p>
+            </>
+          )}
 
           <RegistroEtapaRenderer
             pergunta={etapa}
             form={form}
             atualizar={atualizar}
+            atualizarComAutoAvanco={atualizarComAutoAvanco}
             observacaoAberta={observacaoAberta}
             abrirObservacao={abrirObservacao}
+            fecharObservacao={fecharObservacao}
             registroConcluido={registroConcluido}
           />
         </section>
@@ -65,11 +76,11 @@ export const PaginaRegistro = () => {
         <div className={styles.acoes}>
           {estaNaConclusao ? (
             <>
-              <button type="button" className={styles.botaoSecundario} onClick={registrarOutro}>
-                Registrar outro momento
-              </button>
               <button type="button" className={styles.botaoPrimario} onClick={() => navegar('/')}>
                 Ir para o início
+              </button>
+              <button type="button" className={styles.botaoSecundario} onClick={registrarOutro}>
+                Registrar outro momento
               </button>
             </>
           ) : etapaAtual > 0 ? (
@@ -81,7 +92,7 @@ export const PaginaRegistro = () => {
             <span />
           )}
 
-          {!estaNaConclusao && etapaAtual < PERGUNTAS_REGISTRO.length - 1 && !estaNaObservacao ? (
+          {!estaNaConclusao && !estaNaObservacao && !usaAutoAvanco ? (
             <button type="button" className={styles.botaoPrimario} onClick={avancar}>
               Continuar
               <ChevronRight size={18} />
@@ -94,7 +105,7 @@ export const PaginaRegistro = () => {
               className={styles.botaoPrimario}
               disabled={aguardando}
             >
-              {aguardando ? 'Salvando...' : 'Continuar'}
+              {aguardando ? 'Salvando...' : 'Concluir registro'}
             </button>
           ) : null}
         </div>
