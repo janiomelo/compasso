@@ -6,6 +6,8 @@ Compasso é um web app mobile-first de autoconsciência e equilíbrio de hábito
 
 ## Status atual
 
+[![Deploy em GitHub Pages](https://github.com/janiomelo/compasso/actions/workflows/deploy.yml/badge.svg?branch=master)](https://github.com/janiomelo/compasso/actions/workflows/deploy.yml)
+
 **Fase 8.12** (Final do MVP) — Telemetria anônima com Umami ativada por padrão, com transparência clara e desativação fácil.
 
 ### O que já está pronto (MVP)
