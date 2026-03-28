@@ -123,8 +123,14 @@ export const PaginaOnboarding = ({ modoRevisao = false }: { modoRevisao?: boolea
           <article className={styles.etapa}>
             <h1>Bem-vindo ao Compasso</h1>
             <p>
-              Registre momentos, acompanhe pausas e observe seu ritmo com uma experiência simples e privada por padrão.
+              Um espaço para pessoas adultas registrarem momentos, acompanharem pausas e observarem o próprio ritmo com
+              mais clareza, sem anúncios e com privacidade por padrão.
             </p>
+            <ul>
+              <li>Registrar momentos do seu dia com objetividade.</li>
+              <li>Acompanhar pausas no seu tempo.</li>
+              <li>Perceber padrões com mais clareza.</li>
+            </ul>
             <div className={styles.acoes}>
               <button type="button" className={styles.botaoPrimario} onClick={avancar}>
                 Começar

@@ -40,6 +40,11 @@ describe('Onboarding — fluxo inicial', () => {
     await waitFor(() => {
       expect(screen.getByText('Primeiro acesso')).toBeDefined()
       expect(screen.getByText('Bem-vindo ao Compasso')).toBeDefined()
+      expect(screen.getByText(/privacidade por padrão/i)).toBeDefined()
+      expect(screen.getByText('Registrar momentos do seu dia com objetividade.')).toBeDefined()
+      expect(screen.getByText('Acompanhar pausas no seu tempo.')).toBeDefined()
+      expect(screen.getByText('Perceber padrões com mais clareza.')).toBeDefined()
+      expect(screen.getByRole('link', { name: /Entender melhor o projeto/i })).toBeDefined()
     })
   })
 
