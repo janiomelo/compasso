@@ -74,6 +74,10 @@ describe('Onboarding — fluxo inicial', () => {
 
     fireEvent.click(screen.getByLabelText('Li e aceito os Termos de Uso e a Política de Privacidade'))
     fireEvent.click(screen.getByRole('button', { name: 'Continuar' }))
+
+    // etapa 6: telemetria — avança sem alterar preferência
+    fireEvent.click(screen.getByRole('button', { name: 'Continuar' }))
+
     fireEvent.click(screen.getByRole('button', { name: 'Fazer isso depois' }))
 
     await waitFor(() => {
@@ -96,6 +100,9 @@ describe('Onboarding — fluxo inicial', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Continuar' }))
 
     fireEvent.click(screen.getByLabelText('Li e aceito os Termos de Uso e a Política de Privacidade'))
+    fireEvent.click(screen.getByRole('button', { name: 'Continuar' }))
+
+    // etapa 6: telemetria — avança sem alterar preferência
     fireEvent.click(screen.getByRole('button', { name: 'Continuar' }))
 
     fireEvent.click(screen.getByRole('button', { name: 'Ativar agora' }))
