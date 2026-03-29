@@ -306,7 +306,7 @@ const handleSalvarMomento = async (momento: Momento) => {
 
 - [ ] Testes unitários para cada função de telemetria (mocks Umami)
 - [ ] Testes integração: fluxos com telemetria ativa, desativada e sem decisão (usuarios antigos)
-- [ ] Validar cobertura `> 60%` em `src/utilitarios/telemetria/` e `src/ganchos/useTelemtria.ts`
+- [ ] Validar cobertura `> 60%` em `src/utilitarios/telemetria/` e `src/ganchos/useTelemetria.ts`
 - [ ] Testes E2E (opcionais): verificar eventos em staging Umami
 - [ ] Atualizar baselines de cobertura
 
