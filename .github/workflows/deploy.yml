@@ -2,8 +2,8 @@ name: Deploy em GitHub Pages
 
 on:
   push:
-    branches:
-      - master
+    tags:
+      - 'v*'
   workflow_dispatch:
 
 permissions:
@@ -43,7 +43,18 @@ jobs:
       - name: Testes com cobertura
         run: npm run coverage
 
+      - name: Validar configuracao do Umami
+        env:
+          VITE_UMAMI_WEBSITE_ID: ${{ vars.VITE_UMAMI_WEBSITE_ID }}
+        run: |
+          if [ -z "$VITE_UMAMI_WEBSITE_ID" ]; then
+            echo "VITE_UMAMI_WEBSITE_ID nao configurada em Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+
       - name: Build
+        env:
+          VITE_UMAMI_WEBSITE_ID: ${{ vars.VITE_UMAMI_WEBSITE_ID }}
         run: npm run build
 
       - name: Configurar páginas
