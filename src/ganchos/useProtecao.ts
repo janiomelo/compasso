@@ -16,7 +16,7 @@ const bytesParaBase64 = (bytes: Uint8Array): string => btoa(String.fromCharCode(
 const base64ParaBytes = (base64: string): Uint8Array =>
   new Uint8Array(atob(base64).split('').map((c) => c.charCodeAt(0)))
 
-export const useProteção = () => {
+export const useProtecao = () => {
   const { estado, despacho } = useApp()
 
   const bloquear = useCallback(() => {

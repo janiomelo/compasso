@@ -2,7 +2,7 @@ import { Activity, Home, PauseCircle, PlusCircle, Settings2 } from 'lucide-react
 import { FormEvent, lazy, Suspense, useEffect, useMemo, useState } from 'react'
 import { BrowserRouter as Roteador, NavLink, Routes, Route, Link, Navigate, useLocation } from 'react-router-dom'
 import { useApp, useTelemetria } from './ganchos'
-import { useProteção } from './ganchos/useProtecao'
+import { useProtecao } from './ganchos/useProtecao'
 import { ProvedorApp } from './loja/ContextoApp'
 import { AvisoOffline } from './componentes/comum/AvisoOffline'
 import './App.scss'
@@ -224,7 +224,7 @@ const RotasAplicacao = ({ onboardingConcluido }: { onboardingConcluido: boolean 
 
 const ConteudoApp = () => {
   const { estado } = useApp()
-  const { desbloquear, bloquear } = useProteção()
+  const { desbloquear, bloquear } = useProtecao()
   const onboardingConcluido = Boolean(estado.configuracoes.onboarding?.concluidoEm)
   const [senhaDesbloqueio, setSenhaDesbloqueio] = useState('')
   const [erroDesbloqueio, setErroDesbloqueio] = useState<string | null>(null)

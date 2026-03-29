@@ -252,7 +252,7 @@ src/utilitarios/
       ├── criptografiaDados.ts      # (novo) operações I/O com cifra
       └── ... (existentes)
 src/ganchos/
-  └── useProteção.ts               # (novo) hook de bloqueio e desbloqueio
+  └── useProtecao.ts               # (novo) hook de bloqueio e desbloqueio
 src/loja/
   └── redutor.ts                   # (modificado com ações de proteção)
 src/tipos/
@@ -309,7 +309,7 @@ src/tipos/
    - Método `obterDEK()` → retorna ou lança erro se bloqueado
    - Método `limparDEK()` → apaga da memória
    - Auto-limpeza com timer configurável
-2. Criar `src/ganchos/useProteção.ts`:
+2. Criar `src/ganchos/useProtecao.ts`:
    - `desbloquear(senha: string)` → deriva KEK, descriptografa DEK, chama gerenciador
    - `bloquear()` → limpa DEK, atualiza estado para bloqueado
    - `trocarSenha(senhaAtual, senhaNova)` → re-deriva nova KEK, re-cifra
@@ -412,7 +412,7 @@ src/tipos/
 3. ✅ Implementar `src/utilitarios/seguranca/criptografia.ts` com AES-256-GCM via SubtleCrypto nativa
 4. ✅ Estender schema Dexie com tabela `protecao` em `src/utilitarios/armazenamento/bd.ts`
 5. ✅ Implementar `src/utilitarios/seguranca/gerenciadorChaves.ts` para guardar DEK em memória
-6. ✅ Criar hook `src/ganchos/useProteção.ts` com `desbloquear()`, `bloquear()`, `trocarSenha()`
+6. ✅ Criar hook `src/ganchos/useProtecao.ts` com `desbloquear()`, `bloquear()`, `trocarSenha()`
 7. ✅ Modificar serviços de persistência para cifrar/descritar dados (Fase 4)
 8. ✅ Atualizar `exportarDados()` e `importarDados()` para suportar criptografia (Fase 5)
 9. ✅ Implementar UI: etapa no onboarding + seção em Configurações (Fase 6)

@@ -2,7 +2,7 @@ import { BookOpen, Database, Heart, Info, Palette, ShieldCheck } from 'lucide-re
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useApp, useArmazenamento, useTelemetria, useConsentimentoTelemetria } from '../../ganchos'
-import { useProteção } from '../../ganchos/useProtecao'
+import { useProtecao } from '../../ganchos/useProtecao'
 import styles from './pagina-config.module.scss'
 
 export const PaginaConfig = () => {
@@ -16,7 +16,7 @@ export const PaginaConfig = () => {
     trocarSenha,
     bloquear,
     atualizarTimeoutSessao,
-  } = useProteção()
+  } = useProtecao()
 
   const [mensagem, setMensagem] = useState<string | null>(null)
   const [erro, setErro] = useState<string | null>(null)
