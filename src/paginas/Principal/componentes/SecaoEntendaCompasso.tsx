@@ -10,6 +10,7 @@ const CHAVE_ENTENDA_VISTOS = 'compasso_entenda_vistos'
 type EstadoVistos = {
   dadosLocais?: boolean
   telemetria?: boolean
+  protecaoSenha?: boolean
 }
 
 type ItemEntenda = {
@@ -63,6 +64,7 @@ export const SecaoEntendaCompasso = () => {
   const telemetriaAtivadaPorPadrao = estado.configuracoes.telemetria?.consentido === true && !telemetriaRevisada
   const telemetriaAtiva = estado.configuracoes.telemetria?.consentido === true
   const protecaoConfigurada = estado.configuracoes.protecaoAtiva
+  const protecaoRevisada = protecaoConfigurada || !!vistos.protecaoSenha
   const primeiroRegistroConcluido = estado.registros.length > 0
 
   const marcarVisto = (chave: keyof EstadoVistos) => {
@@ -100,12 +102,12 @@ export const SecaoEntendaCompasso = () => {
     {
       id: 'protecaoSenha',
       titulo: 'Proteção por senha',
-      acaoPendente: 'Configurar',
-      acaoConcluida: 'Configurada',
+      acaoPendente: 'Revisar',
+      acaoConcluida: protecaoConfigurada ? 'Configurada' : 'Revisada',
       rota: '/config',
-      concluido: protecaoConfigurada,
+      concluido: protecaoRevisada,
       icone: Lock,
-      aoVisitar: () => undefined,
+      aoVisitar: () => marcarVisto('protecaoSenha'),
     },
     {
       id: 'primeiroRegistro',
@@ -117,7 +119,7 @@ export const SecaoEntendaCompasso = () => {
       icone: BookOpen,
       aoVisitar: () => undefined,
     },
-  ], [vistos, telemetriaRevisada, telemetriaAtivadaPorPadrao, telemetriaAtiva, protecaoConfigurada, primeiroRegistroConcluido])
+  ], [vistos, telemetriaRevisada, telemetriaAtivadaPorPadrao, telemetriaAtiva, protecaoConfigurada, protecaoRevisada, primeiroRegistroConcluido])
 
   const totalItens = itens.length
   const itensConcluidos = itens.filter((item) => item.concluido).length

@@ -52,7 +52,7 @@ describe('Home Principal — UI Comportamental', () => {
       expect(screen.getByText('Registrar primeiro momento')).toBeDefined()
       expect(screen.getAllByText('Ver').length).toBeGreaterThan(0)
       expect(screen.getByText('Ativada por padrão')).toBeDefined()
-      expect(screen.getByText('Configurar')).toBeDefined()
+      expect(screen.getByText('Revisar')).toBeDefined()
       expect(screen.getByText('Registrar')).toBeDefined()
     })
   })
@@ -103,12 +103,34 @@ describe('Home Principal — UI Comportamental', () => {
     })
   })
 
+  it('marca proteção por senha como revisada sem exigir configuração', async () => {
+    const { unmount } = render(<PaginaPrincipal />, { wrapper: envolverProvider })
+
+    const itemProtecao = await screen.findByText('Proteção por senha')
+    fireEvent.click(itemProtecao)
+
+    const chaveVistos = Object.keys(localStorage).find((chave) =>
+      chave.startsWith('compasso_entenda_vistos:')
+    )
+
+    expect(chaveVistos).toBeTruthy()
+
+    const vistos = JSON.parse(localStorage.getItem(chaveVistos as string) ?? '{}')
+    expect(vistos.protecaoSenha).toBe(true)
+
+    unmount()
+    render(<PaginaPrincipal />, { wrapper: envolverProvider })
+
+    await waitFor(() => {
+      expect(screen.getByText('Revisada')).toBeDefined()
+    })
+  })
+
   it('recolhe seção por padrão quando tudo estiver concluído e permite revisar', async () => {
     const agora = Date.now()
 
     await consultasBD.salvarConfiguracoes({
       ...estadoInicial.configuracoes,
-      protecaoAtiva: true,
       telemetria: {
         consentido: true,
         atualizadoEm: agora + 1000,
@@ -125,6 +147,7 @@ describe('Home Principal — UI Comportamental', () => {
     localStorage.setItem(`compasso_entenda_vistos:${agora}`, JSON.stringify({
       dadosLocais: true,
       telemetria: true,
+      protecaoSenha: true,
     }))
 
     await criarRegistro({ metodo: 'vaporizado', intencao: 'foco', intensidade: 'media' })
