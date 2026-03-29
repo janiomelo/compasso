@@ -8,7 +8,7 @@
     "gerar:publico": "tsx scripts/gerar-paginas-publicas.mjs",
     "build": "npm run gerar:publico && tsc --noEmit && vite build",
     "preview": "vite preview",
-    "test": "vitest",
+    "test": "vitest --run",
     "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
