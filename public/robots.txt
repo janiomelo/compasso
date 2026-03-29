@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
+Disallow: /onboarding
+Disallow: /registro
+Disallow: /pausa
+Disallow: /ritmo
+Disallow: /config
 
 Sitemap: https://compasso.digital/sitemap.xml
