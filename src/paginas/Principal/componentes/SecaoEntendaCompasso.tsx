@@ -1,4 +1,4 @@
-import { BookOpen, CheckCircle2, ChevronDown, ChevronUp, Circle, Database, Lock, Radio, ShieldCheck } from 'lucide-react'
+import { BookOpen, CheckCircle2, ChevronDown, ChevronUp, Circle, Database, Lock, Radio } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useApp } from '../../../ganchos'
@@ -7,10 +7,8 @@ import styles from '../pagina-principal.module.scss'
 const CHAVE_ENTENDA_VISTOS = 'compasso_entenda_vistos'
 
 type EstadoVistos = {
-  conhecaApp?: boolean
   dadosLocais?: boolean
   telemetria?: boolean
-  usoLimites?: boolean
 }
 
 const obterChaveVistos = (escopo: number) => `${CHAVE_ENTENDA_VISTOS}:${escopo}`
@@ -52,6 +50,7 @@ export const SecaoEntendaCompasso = () => {
   const telemetriaAtivadaPorPadrao = estado.configuracoes.telemetria?.consentido === true && !telemetriaRevisada
   const telemetriaAtiva = estado.configuracoes.telemetria?.consentido === true
   const protecaoConfigurada = estado.configuracoes.protecaoAtiva
+  const primeiroRegistroConcluido = estado.registros.length > 0
 
   const marcarVisto = (chave: keyof EstadoVistos) => {
     const proximo: EstadoVistos = {
@@ -64,16 +63,6 @@ export const SecaoEntendaCompasso = () => {
   }
 
   const itens = useMemo(() => [
-    {
-      id: 'conhecaApp',
-      titulo: 'Conheça o app',
-      acaoPendente: 'Ver',
-      acaoConcluida: 'Lido',
-      rota: '/como-funciona',
-      concluido: !!vistos.conhecaApp,
-      icone: BookOpen,
-      aoVisitar: () => marcarVisto('conhecaApp'),
-    },
     {
       id: 'dadosLocais',
       titulo: 'Como seus dados ficam salvos',
@@ -105,22 +94,22 @@ export const SecaoEntendaCompasso = () => {
       aoVisitar: () => undefined,
     },
     {
-      id: 'usoLimites',
-      titulo: 'Uso e limites do projeto',
-      acaoPendente: 'Ver',
-      acaoConcluida: 'Revisado',
-      rota: '/projeto',
-      concluido: !!vistos.usoLimites,
-      icone: ShieldCheck,
-      aoVisitar: () => marcarVisto('usoLimites'),
+      id: 'primeiroRegistro',
+      titulo: 'Registrar primeiro momento',
+      acaoPendente: 'Registrar',
+      acaoConcluida: 'Concluído',
+      rota: '/registro',
+      concluido: primeiroRegistroConcluido,
+      icone: BookOpen,
+      aoVisitar: () => undefined,
     },
-  ] as const, [vistos, telemetriaRevisada, telemetriaAtivadaPorPadrao, telemetriaAtiva, protecaoConfigurada])
+  ] as const, [vistos, telemetriaRevisada, telemetriaAtivadaPorPadrao, telemetriaAtiva, protecaoConfigurada, primeiroRegistroConcluido])
 
   const totalItens = itens.length
   const itensConcluidos = itens.filter((item) => item.concluido).length
   const haPendencias = itensConcluidos < totalItens
   const [estaExpandido, setEstaExpandido] = useState(haPendencias)
-  const resumoFechado = `${itensConcluidos} de ${totalItens} concluídos · revisar dados, telemetria e proteção`
+  const resumoFechado = `${itensConcluidos} de ${totalItens} concluídos · revisar dados, telemetria, proteção e registro`
 
   useEffect(() => {
     setEstaExpandido(haPendencias)

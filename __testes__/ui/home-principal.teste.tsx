@@ -46,23 +46,22 @@ describe('Home Principal — UI Comportamental', () => {
 
     await waitFor(() => {
       expect(screen.getByText('Entenda o Compasso')).toBeDefined()
-      expect(screen.getByText('Conheça o app')).toBeDefined()
       expect(screen.getByText('Como seus dados ficam salvos')).toBeDefined()
       expect(screen.getByText('Telemetria anônima')).toBeDefined()
       expect(screen.getByText('Proteção por senha')).toBeDefined()
-      expect(screen.getByText('Uso e limites do projeto')).toBeDefined()
-      expect(screen.queryByText('Fazer primeiro registro')).toBeNull()
+      expect(screen.getByText('Registrar primeiro momento')).toBeDefined()
       expect(screen.getAllByText('Ver').length).toBeGreaterThan(0)
       expect(screen.getByText('Ativada por padrão')).toBeDefined()
       expect(screen.getByText('Configurar')).toBeDefined()
+      expect(screen.getByText('Registrar')).toBeDefined()
     })
   })
 
-  it('marca item de leitura ao clicar em uso e limites do projeto', async () => {
+  it('marca item de leitura ao clicar em como seus dados ficam salvos', async () => {
     const { unmount } = render(<PaginaPrincipal />, { wrapper: envolverProvider })
 
-    const botaoUsoLimites = await screen.findByText('Uso e limites do projeto')
-    fireEvent.click(botaoUsoLimites)
+    const botaoDadosLocais = await screen.findByText('Como seus dados ficam salvos')
+    fireEvent.click(botaoDadosLocais)
 
     const chaveVistos = Object.keys(localStorage).find((chave) =>
       chave.startsWith('compasso_entenda_vistos:')
@@ -71,13 +70,13 @@ describe('Home Principal — UI Comportamental', () => {
     expect(chaveVistos).toBeTruthy()
 
     const vistos = JSON.parse(localStorage.getItem(chaveVistos as string) ?? '{}')
-    expect(vistos.usoLimites).toBe(true)
+    expect(vistos.dadosLocais).toBe(true)
 
     unmount()
     render(<PaginaPrincipal />, { wrapper: envolverProvider })
 
     await waitFor(() => {
-      expect(screen.getByText('Revisado')).toBeDefined()
+      expect(screen.getAllByText('Lido').length).toBeGreaterThan(0)
     })
   })
 
@@ -124,24 +123,24 @@ describe('Home Principal — UI Comportamental', () => {
     })
 
     localStorage.setItem(`compasso_entenda_vistos:${agora}`, JSON.stringify({
-      conhecaApp: true,
       dadosLocais: true,
-      usoLimites: true,
       telemetria: true,
     }))
+
+    await criarRegistro({ metodo: 'vaporizado', intencao: 'foco', intensidade: 'media' })
 
     render(<PaginaPrincipal />, { wrapper: envolverProvider })
 
     await waitFor(() => {
-      expect(screen.getByText('5 de 5 concluídos · revisar dados, telemetria e proteção')).toBeDefined()
+      expect(screen.getByText('4 de 4 concluídos · revisar dados, telemetria, proteção e registro')).toBeDefined()
       expect(screen.getByRole('button', { name: /Expandir/i })).toBeDefined()
-      expect(screen.queryByText('Conheça o app')).toBeNull()
+      expect(screen.queryByText('Registrar primeiro momento')).toBeNull()
     })
 
     fireEvent.click(screen.getByRole('button', { name: /Expandir/i }))
 
     await waitFor(() => {
-      expect(screen.getByText('Conheça o app')).toBeDefined()
+      expect(screen.getByText('Registrar primeiro momento')).toBeDefined()
       expect(screen.getByText('Como seus dados ficam salvos')).toBeDefined()
     })
   })
@@ -203,11 +202,8 @@ describe('Home Principal — UI Comportamental', () => {
     const linksPausa = screen.getAllByRole('link').filter(link => link.getAttribute('href') === '/pausa')
     expect(linksPausa.length).toBeGreaterThan(0)
 
-    const linksComoFunciona = screen.getAllByRole('link').filter(link => link.getAttribute('href') === '/como-funciona')
-    expect(linksComoFunciona.length).toBeGreaterThan(0)
-
-    const linksProjeto = screen.getAllByRole('link').filter(link => link.getAttribute('href') === '/projeto')
-    expect(linksProjeto.length).toBeGreaterThan(0)
+    const linksDadosLocais = screen.getAllByRole('link').filter(link => link.getAttribute('href') === '/config/dados-locais-seguranca')
+    expect(linksDadosLocais.length).toBeGreaterThan(0)
 
     const linksConfig = screen.getAllByRole('link').filter(link => link.getAttribute('href') === '/config')
     expect(linksConfig.length).toBeGreaterThan(0)

@@ -411,7 +411,7 @@ Criar um card ou painel com:
 - entender seus dados
 - escolher telemetria
 - ativar proteção por senha
-- fazer primeiro registro
+- Registrar primeiro momento
 
 ### Fase 4 — Configurações
 Garantir que tudo possa ser revisitado em:

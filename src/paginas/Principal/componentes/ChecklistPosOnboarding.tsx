@@ -37,7 +37,7 @@ const ITENS_CHECKLIST: ItemChecklist[] = [
   },
   {
     id: 'primeiro-registro',
-    titulo: 'Fazer primeiro registro',
+    titulo: 'Registrar primeiro momento',
     descricao: 'Comece a usar o app registrando seu primeiro momento.',
     intencaoCTA: 'Registrar',
     rota: '/registro',
