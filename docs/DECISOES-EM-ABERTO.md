@@ -19,8 +19,37 @@ Objetivo: registrar decisoes pendentes com dono, prazo e impacto para evitar blo
 | D-04 | Dominio principal | Qual dominio oficial de lancamento? | aberta | a definir | 2026-04-10 | branding, SEO, divulgacao |
 | D-05 | Subtitulo de marca | Usar apenas Compasso ou Compasso + subtitulo na comunicacao inicial? | aberta | a definir | 2026-04-10 | clareza de proposta, posicionamento |
 | D-06 | Telemetria | Implementar telemetria na Fase 8 ou postergar para fase seguinte? | **decidida** | Janio Melo | 2026-03-28 | observabilidade, privacidade, manutencao |
+| D-07 | Paginas publicas | Como publicar URLs publicas do sitemap com SEO correto no GitHub Pages? | **decidida** | Janio Melo | 2026-03-29 | publicacao, sitemap, SEO, preview |
 
 ## Decisões Fechadas
+
+### D-07: Páginas públicas estáticas por rota
+
+- **Status:** decidida
+- **Data da decisão:** 29 de março de 2026
+- **Decisor:** Janio Melo (Desenvolvimento)
+- **Contexto:** As URLs públicas do sitemap precisam abrir diretamente, sem 404, com HTML específico por rota e metadados suficientes para SEO e preview. Em GitHub Pages, depender apenas de fallback de SPA e `404.html` não atende esse requisito.
+- **Opções consideradas:**
+  - ❌ Fallback SPA reforçado como estratégia principal
+  - ✅ **Páginas públicas estáticas por rota (escolhida)**
+  - ❌ Prerender híbrido ou SSR neste momento
+- **Escolha final:** Publicar as páginas públicas do sitemap como arquivos HTML reais no build, mantendo o app operacional como SPA.
+- **Racional:** Essa estratégia atende GitHub Pages, melhora indexação, melhora preview social e reduz dependência de fallback específico de plataforma.
+- **Impactos técnicos:**
+  - manifesto canônico de páginas públicas
+  - pipeline de geração estática para rotas públicas
+  - sitemap alinhado à mesma fonte de publicação
+  - `404.html` rebaixado para fallback secundário
+- **Impactos de produto:**
+  - páginas institucionais passam a existir como destino público real
+  - SEO e compartilhamento deixam de depender do runtime do app
+  - separação mais clara entre conteúdo institucional e área operacional
+- **Ações derivadas:**
+  - [x] Criar ADR-003 (referência: `docs/decisions/adr-003-paginas-publicas-estaticas-github-pages.md`)
+  - [x] Criar manifesto canônico inicial das páginas públicas
+  - [ ] Integrar geração estática ao build
+  - [ ] Derivar ou validar `public/sitemap.xml` a partir do manifesto
+  - [ ] Revisar links internos e fronteira entre páginas públicas e SPA
 
 ### D-06: Telemetria com ativacao padrao
 
@@ -71,5 +100,6 @@ Objetivo: registrar decisoes pendentes com dono, prazo e impacto para evitar blo
 
 ## Historico
 
+- 29/03/2026: D-07 (paginas publicas) fechada com aprovacao de HTML estatico por rota para GitHub Pages, com manifesto canônico como base de publicacao. Criada ADR-003.
 - 28/03/2026: D-06 (Telemetria) fechada com aprovacao de Umami com ativacao padrao, desativacao facil e pagina "Saiba mais". Criada ADR-002 e planejamento Fase 8.12.
 - 22/03/2026: documento criado para consolidar pendencias de decisao apos fechamento da Fase 7.
