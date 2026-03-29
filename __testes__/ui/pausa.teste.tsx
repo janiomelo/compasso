@@ -4,6 +4,7 @@ import { render, screen, waitFor, fireEvent } from '@testing-library/react'
 import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { BrowserRouter } from 'react-router-dom'
 import { ProvedorApp } from '../../src/loja/ContextoApp'
+import { estadoInicial } from '../../src/loja/redutor'
 import { PaginaPausa } from '../../src/paginas/Pausa/PaginaPausa'
 import { bd, consultasBD } from '../../src/utilitarios/armazenamento/bd'
 import { DURACOES_PAUSA } from '../../src/utilitarios/constantes'
@@ -93,6 +94,50 @@ describe('Pausa — UI', () => {
       expect(screen.getByText('Começar uma pausa')).toBeDefined()
       expect(screen.getByText('Pausa cancelada em menos de 5 minutos. Este ciclo não foi salvo no histórico.')).toBeDefined()
       expect(screen.queryByText('Histórico recente')).toBeNull()
+    })
+  })
+
+  it('oculta economia na pausa ativa quando valor medio nao estiver configurado', async () => {
+    await consultasBD.salvarPausa({
+      id: 'pausa-sem-economia',
+      iniciadoEm: Date.now() - (6 * 60 * 1000),
+      duracaoPlanejada: DURACOES_PAUSA.HORAS_24,
+      status: 'ativa',
+      valorEconomia: 0,
+    })
+
+    render(<PaginaPausa />, { wrapper: envolverProvider })
+
+    await waitFor(() => {
+      expect(screen.getByText('Sua pausa está em andamento')).toBeDefined()
+      expect(screen.queryByText('Economia')).toBeNull()
+      expect(screen.queryByText('R$ 0,00')).toBeNull()
+    })
+  })
+
+  it('oculta economia zerada no historico quando valor medio nao estiver configurado', async () => {
+    await bd.configuracoes.put({
+      chave: 'principal',
+      valor: {
+        ...estadoInicial.configuracoes,
+        valorEconomia: 0,
+      },
+    })
+
+    await consultasBD.salvarPausa({
+      id: 'pausa-historico-sem-economia',
+      iniciadoEm: Date.now() - (8 * 60 * 60 * 1000),
+      duracaoPlanejada: DURACOES_PAUSA.HORAS_24,
+      duracaoReal: 7 * 60 * 60 * 1000,
+      status: 'concluida',
+      valorEconomia: 0,
+    })
+
+    render(<PaginaPausa />, { wrapper: envolverProvider })
+
+    await waitFor(() => {
+      expect(screen.getByText('Histórico recente')).toBeDefined()
+      expect(screen.queryByText('R$ 0,00')).toBeNull()
     })
   })
 })

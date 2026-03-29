@@ -1,6 +1,6 @@
 import { History, PauseCircle, PlayCircle, Sparkles } from 'lucide-react'
 import { useState } from 'react'
-import { usePausa } from '../../ganchos'
+import { useApp, usePausa } from '../../ganchos'
 import { rotularStatusPausa } from '../../utilitarios/apresentacao/rotulos'
 import { formatarDuracao, formatarMoeda } from '../../utilitarios/dados/formatacao'
 import { DURACOES_PAUSA, TEMPO_MINIMO_CONSIDERAR_PAUSA_MS } from '../../utilitarios/constantes'
@@ -15,10 +15,13 @@ const OPCOES_DURACAO = [
 
 export const PaginaPausa = () => {
   const { pausaAtiva, progresso, historico, iniciar, encerrar, cancelar } = usePausa()
+  const { estado } = useApp()
   const [duracaoSelecionada, setDuracaoSelecionada] = useState(DURACOES_PAUSA.HORAS_24)
   const [aguardando, setAguardando] = useState(false)
   const [erro, setErro] = useState<string | null>(null)
   const [mensagem, setMensagem] = useState<string | null>(null)
+
+  const economiaHabilitada = estado.configuracoes.valorEconomia > 0
 
   const handleIniciar = async () => {
     setErro(null)
@@ -101,7 +104,12 @@ export const PaginaPausa = () => {
             />
           </div>
 
-          <div className={styles.pausaInfos}>
+          <div
+            className={
+              styles.pausaInfos +
+              (economiaHabilitada ? '' : ' ' + styles['pausaInfos--semEconomia'])
+            }
+          >
             <div className={styles.pausaInfo}>
               <span className={styles.pausaInfoRotulo}>Restante</span>
               <span className={styles.pausaInfoValor}>{formatarDuracao(progresso.restanteMs)}</span>
@@ -110,10 +118,12 @@ export const PaginaPausa = () => {
               <span className={styles.pausaInfoRotulo}>Meta</span>
               <span className={styles.pausaInfoValor}>{formatarDuracao(pausaAtiva.duracaoPlanejada)}</span>
             </div>
-            <div className={styles.pausaInfo}>
-              <span className={styles.pausaInfoRotulo}>Economia</span>
-              <span className={styles.pausaInfoValor}>{formatarMoeda(pausaAtiva.valorEconomia)}</span>
-            </div>
+            {economiaHabilitada && (
+              <div className={styles.pausaInfo}>
+                <span className={styles.pausaInfoRotulo}>Economia</span>
+                <span className={styles.pausaInfoValor}>{formatarMoeda(pausaAtiva.valorEconomia)}</span>
+              </div>
+            )}
           </div>
 
           <div className={styles.acoes}>
@@ -201,7 +211,9 @@ export const PaginaPausa = () => {
                 <span className={styles.itemDuracao}>
                   {formatarDuracao(pausa.duracaoReal ?? pausa.duracaoPlanejada)}
                 </span>
-                <span className={styles.itemEconomia}>{formatarMoeda(pausa.valorEconomia)}</span>
+                {economiaHabilitada && (
+                  <span className={styles.itemEconomia}>{formatarMoeda(pausa.valorEconomia)}</span>
+                )}
               </li>
             ))}
           </ul>
