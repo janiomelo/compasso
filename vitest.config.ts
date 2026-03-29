@@ -20,11 +20,12 @@ export default defineConfig({
         'src/estilos/**',
         'src/vite-env.d.ts',
       ],
+      // Gate atual de cobertura em 80%; meta planejada: elevar para 95%.
       thresholds: {
-        lines: 60,
-        functions: 60,
-        branches: 55,
-        statements: 60,
+        lines: 80,
+        functions: 80,
+        branches: 80,
+        statements: 80,
       },
       reporter: ['text', 'json', 'json-summary', 'html'],
     },
