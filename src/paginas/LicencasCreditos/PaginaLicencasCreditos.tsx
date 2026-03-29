@@ -1,4 +1,4 @@
-import { BookOpen, Boxes, ChevronLeft, FileBadge2, Github, Palette, ShieldCheck } from 'lucide-react'
+import { BookOpen, Boxes, ChevronLeft, FileBadge2, Github, Palette } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import styles from './pagina-licencas-creditos.module.scss'
 

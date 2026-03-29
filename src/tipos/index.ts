@@ -108,12 +108,24 @@ export interface Configuracoes {
   };
 }
 
+export interface ItemChecklistPosOnboarding {
+  id: 'dados-locais' | 'telemetria' | 'protecao-senha' | 'primeiro-registro';
+  concluidoEm?: number;
+}
+
+export interface EstadoPosOnboarding {
+  concluidoEm?: number; // Timestamp quando todos os itens foram marcados como concluídos
+  intiniado?: number; // Timestamp quando o checklist foi primeiro mostrado
+  checklist: ItemChecklistPosOnboarding[];
+}
+
 export interface EstadoOnboarding {
   concluidoEm: number;
   confirmouMaioridadeEm: number;
   aceitouTermosPrivacidadeEm: number;
   versaoTermos: string;
   versaoPolitica: string;
+  posOnboarding?: EstadoPosOnboarding; // Nova sub-estrutura para pós-onboarding
 }
 
 // Estado da UI

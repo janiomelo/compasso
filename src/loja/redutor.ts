@@ -1,5 +1,7 @@
 import { EstadoApp, AcaoApp, Configuracoes, EstadoUI } from '../tipos'
 
+const agora = Date.now()
+
 // Estado inicial padrão
 export const estadoInicial: EstadoApp = {
   registros: [],
@@ -18,8 +20,8 @@ export const estadoInicial: EstadoApp = {
     timeoutBloqueio: 15 * 60 * 1000,
     manterDesbloqueadoNestaSessao: false,
     telemetria: {
-      consentido: null,
-      atualizadoEm: 0,
+      consentido: true,
+      atualizadoEm: agora,
     },
   } as Configuracoes,
   protecao: {
@@ -36,7 +38,7 @@ export const estadoInicial: EstadoApp = {
   metadados: {
     ultimaSincronizacao: 0,
     versaoApp: '0.1.0',
-    criadoEm: Date.now(),
+    criadoEm: agora,
   },
 }
 
