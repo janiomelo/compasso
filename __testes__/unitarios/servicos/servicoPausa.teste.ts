@@ -21,8 +21,12 @@ import {
 import { bd, consultasBD } from '../../../src/utilitarios/armazenamento/bd'
 
 describe('servicoPausa.ts — Operações de Pausa', () => {
+  let agoraMock = 0
+
   beforeEach(async () => {
     vi.restoreAllMocks()
+    agoraMock = Date.now()
+    vi.spyOn(Date, 'now').mockImplementation(() => agoraMock)
     await bd.delete()
     await bd.open()
   })
@@ -124,6 +128,9 @@ describe('servicoPausa.ts — Operações de Pausa', () => {
         valorEconomia: 50,
       })
 
+      // Avança tempo para garantir duracaoReal > 0
+      agoraMock += 5 * 60 * 1000 // 5 minutos
+
       const pausaEncerrada = await encerrarPausa(pausa.id)
 
       expect(pausaEncerrada.status).toBe('concluida')
@@ -147,13 +154,13 @@ describe('servicoPausa.ts — Operações de Pausa', () => {
       })
 
       const tempoDecorrido = 5 * 60 * 1000 // 5 minutos
-
-      // Aguarda 5ms para garantir diferença de tempo
-      await new Promise((resolve) => setTimeout(resolve, 5))
+      
+      // Avança tempo usando mock
+      agoraMock += tempoDecorrido
 
       const pausaEncerrada = await encerrarPausa(pausa.id)
 
-      expect(pausaEncerrada.duracaoReal).toBeGreaterThanOrEqual(5)
+      expect(pausaEncerrada.duracaoReal).toBeGreaterThanOrEqual(tempoDecorrido)
     })
 
     it('rejeita encerramento de pausa inexistente', async () => {
@@ -188,6 +195,9 @@ describe('servicoPausa.ts — Operações de Pausa', () => {
       const pausa = await iniciarPausa({
         duracaoPlanejada: 24 * 60 * 60 * 1000,
       })
+
+      // Avança tempo para garantir duracaoReal > 0
+      agoraMock += 5 * 60 * 1000 // 5 minutos
 
       const pausaInterrompida = await interromperPausa(pausa.id)
 
