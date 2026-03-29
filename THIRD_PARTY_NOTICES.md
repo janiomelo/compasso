@@ -4,6 +4,11 @@ Este arquivo registra bibliotecas de terceiros relevantes usadas no projeto Comp
 
 As informacoes abaixo sao um ponto de partida para distribuicao e devem ser revisadas quando as dependencias forem atualizadas.
 
+Escopo de exibicao na UI:
+
+- A tela de "Licencas e creditos" no app deve mostrar apenas um resumo contextual (runtime/UI).
+- Este arquivo permanece como inventario mais amplo para distribuicao e compliance.
+
 ## Runtime e UI
 
 - React (`react`) - MIT

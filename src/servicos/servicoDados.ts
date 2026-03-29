@@ -161,12 +161,26 @@ const normalizarOnboarding = (onboarding: unknown): EstadoOnboarding | undefined
     return undefined
   }
 
+  // Migração retroativa: usuários que concluíram o onboarding antigo
+  // iniciam com pós-onboarding já concluído
+  const posOnboarding = candidato.posOnboarding || {
+    concluidoEm: candidato.concluidoEm, // Marca pós-onboarding como concluído no mesmo timestamp
+    intiniado: candidato.concluidoEm,
+    checklist: [
+      { id: 'dados-locais' as const, concluidoEm: candidato.concluidoEm },
+      { id: 'telemetria' as const, concluidoEm: candidato.concluidoEm },
+      { id: 'protecao-senha' as const, concluidoEm: candidato.concluidoEm },
+      { id: 'primeiro-registro' as const, concluidoEm: candidato.concluidoEm },
+    ],
+  }
+
   return {
     concluidoEm: candidato.concluidoEm,
     confirmouMaioridadeEm: candidato.confirmouMaioridadeEm,
     aceitouTermosPrivacidadeEm: candidato.aceitouTermosPrivacidadeEm,
     versaoTermos: candidato.versaoTermos,
     versaoPolitica: candidato.versaoPolitica,
+    posOnboarding,
   }
 }
 

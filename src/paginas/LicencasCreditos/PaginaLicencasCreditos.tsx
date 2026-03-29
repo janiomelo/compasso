@@ -1,4 +1,4 @@
-import { BookOpen, Boxes, ChevronLeft, FileBadge2, Github, Palette, ShieldCheck } from 'lucide-react'
+import { BookOpen, Boxes, ChevronLeft, FileBadge2, Github, Palette } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import styles from './pagina-licencas-creditos.module.scss'
 
@@ -24,7 +24,7 @@ export const PaginaLicencasCreditos = () => {
         <span className={styles.eyebrow}>Configurações</span>
         <h1 className={styles.titulo}>Licenças e créditos</h1>
         <p className={styles.subtitulo}>
-          Origem visual, bibliotecas relevantes e referências públicas desta fase do Compasso.
+          Resumo de origem visual e bibliotecas essenciais para contexto de uso nesta tela.
         </p>
       </header>
 
@@ -38,7 +38,7 @@ export const PaginaLicencasCreditos = () => {
             <li>Ícones funcionais padronizados em Lucide.</li>
             <li>Símbolo de marca provisório preservado como SVG base e variantes de uso.</li>
             <li>Manifest, service worker e favicon já apontam para assets próprios.</li>
-            <li>Não há uso atual de CDN ou imagens remotas no app.</li>
+            <li>Não há CDN ou imagens remotas para assets de interface; telemetria Umami usa script externo opcional com consentimento.</li>
           </ul>
         </section>
 
@@ -47,6 +47,9 @@ export const PaginaLicencasCreditos = () => {
             <BookOpen size={18} />
             <h2>Bibliotecas principais</h2>
           </div>
+          <p>
+            Esta tela exibe apenas bibliotecas essenciais de runtime/UI. A lista completa de terceiros fica no arquivo de notices.
+          </p>
 
           <dl className={styles.listaLicencas}>
             {VENDORS.map(([nome, licenca]) => (
@@ -66,19 +69,7 @@ export const PaginaLicencasCreditos = () => {
           <ul>
             <li>O projeto mantém o arquivo THIRD_PARTY_NOTICES.md como artefato público inicial.</li>
             <li>As licenças originais seguem disponíveis em node_modules/*/LICENSE*.</li>
-            <li>Antes de release, o ideal é revisar notices contra o lockfile vigente.</li>
-          </ul>
-        </section>
-
-        <section className={styles.cartao}>
-          <div className={styles.cartaoTopo}>
-            <ShieldCheck size={18} />
-            <h2>Pendências abertas</h2>
-          </div>
-          <ul>
-            <li>Definir símbolo definitivo da marca.</li>
-            <li>Manter notices atualizados conforme dependências evoluem.</li>
-            <li>Revisar microcopy como parte do checklist editorial de originalidade.</li>
+            <li>Antes de release, revisar notices contra o lockfile vigente e manter esta página como resumo.</li>
           </ul>
         </section>
 
