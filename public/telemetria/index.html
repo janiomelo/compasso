@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#295446" />
+    <meta name="description" content="Entenda quais eventos anônimos o Compasso coleta, o que não é coletado e como desativar a telemetria a qualquer momento." />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Compasso" />
+    <meta property="og:title" content="Saiba mais sobre telemetria — Compasso" />
+    <meta property="og:description" content="Entenda quais eventos anônimos o Compasso coleta, o que não é coletado e como desativar a telemetria a qualquer momento." />
+    <meta property="og:url" content="https://compasso.digital/telemetria" />
+    <meta property="og:image" content="https://compasso.digital/brand/compasso-social-preview.svg" />
+    <meta property="og:image:alt" content="Marca do Compasso em composição institucional" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Saiba mais sobre telemetria — Compasso" />
+    <meta name="twitter:description" content="Entenda quais eventos anônimos o Compasso coleta, o que não é coletado e como desativar a telemetria a qualquer momento." />
+    <meta name="twitter:image" content="https://compasso.digital/brand/compasso-social-preview.svg" />
+    <link rel="icon" type="image/svg+xml" href="/brand/compasso-favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="canonical" href="https://compasso.digital/telemetria" />
+    <title>Saiba mais sobre telemetria — Compasso</title>
+    <style>
+  :root {
+    color-scheme: light;
+    --cor-fundo: #f6f1e8;
+    --cor-superficie: rgba(255, 252, 247, 0.92);
+    --cor-texto: #1d1a17;
+    --cor-texto-suave: #5f554a;
+    --cor-borda: rgba(74, 57, 36, 0.16);
+    --cor-destaque: #295446;
+    --cor-destaque-contraste: #f8f7f2;
+    --sombra: 0 24px 60px rgba(35, 23, 12, 0.12);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: 16px;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Georgia", "Times New Roman", serif;
+    background:
+      radial-gradient(circle at top, rgba(41, 84, 70, 0.08), transparent 34%),
+      linear-gradient(180deg, #fbf7ef 0%, #f4ecdf 100%);
+    color: var(--cor-texto);
+  }
+
+  a {
+    color: var(--cor-destaque);
+  }
+
+  main {
+    width: min(100%, 72rem);
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+  }
+
+  .hero {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .marca {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: fit-content;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .marca img {
+    display: block;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .marca strong {
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+  }
+
+  .topo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .topo p {
+    margin: 0;
+    max-width: 40rem;
+    color: var(--cor-texto-suave);
+    line-height: 1.6;
+  }
+
+  .botaoAbrir {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem 1.15rem;
+    border-radius: 999px;
+    background: var(--cor-destaque);
+    color: var(--cor-destaque-contraste);
+    text-decoration: none;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .cartao {
+    background: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: 1.5rem;
+    padding: clamp(1.25rem, 2vw, 2rem);
+    box-shadow: var(--sombra);
+    backdrop-filter: blur(10px);
+  }
+
+  article {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    line-height: 1.8;
+  }
+
+  article h1,
+  article h2,
+  article h3 {
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  article h1 {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+  }
+
+  article h2 {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--cor-borda);
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+  }
+
+  article h3 {
+    font-size: 1.05rem;
+  }
+
+  article p,
+  article ul,
+  article ol,
+  article pre {
+    margin: 0;
+  }
+
+  article ul,
+  article ol {
+    padding-left: 1.25rem;
+  }
+
+  article li + li {
+    margin-top: 0.45rem;
+  }
+
+  article pre {
+    padding: 0.9rem 1rem;
+    border-radius: 1rem;
+    background: rgba(41, 84, 70, 0.08);
+    overflow-x: auto;
+  }
+
+  .rodape {
+    margin-top: 1.5rem;
+    color: var(--cor-texto-suave);
+    font-size: 0.95rem;
+  }
+
+  @media (min-width: 768px) {
+    main {
+      padding-top: 3rem;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    .hero {
+      margin-bottom: 2rem;
+    }
+  }
+</style>
+  </head>
+  <body>
+    <main><section class="hero"><a class="marca" href="/"><img src="/brand/compasso-navbar.svg" alt="" aria-hidden="true"/><strong>Compasso</strong></a><div class="topo"><p>Página pública institucional do Compasso. O app principal continua disponível com privacidade local e funcionamento offline-first.</p><a class="botaoAbrir" href="/">Abrir app</a></div></section><section class="cartao"><article><h1>Saiba mais — Telemetria no Compasso</h1><p><strong>Resumo direto:</strong> coletamos somente eventos de uso anônimos para entender se o app está útil e onde melhorar.</p><h2>O que coletamos</h2><ul><li>páginas visitadas no app;</li><li>clique em começar;</li><li>conclusão do onboarding;</li><li>início de pausa;</li><li>registro de momento (somente intenção e intensidade).</li></ul><h2>O que não coletamos</h2><ul><li>nome, e-mail, telefone ou documento;</li><li>valor de consumo;</li><li>texto de observações;</li><li>conteúdo detalhado dos seus registros.</li></ul><h2>Como usamos esses dados</h2><ul><li>medir uso real das funcionalidades;</li><li>identificar pontos de abandono;</li><li>priorizar melhorias de interface e fluxo.</li></ul><h2>Como desativar</h2><p>Você pode desativar a qualquer momento em <strong>Configurações &gt; Privacidade e dados &gt; Permitir telemetria</strong>.</p><h2>Quando não há internet</h2><p>O Compasso continua funcionando normalmente. A telemetria não bloqueia nenhuma funcionalidade.</p></article></section><p class="rodape">Compasso. Conteúdo público entregue como HTML estático para melhorar abertura direta, indexação e preview.</p></main>
+  </body>
+</html>

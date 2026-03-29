@@ -102,7 +102,6 @@ const RotasAplicacao = ({ onboardingConcluido }: { onboardingConcluido: boolean 
     '/como-funciona',
     '/projeto',
     '/termos',
-    '/sobre',
     '/apoie',
     '/telemetria',
   ])
@@ -181,7 +180,6 @@ const RotasAplicacao = ({ onboardingConcluido }: { onboardingConcluido: boolean 
             <Route path="/como-funciona" element={<PaginaComoFunciona />} />
             <Route path="/projeto" element={<PaginaProjeto />} />
             <Route path="/termos" element={<PaginaTermos />} />
-            <Route path="/sobre" element={<Navigate to="/projeto" replace />} />
             <Route path="/apoie" element={<PaginaApoie />} />
             <Route path="/telemetria" element={<PaginaSaibaMaisTelemetria />} />
 

@@ -55,16 +55,6 @@ describe('Rotas públicas — SEO e descoberta', () => {
     })
   })
 
-  it('deve redirecionar /sobre para /projeto', async () => {
-    window.history.pushState({}, '', '/sobre')
-
-    render(<App />)
-
-    await waitFor(() => {
-      expect(screen.getByText('Sobre e Transparência — Compasso')).toBeDefined()
-    })
-  })
-
   it('deve abrir /termos sem bloquear em onboarding', async () => {
     window.history.pushState({}, '', '/termos')
 

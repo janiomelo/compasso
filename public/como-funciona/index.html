@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#295446" />
+    <meta name="description" content="Veja como o Compasso funciona no dispositivo, como exportação e backup operam e quais são os limites de segurança do ambiente local." />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Compasso" />
+    <meta property="og:title" content="Dados locais e segurança — Compasso" />
+    <meta property="og:description" content="Veja como o Compasso funciona no dispositivo, como exportação e backup operam e quais são os limites de segurança do ambiente local." />
+    <meta property="og:url" content="https://compasso.digital/como-funciona" />
+    <meta property="og:image" content="https://compasso.digital/brand/compasso-social-preview.svg" />
+    <meta property="og:image:alt" content="Marca do Compasso em composição institucional" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Dados locais e segurança — Compasso" />
+    <meta name="twitter:description" content="Veja como o Compasso funciona no dispositivo, como exportação e backup operam e quais são os limites de segurança do ambiente local." />
+    <meta name="twitter:image" content="https://compasso.digital/brand/compasso-social-preview.svg" />
+    <link rel="icon" type="image/svg+xml" href="/brand/compasso-favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="canonical" href="https://compasso.digital/como-funciona" />
+    <title>Dados locais e segurança — Compasso</title>
+    <style>
+  :root {
+    color-scheme: light;
+    --cor-fundo: #f6f1e8;
+    --cor-superficie: rgba(255, 252, 247, 0.92);
+    --cor-texto: #1d1a17;
+    --cor-texto-suave: #5f554a;
+    --cor-borda: rgba(74, 57, 36, 0.16);
+    --cor-destaque: #295446;
+    --cor-destaque-contraste: #f8f7f2;
+    --sombra: 0 24px 60px rgba(35, 23, 12, 0.12);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: 16px;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Georgia", "Times New Roman", serif;
+    background:
+      radial-gradient(circle at top, rgba(41, 84, 70, 0.08), transparent 34%),
+      linear-gradient(180deg, #fbf7ef 0%, #f4ecdf 100%);
+    color: var(--cor-texto);
+  }
+
+  a {
+    color: var(--cor-destaque);
+  }
+
+  main {
+    width: min(100%, 72rem);
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+  }
+
+  .hero {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .marca {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: fit-content;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .marca img {
+    display: block;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .marca strong {
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+  }
+
+  .topo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .topo p {
+    margin: 0;
+    max-width: 40rem;
+    color: var(--cor-texto-suave);
+    line-height: 1.6;
+  }
+
+  .botaoAbrir {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem 1.15rem;
+    border-radius: 999px;
+    background: var(--cor-destaque);
+    color: var(--cor-destaque-contraste);
+    text-decoration: none;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .cartao {
+    background: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: 1.5rem;
+    padding: clamp(1.25rem, 2vw, 2rem);
+    box-shadow: var(--sombra);
+    backdrop-filter: blur(10px);
+  }
+
+  article {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    line-height: 1.8;
+  }
+
+  article h1,
+  article h2,
+  article h3 {
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  article h1 {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+  }
+
+  article h2 {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--cor-borda);
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+  }
+
+  article h3 {
+    font-size: 1.05rem;
+  }
+
+  article p,
+  article ul,
+  article ol,
+  article pre {
+    margin: 0;
+  }
+
+  article ul,
+  article ol {
+    padding-left: 1.25rem;
+  }
+
+  article li + li {
+    margin-top: 0.45rem;
+  }
+
+  article pre {
+    padding: 0.9rem 1rem;
+    border-radius: 1rem;
+    background: rgba(41, 84, 70, 0.08);
+    overflow-x: auto;
+  }
+
+  .rodape {
+    margin-top: 1.5rem;
+    color: var(--cor-texto-suave);
+    font-size: 0.95rem;
+  }
+
+  @media (min-width: 768px) {
+    main {
+      padding-top: 3rem;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    .hero {
+      margin-bottom: 2rem;
+    }
+  }
+</style>
+  </head>
+  <body>
+    <main><section class="hero"><a class="marca" href="/"><img src="/brand/compasso-navbar.svg" alt="" aria-hidden="true"/><strong>Compasso</strong></a><div class="topo"><p>Página pública institucional do Compasso. O app principal continua disponível com privacidade local e funcionamento offline-first.</p><a class="botaoAbrir" href="/">Abrir app</a></div></section><section class="cartao"><article><h1>Dados Locais e Segurança — Compasso</h1><p><strong>Última atualização:</strong> 23/03/2026</p><h2>Objetivo</h2><p>Explicar de forma direta como os dados são armazenados no dispositivo, quais operações de backup/importação existem e quais limites de segurança dependem do ambiente local.</p><h2>1. Armazenamento local</h2><p>Na fase atual do projeto, os dados do Compasso ficam no dispositivo/navegador da pessoa usuária.</p><p>Isso inclui, entre outros:</p><ul><li>registros de momentos;</li><li>pausas e histórico de pausas;</li><li>configurações de uso.</li></ul><p>Quando proteção local está ativa, os dados principais de registros e pausas passam a ser gravados com criptografia em repouso.</p><h2>1.1. Proteção por senha local</h2><ul><li>a pessoa usuária pode ativar senha local no app;</li><li>o desbloqueio é exigido após bloqueio manual ou inatividade;</li><li>a senha não cria conta remota e não transfere dados para servidor.</li></ul><h2>2. Exportação, importação e restauração</h2><p>Operações disponíveis no app:</p><ul><li>exportar arquivo de dados;</li><li>importar arquivo;</li><li>restaurar backup.</li></ul><p>No estado atual, há suporte a pacote de exportação/importação criptografado, além do pacote plano.</p><p>Essas operações dependem de ação explícita da pessoa usuária.</p><h2>3. Backup</h2><ul><li>backup manual pode ser gerado no app;</li><li>backups podem ser exportados em formato criptografado quando proteção/senha estiver ativa;</li><li>backups exportados passam a depender do local onde forem guardados (dispositivo, pasta sincronizada, nuvem pessoal, etc.).</li></ul><h2>4. Apagar dados</h2><p>A exclusão local deve ser tratada como ação clara e acessível no app.</p><p>Quando executada, remove os dados salvos localmente no ambiente atual.</p><h2>5. Limites de segurança</h2><p>O Compasso adota boas práticas proporcionais ao estágio atual, mas não promete segurança absoluta.</p><p>A proteção real também depende de:</p><ul><li>segurança do dispositivo;</li><li>segurança do navegador;</li><li>configurações do sistema operacional;</li><li>cuidado com arquivos exportados.</li></ul><p>Mesmo com proteção local, não há promessa de segurança absoluta.</p><h2>6. Transparência no produto</h2><p>Sempre que possível, o app deve mostrar de forma simples:</p><ul><li>o que está salvo localmente;</li><li>quando houve exportação/restauração;</li><li>como apagar dados locais.</li></ul><h2>7. Referências</h2><ul><li><a href="/privacidade">Política de privacidade completa</a></li><li><a href="/projeto">Sobre o projeto e valores</a></li><li>Licenças e créditos: acesse em Configurações → Licenças e créditos</li></ul></article></section><p class="rodape">Compasso. Conteúdo público entregue como HTML estático para melhorar abertura direta, indexação e preview.</p></main>
+  </body>
+</html>

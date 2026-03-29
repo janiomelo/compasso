@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "tsc --noEmit && vite build",
+    "gerar:publico": "tsx scripts/gerar-paginas-publicas.mjs",
+    "build": "npm run gerar:publico && tsc --noEmit && vite build",
     "preview": "vite preview",
     "test": "vitest",
     "test:ui": "vitest --ui",
@@ -39,6 +40,7 @@
     "prettier": "^3.0.3",
     "sass": "^1.69.0",
     "terser": "^5.39.0",
+    "tsx": "^4.21.0",
     "typescript": "^5.2.2",
     "vite": "^4.5.0",
     "vitest": "^0.34.6"
