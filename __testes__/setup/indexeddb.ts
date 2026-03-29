@@ -12,3 +12,18 @@ if (!globalThis.crypto || !globalThis.crypto.subtle) {
 		configurable: true,
 	})
 }
+
+// mock para window.matchMedia (usado em componentes que detectam tema do sistema)
+Object.defineProperty(window, 'matchMedia', {
+	writable: true,
+	value: (query: string) => ({
+		matches: false,
+		media: query,
+		onchange: null,
+		addListener: () => {}, // deprecated
+		removeListener: () => {}, // deprecated
+		addEventListener: () => {},
+		removeEventListener: () => {},
+		dispatchEvent: () => {},
+	}),
+})
