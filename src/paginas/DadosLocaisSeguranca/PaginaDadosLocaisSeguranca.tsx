@@ -11,7 +11,7 @@ import {
   Trash2,
 } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useApp, useArmazenamento } from '../../ganchos'
 import { hidratarEstado, obterResumoDadosLocais } from '../../servicos/servicoDados'
 import { formatarDataHora, formatarNumero } from '../../utilitarios/dados/formatacao'
@@ -71,6 +71,7 @@ const formatarEvento = (timestamp: number | null) => {
 }
 
 export const PaginaDadosLocaisSeguranca = () => {
+  const localizacao = useLocation()
   const { despacho } = useApp()
   const {
     carregando,
@@ -93,6 +94,10 @@ export const PaginaDadosLocaisSeguranca = () => {
   })
   const [validacaoAtual, setValidacaoAtual] = useState<'pendente' | 'ok' | 'inconsistente'>('pendente')
   const inputImportacaoRef = useRef<HTMLInputElement | null>(null)
+  const origem = (localizacao.state as { origem?: string } | null)?.origem
+  const voltarParaInicio = origem === 'home'
+  const destinoVoltar = voltarParaInicio ? '/' : '/config'
+  const rotuloVoltar = voltarParaInicio ? 'Voltar para Início' : 'Voltar para Configurações'
 
   const armazenamentoAtivo = typeof window !== 'undefined' && 'indexedDB' in window
 
@@ -222,9 +227,9 @@ export const PaginaDadosLocaisSeguranca = () => {
 
   return (
     <div className={styles.pagina}>
-      <Link to="/config" className={styles.voltar}>
+      <Link to={destinoVoltar} className={styles.voltar}>
         <ChevronLeft size={16} />
-        <span>Voltar para Configurações</span>
+        <span>{rotuloVoltar}</span>
       </Link>
 
       <header className={styles.topo}>

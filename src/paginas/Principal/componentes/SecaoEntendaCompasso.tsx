@@ -1,4 +1,5 @@
 import { BookOpen, CheckCircle2, ChevronDown, ChevronUp, Circle, Database, Lock, Radio } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useApp } from '../../../ganchos'
@@ -9,6 +10,18 @@ const CHAVE_ENTENDA_VISTOS = 'compasso_entenda_vistos'
 type EstadoVistos = {
   dadosLocais?: boolean
   telemetria?: boolean
+}
+
+type ItemEntenda = {
+  id: string
+  titulo: string
+  acaoPendente: string
+  acaoConcluida: string
+  rota: string
+  estadoNavegacao?: { origem: 'home' }
+  concluido: boolean
+  icone: LucideIcon
+  aoVisitar: () => void
 }
 
 const obterChaveVistos = (escopo: number) => `${CHAVE_ENTENDA_VISTOS}:${escopo}`
@@ -62,13 +75,14 @@ export const SecaoEntendaCompasso = () => {
     setVersaoVistos((atual) => atual + 1)
   }
 
-  const itens = useMemo(() => [
+  const itens = useMemo<ItemEntenda[]>(() => [
     {
       id: 'dadosLocais',
       titulo: 'Como seus dados ficam salvos',
       acaoPendente: 'Ver',
       acaoConcluida: 'Lido',
       rota: '/config/dados-locais-seguranca',
+      estadoNavegacao: { origem: 'home' as const },
       concluido: !!vistos.dadosLocais,
       icone: Database,
       aoVisitar: () => marcarVisto('dadosLocais'),
@@ -103,7 +117,7 @@ export const SecaoEntendaCompasso = () => {
       icone: BookOpen,
       aoVisitar: () => undefined,
     },
-  ] as const, [vistos, telemetriaRevisada, telemetriaAtivadaPorPadrao, telemetriaAtiva, protecaoConfigurada, primeiroRegistroConcluido])
+  ], [vistos, telemetriaRevisada, telemetriaAtivadaPorPadrao, telemetriaAtiva, protecaoConfigurada, primeiroRegistroConcluido])
 
   const totalItens = itens.length
   const itensConcluidos = itens.filter((item) => item.concluido).length
@@ -154,6 +168,7 @@ export const SecaoEntendaCompasso = () => {
             <Link
               key={item.id}
               to={item.rota}
+              state={item.estadoNavegacao}
               onClick={item.aoVisitar}
               className={styles.entendaCompasso__item + (item.concluido ? ' ' + styles['entendaCompasso__item--concluido'] : '')}
             >

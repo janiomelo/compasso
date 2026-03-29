@@ -200,7 +200,9 @@ export const ChecklistPosOnboarding = () => {
         await marcarItemConcluido(item.id)
       }
 
-      navegar(item.rota)
+      navegar(item.rota, {
+        state: item.rota === '/config/dados-locais-seguranca' ? { origem: 'home' } : undefined,
+      })
     },
     [marcarItemConcluido, navegar],
   )
