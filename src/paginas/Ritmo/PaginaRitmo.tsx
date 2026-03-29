@@ -16,7 +16,7 @@ import { useEconomia, useRegistro, useRitmo } from '../../ganchos'
 import {
   rotularMetodo,
   rotularIntencao,
-  MAPA_INTENSIDADE,
+  rotularIntensidade,
 } from '../../utilitarios/apresentacao/rotulos'
 import { calcularValorPercebido } from '../../utilitarios/dados/calculos'
 import { formatarNumero } from '../../utilitarios/dados/formatacao'
@@ -42,14 +42,43 @@ export const PaginaRitmo = () => {
   const { registros } = useRegistro()
   const { totalAcumulado } = useEconomia()
 
-  const intensidadeMedia = useMemo(() => {
+  const totalRegistrosUltimos7Dias = estatisticas.totalRegistros
+  const exibicaoSimplificada = totalRegistrosUltimos7Dias < 3
+
+  const intensidadePredominante = useMemo(() => {
+    if (registros.length === 0) {
+      return null
+    }
+
+    const mapa = registros.reduce<Record<string, number>>((acumulado, registro) => {
+      acumulado[registro.intensidade] = (acumulado[registro.intensidade] ?? 0) + 1
+      return acumulado
+    }, {})
+
+    const intensidade = Object.entries(mapa).sort((a, b) => b[1] - a[1])[0]?.[0]
+    return intensidade ?? null
+  }, [registros])
+
+  const diasDeHistorico = useMemo(() => {
     if (registros.length === 0) {
       return 0
     }
 
-    const soma = registros.reduce((total, registro) => total + MAPA_INTENSIDADE[registro.intensidade], 0)
-    return Number((soma / registros.length).toFixed(1))
+    const primeiroRegistro = registros.reduce(
+      (menor, registro) => Math.min(menor, registro.timestamp),
+      registros[0].timestamp,
+    )
+
+    const diaMs = 24 * 60 * 60 * 1000
+    const diferencaDias = Math.floor((Date.now() - primeiroRegistro) / diaMs)
+    return diferencaDias + 1
   }, [registros])
+
+  const mostrarTendencia = !exibicaoSimplificada && diasDeHistorico >= 7
+  const mostrarValorPercebido = totalAcumulado > 0
+  const rotuloIntensidadePredominante = intensidadePredominante
+    ? rotularIntensidade(intensidadePredominante)
+    : 'Sem intensidade definida'
 
   const diasSemana = useMemo(() => {
     const hoje = new Date()
@@ -113,28 +142,43 @@ export const PaginaRitmo = () => {
         </article>
 
         <article className={styles.cartaoMetrica}>
-          <div className={styles.cartaoMetrica__topo}><Activity size={18} /> Média semanal</div>
-          <strong className={styles.cartaoMetrica__numero + ' ' + styles['cartaoMetrica__numero--medio']}>
-            {(estatisticas.registrosPorDia * 7).toFixed(1)}
-          </strong>
-          <span className={styles.cartaoMetrica__texto}>por semana</span>
+          <div className={styles.cartaoMetrica__topo}><Activity size={18} /> {exibicaoSimplificada ? 'Leitura simples' : 'Média semanal'}</div>
+          {exibicaoSimplificada ? (
+            <>
+              <strong className={styles.cartaoMetrica__numero + ' ' + styles['cartaoMetrica__numero--texto']}>
+                Base inicial
+              </strong>
+              <span className={styles.cartaoMetrica__texto}>Adicione mais registros para abrir a leitura detalhada.</span>
+            </>
+          ) : (
+            <>
+              <strong className={styles.cartaoMetrica__numero + ' ' + styles['cartaoMetrica__numero--medio']}>
+                {(estatisticas.registrosPorDia * 7).toFixed(1)}
+              </strong>
+              <span className={styles.cartaoMetrica__texto}>intensidade mais comum {rotuloIntensidadePredominante}</span>
+            </>
+          )}
         </article>
 
-        <article className={styles.cartaoMetrica}>
-          <div className={styles.cartaoMetrica__topo}>
-            {tendencia === 'diminuindo' ? <TrendingDown size={18} /> : <TrendingUp size={18} />} Tendência
-          </div>
-          <strong className={styles.cartaoMetrica__numero + ' ' + styles['cartaoMetrica__numero--texto']}>
-            {ROTULOS_TENDENCIA_CURTOS[tendencia]}
-          </strong>
-          <span className={styles.cartaoMetrica__texto}>intensidade média {intensidadeMedia.toFixed(1)} / 10</span>
-        </article>
+        {mostrarTendencia ? (
+          <article className={styles.cartaoMetrica}>
+            <div className={styles.cartaoMetrica__topo}>
+              {tendencia === 'diminuindo' ? <TrendingDown size={18} /> : <TrendingUp size={18} />} Tendência
+            </div>
+            <strong className={styles.cartaoMetrica__numero + ' ' + styles['cartaoMetrica__numero--texto']}>
+              {ROTULOS_TENDENCIA_CURTOS[tendencia]}
+            </strong>
+            <span className={styles.cartaoMetrica__texto}>com base nos últimos 7 dias</span>
+          </article>
+        ) : null}
 
-        <article className={styles.cartaoMetrica}>
-          <div className={styles.cartaoMetrica__topo}><Lightbulb size={18} /> Valor percebido</div>
-          <strong className={styles.cartaoMetrica__numero}>{formatarNumero(valorPercebido, 1)}</strong>
-          <span className={styles.cartaoMetrica__texto}>escala de 0 a 100</span>
-        </article>
+        {mostrarValorPercebido ? (
+          <article className={styles.cartaoMetrica}>
+            <div className={styles.cartaoMetrica__topo}><Lightbulb size={18} /> Valor percebido</div>
+            <strong className={styles.cartaoMetrica__numero}>{formatarNumero(valorPercebido, 1)}</strong>
+            <span className={styles.cartaoMetrica__texto}>escala de 0 a 100</span>
+          </article>
+        ) : null}
       </section>
 
       <section className={styles.bloco}>

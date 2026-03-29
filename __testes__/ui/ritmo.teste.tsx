@@ -20,6 +20,7 @@ describe('Ritmo — UI', () => {
   })
 
   afterEach(() => {
+    vi.useRealTimers()
     vi.restoreAllMocks()
   })
 
@@ -51,5 +52,38 @@ describe('Ritmo — UI', () => {
       expect(screen.getByText('2 momentos')).toBeDefined()
       expect(screen.getByText('67% dos registros visíveis')).toBeDefined()
     })
+  })
+
+  it('mostra leitura simples e oculta tendencia com menos de 3 registros', async () => {
+    await criarRegistro({ metodo: 'vaporizado', intencao: 'foco', intensidade: 'media' })
+
+    render(<PaginaRitmo />, { wrapper: envolverProvider })
+
+    await waitFor(() => {
+      expect(screen.getByText('Leitura simples')).toBeDefined()
+      expect(screen.getByText('Base inicial')).toBeDefined()
+      expect(screen.queryByText('Tendência')).toBeNull()
+      expect(screen.queryByText('Valor percebido')).toBeNull()
+      expect(screen.queryByText(/\/ 10/)).toBeNull()
+    })
+  })
+
+  it('oculta tendencia quando historico ainda nao cobre 7 dias', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] })
+    const base = new Date('2026-03-29T20:00:00.000Z').getTime()
+
+    for (let i = 0; i < 3; i += 1) {
+      vi.setSystemTime(base - i * 24 * 60 * 60 * 1000)
+      await criarRegistro({ metodo: 'vaporizado', intencao: 'foco', intensidade: 'media' })
+    }
+
+    vi.setSystemTime(base)
+    render(<PaginaRitmo />, { wrapper: envolverProvider })
+
+    await waitFor(() => {
+      expect(screen.queryByText('Tendência')).toBeNull()
+      expect(screen.getByText('Média semanal')).toBeDefined()
+    })
+
   })
 })
