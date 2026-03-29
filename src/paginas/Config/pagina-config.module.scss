@@ -139,6 +139,36 @@
   background: var(--superficie-cartao);
 }
 
+.painelEconomia {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-sm;
+  border: 1px solid var(--borda-suave);
+  border-radius: $raio-lg;
+  padding: $espaco-md;
+  background: var(--superficie-cartao);
+}
+
+.formEconomia {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-xs;
+
+  label {
+    color: var(--cor-texto-secundaria);
+    font-size: $tamanho-pequeno;
+  }
+
+  input,
+  select {
+    border: 1px solid var(--borda-suave);
+    border-radius: $raio-md;
+    background: var(--superficie-cartao);
+    color: var(--cor-texto-primaria);
+    padding: 0.72rem 0.8rem;
+  }
+}
+
 .formProtecao {
   display: flex;
   flex-direction: column;

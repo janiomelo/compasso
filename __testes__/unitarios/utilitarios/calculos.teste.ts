@@ -3,6 +3,7 @@ import {
   calcularFrequencia,
   calcularEconomiaAcumulada,
   calcularEconomiaDiaria,
+  calcularEconomiaEstimadaPorDuracao,
   calcularTendencia,
   calcularEstatisticas,
   calcularPercentualReducao,
@@ -118,6 +119,22 @@ describe('Cálculos', () => {
     it('deve retornar 0 com pausas vazias', () => {
       const economia = calcularEconomiaDiaria([], 30)
       expect(economia).toBe(0)
+    })
+  })
+
+  describe('calcularEconomiaEstimadaPorDuracao', () => {
+    it('deve estimar proporcionalmente à duração em janela de 24h', () => {
+      const cincoMinutos = 5 * 60 * 1000
+      const valor = calcularEconomiaEstimadaPorDuracao(cincoMinutos, 24)
+
+      // 5 minutos representam 1/288 de 24h
+      expect(valor).toBeCloseTo(0.08, 2)
+    })
+
+    it('deve retornar zero quando entrada for inválida', () => {
+      expect(calcularEconomiaEstimadaPorDuracao(0, 20)).toBe(0)
+      expect(calcularEconomiaEstimadaPorDuracao(1000, 0)).toBe(0)
+      expect(calcularEconomiaEstimadaPorDuracao(-1, 20)).toBe(0)
     })
   })
 

@@ -1,5 +1,7 @@
 import { Registro, Pausa } from '../../tipos'
 
+const JANELA_USO_PADRAO_MS = 24 * 60 * 60 * 1000
+
 export type JanelaHorario = 'madrugada' | 'manha' | 'tarde' | 'noite'
 
 export interface PadroesUso {
@@ -80,6 +82,31 @@ export const calcularEconomiaAcumulada = (pausas: Pausa[]): number => {
   return pausas
     .filter((p) => p.status === 'concluida')
     .reduce((total, pausa) => total + pausa.valorEconomia, 0)
+}
+
+/**
+ * Calcula estimativa de economia proporcional à duração.
+ * Regra atual do MVP: valor diário de uso distribuído em janela de 24h.
+ */
+export const calcularEconomiaEstimadaPorDuracao = (
+  duracaoMs: number,
+  valorDiario: number,
+  janelaUsoMs: number = JANELA_USO_PADRAO_MS,
+): number => {
+  if (!Number.isFinite(duracaoMs) || duracaoMs <= 0) {
+    return 0
+  }
+
+  if (!Number.isFinite(valorDiario) || valorDiario <= 0) {
+    return 0
+  }
+
+  if (!Number.isFinite(janelaUsoMs) || janelaUsoMs <= 0) {
+    return 0
+  }
+
+  const valorEstimado = (duracaoMs / janelaUsoMs) * valorDiario
+  return parseFloat(valorEstimado.toFixed(2))
 }
 
 /**

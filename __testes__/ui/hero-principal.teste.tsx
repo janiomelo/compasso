@@ -49,6 +49,7 @@ describe('HeroPrincipal — ganho estimado', () => {
       possuiHistoricoEconomia: false,
       economiaPotencialPausaAtiva: 0,
       economiaConfigurada: false,
+      moedaEconomia: 'BRL',
     })
 
     render(<HeroPrincipal />, { wrapper })
@@ -66,6 +67,7 @@ describe('HeroPrincipal — ganho estimado', () => {
       possuiHistoricoEconomia: true,
       economiaPotencialPausaAtiva: 2,
       economiaConfigurada: true,
+      moedaEconomia: 'BRL',
     })
 
     render(<HeroPrincipal />, { wrapper })

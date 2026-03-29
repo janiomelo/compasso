@@ -36,10 +36,16 @@ export async function encerrarPausa(idPausa: string, motivoEncerramento?: string
   }
 
   const agora = Date.now()
+  const duracaoReal = agora - pausa.iniciadoEm
+  const proporcaoConcluida = pausa.duracaoPlanejada > 0
+    ? duracaoReal / pausa.duracaoPlanejada
+    : 0
+
   const pausaAtualizada: Pausa = {
     ...pausa,
-    duracaoReal: agora - pausa.iniciadoEm,
+    duracaoReal,
     status: 'concluida',
+    valorEconomia: parseFloat((pausa.valorEconomia * Math.max(proporcaoConcluida, 0)).toFixed(2)),
     motivoEncerramento,
   }
 
@@ -54,10 +60,16 @@ export async function interromperPausa(idPausa: string, motivoEncerramento?: str
   }
 
   const agora = Date.now()
+  const duracaoReal = agora - pausa.iniciadoEm
+  const proporcaoInterrompida = pausa.duracaoPlanejada > 0
+    ? duracaoReal / pausa.duracaoPlanejada
+    : 0
+
   const pausaAtualizada: Pausa = {
     ...pausa,
-    duracaoReal: agora - pausa.iniciadoEm,
+    duracaoReal,
     status: 'interrompida',
+    valorEconomia: parseFloat((pausa.valorEconomia * Math.max(proporcaoInterrompida, 0)).toFixed(2)),
     motivoEncerramento,
   }
 

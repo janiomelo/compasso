@@ -162,9 +162,9 @@ describe('Pausa — UI', () => {
 
     await waitFor(() => {
       expect(screen.getByText('Sua pausa está em andamento')).toBeDefined()
-      expect(screen.getByText('Economia')).toBeDefined()
+      expect(screen.getByText('Economia estimada (até agora)')).toBeDefined()
       // Procura por valor de economia (pode variar por tempo decorrido)
-      const economiaEl = screen.getByText('Economia').closest('div')
+      const economiaEl = screen.getByText('Economia estimada (até agora)').closest('div')
       expect(economiaEl?.textContent).toContain('R$')
     })
   })

@@ -39,6 +39,11 @@ export const useEconomia = () => {
     [configuracoes.valorEconomia],
   )
 
+  const moedaEconomia = useMemo(
+    () => configuracoes.moedaEconomia,
+    [configuracoes.moedaEconomia],
+  )
+
   // economia potencial da pausa ativa (calculado com o valorEconomia configurado)
   const economiaPotencialPausaAtiva = useMemo(() => {
     if (!estado.pausaAtiva) {
@@ -58,5 +63,6 @@ export const useEconomia = () => {
     economiaPotencialPausaAtiva,
     possuiHistoricoEconomia,
     economiaConfigurada,
+    moedaEconomia,
   }
 }

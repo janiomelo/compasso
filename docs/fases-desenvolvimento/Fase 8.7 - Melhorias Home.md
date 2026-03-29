@@ -100,7 +100,7 @@ Se não houver configuração:
 - mostrar algo como:
 
 **Economia não configurada**  
-**Adicione um valor médio por uso para acompanhar estimativas.**
+**Adicione um valor diário de uso para acompanhar estimativas.**
 
 Pode haver um link ou ação secundária leve como:
 - **Configurar estimativa**

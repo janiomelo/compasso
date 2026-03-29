@@ -9,7 +9,7 @@ import styles from '../pagina-principal.module.scss'
 
 export const HeroPrincipal = () => {
   const { pausaAtiva, progresso } = usePausa()
-  const { totalAcumulado, economiaConfigurada } = useEconomia()
+  const { totalAcumulado, economiaConfigurada, moedaEconomia } = useEconomia()
 
   return (
     <section className={styles.hero}>
@@ -30,7 +30,7 @@ export const HeroPrincipal = () => {
 
               <div className={styles.hero__metricas}>
                 {economiaConfigurada && (
-                  <span>{formatarMoeda(pausaAtiva.valorEconomia)} em ganho estimado</span>
+                  <span>{formatarMoeda(pausaAtiva.valorEconomia, moedaEconomia)} em ganho estimado</span>
                 )}
                 <span>{formatarDuracao(pausaAtiva.duracaoPlanejada)} de meta total</span>
               </div>
@@ -46,7 +46,7 @@ export const HeroPrincipal = () => {
 
               <div className={styles.hero__metricas}>
                 {economiaConfigurada && totalAcumulado > 0 && (
-                  <span>{formatarMoeda(totalAcumulado)} já acumulados</span>
+                  <span>{formatarMoeda(totalAcumulado, moedaEconomia)} já acumulados</span>
                 )}
               </div>
             </>

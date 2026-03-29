@@ -1,4 +1,4 @@
-import { BookOpen, Database, Heart, Info, Palette, ShieldCheck } from 'lucide-react'
+import { BookOpen, Coins, Database, Heart, Info, Palette, ShieldCheck } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useApp, useArmazenamento, useTelemetria, useConsentimentoTelemetria } from '../../ganchos'
@@ -24,6 +24,10 @@ export const PaginaConfig = () => {
   const [confirmacaoSenhaProtecao, setConfirmacaoSenhaProtecao] = useState('')
   const [senhaAtual, setSenhaAtual] = useState('')
   const [novaSenha, setNovaSenha] = useState('')
+  const [valorEconomiaEntrada, setValorEconomiaEntrada] = useState(
+    estado.configuracoes.valorEconomia > 0 ? String(estado.configuracoes.valorEconomia) : ''
+  )
+  const [moedaEconomiaEntrada, setMoedaEconomiaEntrada] = useState(estado.configuracoes.moedaEconomia)
 
   const opcoesTimeout = [
     { rotulo: '5 minutos', valor: 5 * 60 * 1000 },
@@ -165,6 +169,42 @@ export const PaginaConfig = () => {
     setMensagem(novoEstado
       ? 'Telemetria ativada. Vamos coletar contadores de uso anônimos.'
       : 'Telemetria desativada. O app continuará funcionando normalmente.')
+  }
+
+  const salvarEconomiaNaPagina = async () => {
+    limparFeedback()
+
+    const valorNormalizado = valorEconomiaEntrada.trim().replace(',', '.')
+    const valorConvertido = valorNormalizado === '' ? 0 : Number(valorNormalizado)
+
+    if (!Number.isFinite(valorConvertido) || valorConvertido < 0) {
+      setErro('Informe um valor diário válido, maior ou igual a zero.')
+      return
+    }
+
+    const valorArredondado = Math.round(valorConvertido * 100) / 100
+
+    const novasConfiguracoes = {
+      ...estado.configuracoes,
+      valorEconomia: valorArredondado,
+      moedaEconomia: moedaEconomiaEntrada,
+    }
+
+    await salvarConfiguracoes(novasConfiguracoes)
+    despacho({
+      tipo: 'DEFINIR_CONFIGURACAO',
+      payload: {
+        valorEconomia: valorArredondado,
+        moedaEconomia: moedaEconomiaEntrada,
+      },
+    })
+
+    if (valorArredondado > 0) {
+      setMensagem('Estimativas de economia atualizadas com base no seu valor diário de uso.')
+      return
+    }
+
+    setMensagem('Estimativas de economia desativadas. Você pode reativar quando quiser.')
   }
 
   const temaEfetivo = useMemo(() => {
@@ -389,6 +429,54 @@ export const PaginaConfig = () => {
             </button>
           </div>
         )}
+      </section>
+
+      <section className={styles.painelEconomia}>
+        <div className={styles.painelLinksTopo}>
+          <Coins size={18} />
+          <h2>Economia e estimativas</h2>
+        </div>
+
+        <p className={styles.painelLinksResumo}>
+          Defina um valor diário de uso para acompanhar estimativas. Esse valor é opcional e pode ser alterado a qualquer momento.
+        </p>
+
+        <div className={styles.formEconomia}>
+          <label htmlFor="valor-economia-medio">Valor diário de uso</label>
+          <input
+            id="valor-economia-medio"
+            type="number"
+            min="0"
+            step="0.01"
+            inputMode="decimal"
+            placeholder="Ex.: 18,50"
+            value={valorEconomiaEntrada}
+            onChange={(evento) => setValorEconomiaEntrada(evento.target.value)}
+          />
+
+          <label htmlFor="moeda-economia">Moeda</label>
+          <select
+            id="moeda-economia"
+            value={moedaEconomiaEntrada}
+            onChange={(evento) => setMoedaEconomiaEntrada(evento.target.value as 'BRL' | 'USD')}
+          >
+            <option value="BRL">Real brasileiro (BRL)</option>
+            <option value="USD">Dólar americano (USD)</option>
+          </select>
+
+          <button type="button" className={styles.acao} onClick={() => void salvarEconomiaNaPagina()} disabled={carregando}>
+            Salvar estimativa
+          </button>
+        </div>
+
+        <p className={styles.onboardingMeta}>
+          Estado atual:{' '}
+          <strong>
+            {estado.configuracoes.valorEconomia > 0
+              ? `estimativas ativas em ${estado.configuracoes.moedaEconomia}`
+              : 'economia não configurada'}
+          </strong>
+        </p>
       </section>
 
       <section className={styles.painelOnboarding}>

@@ -9,6 +9,7 @@ import {
 } from '../servicos/servicoPausa'
 import type { EntradaPausa, Pausa, ProgressoPausa } from '../tipos'
 import { TEMPO_MINIMO_CONSIDERAR_PAUSA_MS } from '../utilitarios/constantes'
+import { calcularEconomiaEstimadaPorDuracao } from '../utilitarios/dados/calculos'
 
 const INTERVALO_CRONOMETRO_MS = 1000
 
@@ -66,7 +67,15 @@ export const usePausa = () => {
   // --- ações ---
   const iniciar = useCallback(
     async (dados: EntradaPausa): Promise<Pausa> => {
-      const pausa = await iniciarPausaServico(dados)
+      const valorEconomiaPadrao = calcularEconomiaEstimadaPorDuracao(
+        dados.duracaoPlanejada,
+        estado.configuracoes.valorEconomia,
+      )
+
+      const pausa = await iniciarPausaServico({
+        ...dados,
+        valorEconomia: dados.valorEconomia ?? valorEconomiaPadrao,
+      })
 
       despacho({ tipo: 'INICIAR_PAUSA', payload: pausa })
       rastrearEvento('iniciou_pausa', {
@@ -75,7 +84,7 @@ export const usePausa = () => {
 
       return pausa
     },
-    [despacho, rastrearEvento],
+    [despacho, rastrearEvento, estado.configuracoes.valorEconomia],
   )
 
   const encerrar = useCallback(

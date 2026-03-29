@@ -205,6 +205,47 @@ describe('PaginaConfig — Página de Configurações', () => {
     })
   })
 
+  describe('Economia: Configuração', () => {
+    it('renderiza seção de economia e estimativas', () => {
+      render(<PaginaConfig />, { wrapper: envolverComProvider })
+
+      expect(screen.getByText('Economia e estimativas')).toBeDefined()
+      expect(screen.getByLabelText('Valor diário de uso')).toBeDefined()
+      expect(screen.getByLabelText('Moeda')).toBeDefined()
+      expect(screen.getByRole('button', { name: 'Salvar estimativa' })).toBeDefined()
+    })
+
+    it('salva valor médio e moeda configurados', async () => {
+      render(<PaginaConfig />, { wrapper: envolverComProvider })
+
+      const inputValor = screen.getByLabelText('Valor diário de uso')
+      const selectMoeda = screen.getByLabelText('Moeda')
+      const botaoSalvar = screen.getByRole('button', { name: 'Salvar estimativa' })
+
+      fireEvent.change(inputValor, { target: { value: '25.5' } })
+      fireEvent.change(selectMoeda, { target: { value: 'USD' } })
+      fireEvent.click(botaoSalvar)
+
+      await waitFor(() => {
+        expect(screen.getByText(/Estimativas de economia atualizadas/i)).toBeDefined()
+      })
+    })
+
+    it('exibe erro ao informar valor inválido', async () => {
+      render(<PaginaConfig />, { wrapper: envolverComProvider })
+
+      const inputValor = screen.getByLabelText('Valor diário de uso')
+      const botaoSalvar = screen.getByRole('button', { name: 'Salvar estimativa' })
+
+      fireEvent.change(inputValor, { target: { value: '-3' } })
+      fireEvent.click(botaoSalvar)
+
+      await waitFor(() => {
+        expect(screen.getByText('Informe um valor diário válido, maior ou igual a zero.')).toBeDefined()
+      })
+    })
+  })
+
   describe('Integração: Completa', () => {
     it('renderiza sem console errors críticos', () => {
       const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {})

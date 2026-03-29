@@ -81,7 +81,7 @@ export const CartaoEconomia: FC = () => {
       {!economiaConfigurada ? (
         <>
           <strong className={styles.cartao__titulo}>Economia não configurada</strong>
-          <p className={styles.cartao__texto}>Adicione um valor estimado por uso nas configurações.</p>
+          <p className={styles.cartao__texto}>Adicione um valor diário de uso nas configurações.</p>
         </>
       ) : possuiHistoricoEconomia ? (
         <>

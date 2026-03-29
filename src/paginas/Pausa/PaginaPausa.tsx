@@ -66,6 +66,9 @@ export const PaginaPausa = () => {
   }
 
   const ultimasCinco = historico.slice(0, 5)
+  const economiaAteAgora = pausaAtiva && progresso
+    ? pausaAtiva.valorEconomia * Math.min(progresso.percentualConclusao / 100, 1)
+    : 0
 
   return (
     <div className={styles.pagina}>
@@ -120,8 +123,8 @@ export const PaginaPausa = () => {
             </div>
             {economiaHabilitada && (
               <div className={styles.pausaInfo}>
-                <span className={styles.pausaInfoRotulo}>Economia</span>
-                <span className={styles.pausaInfoValor}>{formatarMoeda(pausaAtiva.valorEconomia)}</span>
+                <span className={styles.pausaInfoRotulo}>Economia estimada (até agora)</span>
+                <span className={styles.pausaInfoValor}>{formatarMoeda(economiaAteAgora, estado.configuracoes.moedaEconomia)}</span>
               </div>
             )}
           </div>
@@ -212,7 +215,7 @@ export const PaginaPausa = () => {
                   {formatarDuracao(pausa.duracaoReal ?? pausa.duracaoPlanejada)}
                 </span>
                 {economiaHabilitada && (
-                  <span className={styles.itemEconomia}>{formatarMoeda(pausa.valorEconomia)}</span>
+                  <span className={styles.itemEconomia}>{formatarMoeda(pausa.valorEconomia, estado.configuracoes.moedaEconomia)}</span>
                 )}
               </li>
             ))}
