@@ -4,6 +4,12 @@
 
 Consolidar de forma rastreável a origem de ícones e assets do produto, o estado de licenças de terceiros e as pendências de originalidade a fechar antes de distribuição.
 
+Regra de exibicao na interface:
+
+- A tela de "Licencas e creditos" deve exibir apenas resumo contextual para leitura rápida.
+- Detalhamento completo de terceiros fica em `THIRD_PARTY_NOTICES.md`.
+- Rastreabilidade de origem de assets permanece neste documento.
+
 ## Levantamento atual (28/03/2026)
 
 - ícones funcionais: padrão definido em `lucide-react`, com uso consistente nas telas principais;
