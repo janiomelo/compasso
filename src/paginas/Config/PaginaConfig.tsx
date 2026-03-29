@@ -367,7 +367,7 @@ export const PaginaConfig = () => {
           </p>
         </div>
 
-        <Link to="/saiba-mais/telemetria" className={styles.itemNavegacao} style={{ marginTop: '1rem' }} target="_blank" rel="noopener noreferrer">
+        <Link to="/telemtria" className={styles.itemNavegacao} style={{ marginTop: '1rem' }} target="_blank" rel="noopener noreferrer">
           <span className={styles.itemNavegacaoTexto}>
             <strong>Saiba mais sobre telemetria</strong>
             <small>O que coletamos, como funciona offline e como desativar.</small>

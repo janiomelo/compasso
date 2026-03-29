@@ -104,7 +104,7 @@ const RotasAplicacao = ({ onboardingConcluido }: { onboardingConcluido: boolean 
     '/termos',
     '/sobre',
     '/apoie',
-    '/saiba-mais/telemetria',
+    '/telemtria',
   ])
   const emOnboarding = localizacao.pathname === '/onboarding'
   const emPaginaPublica = rotasPublicas.has(localizacao.pathname)
@@ -183,7 +183,7 @@ const RotasAplicacao = ({ onboardingConcluido }: { onboardingConcluido: boolean 
             <Route path="/termos" element={<PaginaTermos />} />
             <Route path="/sobre" element={<Navigate to="/projeto" replace />} />
             <Route path="/apoie" element={<PaginaApoie />} />
-            <Route path="/saiba-mais/telemetria" element={<PaginaSaibaMaisTelemetria />} />
+            <Route path="/telemtria" element={<PaginaSaibaMaisTelemetria />} />
 
             <Route
               path="/onboarding"
