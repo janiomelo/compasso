@@ -49,14 +49,10 @@ export const ChecklistPosOnboarding = () => {
   const { estado, despacho } = useApp()
   const { salvarConfiguracoes, carregando } = useArmazenamento()
   const { rastrearEvento } = useTelemetria()
-  const [estaAberto, setEstaAberto] = useState(false)
+  const [estaAberto, setEstaAberto] = useState(true)
 
   const posOnboarding = estado.configuracoes.onboarding?.posOnboarding
   const jaFoiConcluido = !!posOnboarding?.concluidoEm
-
-  if (jaFoiConcluido) {
-    return null
-  }
 
   const marcarItemConcluido = useCallback(
     async (itemId: ItemChecklist['id']) => {

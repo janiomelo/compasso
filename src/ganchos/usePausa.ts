@@ -91,6 +91,19 @@ export const usePausa = () => {
     [pausaAtiva, despacho],
   )
 
+  const interromper = useCallback(
+    async (motivoEncerramento?: string): Promise<void> => {
+      if (!pausaAtiva) {
+        return
+      }
+
+      const pausaInterrompida = await interromperPausaServico(pausaAtiva.id, motivoEncerramento)
+
+      despacho({ tipo: 'ENCERRAR_PAUSA', payload: pausaInterrompida })
+    },
+    [pausaAtiva, despacho],
+  )
+
   const cancelar = useCallback(
     async (motivoEncerramento?: string): Promise<ResultadoCancelamentoPausa> => {
       if (!pausaAtiva) {
@@ -122,6 +135,7 @@ export const usePausa = () => {
     progresso,
     iniciar,
     encerrar,
+    interromper,
     cancelar,
   }
 }

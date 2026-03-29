@@ -2,6 +2,7 @@ import { HeroPrincipal } from './componentes/HeroPrincipal'
 import { CartaoUltimoRegistro, CartaoSeteDias, CartaoEconomia } from './componentes/CartoesMetricas'
 import { ListaRegistrosRecentes } from './componentes/ListaRegistrosRecentes'
 import { CTARegistro } from './componentes/CTARegistro'
+import { ChecklistPosOnboarding } from './componentes/ChecklistPosOnboarding'
 import { SecaoEntendaCompasso } from './componentes/SecaoEntendaCompasso'
 import { useRegistro } from '../../ganchos'
 import styles from './pagina-principal.module.scss'
@@ -19,6 +20,8 @@ export const PaginaPrincipal = () => {
       </header>
 
       <HeroPrincipal />
+
+      <ChecklistPosOnboarding />
 
       <SecaoEntendaCompasso />
 

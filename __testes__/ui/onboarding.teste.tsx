@@ -84,10 +84,12 @@ describe('Onboarding — fluxo inicial', () => {
 
     await waitFor(() => {
       expect(screen.getByText('Seu compasso recente')).toBeDefined()
-      expect(screen.getByText('Próximos passos')).toBeDefined()
-      expect(screen.getByText('Entender seus dados')).toBeDefined()
-      expect(screen.getByText('Telemetria anônima')).toBeDefined()
     })
+
+    // Verificar elementos do checklist em sequência
+    expect(await screen.findByText('Próximos passos')).toBeDefined()
+    expect(screen.getByText('Entender seus dados')).toBeDefined()
+    expect(screen.getAllByText('Telemetria anônima')).toHaveLength(2) // ChecklistPosOnboarding + SecaoEntendaCompasso
 
     const configuracoesSalvas = await bd.configuracoes.get('principal')
     expect(configuracoesSalvas?.valor.telemetria?.consentido).toBe(true)
