@@ -95,4 +95,13 @@ describe('servicoRegistro', () => {
 
     await expect(obterRegistroPorId(registro.id)).rejects.toThrow('Registro não encontrado')
   })
+
+  it('retorna erro ao tentar criar registro sem intensidade', async () => {
+    await expect(
+      criarRegistro({
+        metodo: 'fumado',
+        intencao: 'paz',
+      }),
+    ).rejects.toThrow('Intensidade obrigatória')
+  })
 })

@@ -18,6 +18,10 @@ export async function criarRegistro(dados: EntradaRegistro): Promise<Registro> {
     throw new Error('Intenção obrigatória')
   }
 
+  if (!dados.intensidade) {
+    throw new Error('Intensidade obrigatória')
+  }
+
   const agora = Date.now()
 
   const registro: Registro = {
@@ -27,6 +31,7 @@ export async function criarRegistro(dados: EntradaRegistro): Promise<Registro> {
     ...dados,
     metodo: dados.metodo,
     intencao: dados.intencao,
+    intensidade: dados.intensidade,
   }
 
   return consultasBD.salvarRegistro(registro)

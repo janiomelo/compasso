@@ -7,7 +7,6 @@ import type { EntradaRegistro } from '../../tipos'
 import { PERGUNTAS_REGISTRO } from './config/perguntasRegistro'
 
 const ESTADO_INICIAL: EntradaRegistro = {
-  intensidade: 'media',
   humorAntes: undefined,
   humorDepois: undefined,
   notas: '',
@@ -88,6 +87,11 @@ export const useFluxoRegistro = () => {
 
       if (!form.intencao) {
         setErro('Escolha a intenção principal para continuar.')
+        return
+      }
+
+      if (!form.intensidade) {
+        setErro('Escolha a intensidade para continuar.')
         return
       }
 

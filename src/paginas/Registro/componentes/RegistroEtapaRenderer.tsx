@@ -130,6 +130,7 @@ export const RegistroEtapaRenderer = ({
                 key={opcao.id}
                 type="button"
                 className={styles.intensidade__opcao + (ativo ? ' ' + styles['intensidade__opcao--ativa'] : '')}
+                aria-pressed={ativo}
                 onClick={() => atualizarComAutoAvanco('intensidade', opcao.valor as EntradaRegistro['intensidade'])}
               >
                 <strong>{opcao.rotulo}</strong>
@@ -198,12 +199,17 @@ export const RegistroEtapaRenderer = ({
       registroConcluido?.intencao ?? 'outro',
     )
 
+    const intensidadeResumo =
+      registroConcluido?.intensidade
+        ? chaveResumoIntensidade[registroConcluido.intensidade]
+        : '-'
+
     return (
       <div className={styles.resumoConclusao}>
         <span className={styles.resumoConclusao__eyebrow}>Registro criado</span>
         <h2 className={styles.resumoConclusao__titulo}>Seu momento foi registrado</h2>
         <p className={styles.resumoConclusao__descricao}>
-          {formaUso} · {intencao} · Intensidade {registroConcluido ? chaveResumoIntensidade[registroConcluido.intensidade] : '-'}
+          {formaUso} · {intencao} · Intensidade {intensidadeResumo}
         </p>
 
         <div className={styles.resumoConclusao__chips}>
@@ -217,7 +223,7 @@ export const RegistroEtapaRenderer = ({
           </span>
           <span className={styles.resumoConclusao__chip}>
             <Sparkles size={16} aria-hidden="true" />
-            Intensidade {registroConcluido ? chaveResumoIntensidade[registroConcluido.intensidade] : '-'}
+            Intensidade {intensidadeResumo}
           </span>
         </div>
 

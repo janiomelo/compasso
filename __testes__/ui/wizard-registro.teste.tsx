@@ -83,6 +83,10 @@ describe('Wizard de Registro — UI', () => {
       expect(screen.getByText('Qual foi a intensidade?')).toBeDefined()
     })
 
+    expect(screen.getByRole('button', { name: /Leve/i }).getAttribute('aria-pressed')).toBe('false')
+    expect(screen.getByRole('button', { name: /Média/i }).getAttribute('aria-pressed')).toBe('false')
+    expect(screen.getByRole('button', { name: /Alta/i }).getAttribute('aria-pressed')).toBe('false')
+
     fireEvent.click(screen.getByText('Alta'))
 
     await waitFor(() => {

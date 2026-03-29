@@ -55,7 +55,7 @@ export const PERGUNTAS_REGISTRO: PerguntaRegistro[] = [
     id: 'intencao',
     tipo: 'escolha-unica',
     titulo: 'Qual era sua intenção?',
-    descricao: 'Escolha a intenção principal deste registro, não o estado em que você estava antes.',
+    descricao: 'Escolha a intenção principal deste registro.',
     campo: 'intencao',
     obrigatoria: true,
     opcoes: OPCOES_INTENCAO,
