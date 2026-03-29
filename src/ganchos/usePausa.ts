@@ -5,10 +5,16 @@ import {
   iniciarPausa as iniciarPausaServico,
   encerrarPausa as encerrarPausaServico,
   interromperPausa as interromperPausaServico,
+  cancelarPausa as cancelarPausaServico,
 } from '../servicos/servicoPausa'
 import type { EntradaPausa, Pausa, ProgressoPausa } from '../tipos'
+import { TEMPO_MINIMO_CONSIDERAR_PAUSA_MS } from '../utilitarios/constantes'
 
 const INTERVALO_CRONOMETRO_MS = 1000
+
+type ResultadoCancelamentoPausa = {
+  registradaNoHistorico: boolean
+}
 
 export const usePausa = () => {
   const { estado, despacho } = useApp()
@@ -85,17 +91,29 @@ export const usePausa = () => {
     [pausaAtiva, despacho],
   )
 
-  const interromper = useCallback(
-    async (motivoEncerramento?: string): Promise<void> => {
+  const cancelar = useCallback(
+    async (motivoEncerramento?: string): Promise<ResultadoCancelamentoPausa> => {
       if (!pausaAtiva) {
-        return
+        return { registradaNoHistorico: false }
+      }
+
+      const duracaoDecorridaMs = Date.now() - pausaAtiva.iniciadoEm
+
+      if (duracaoDecorridaMs < TEMPO_MINIMO_CONSIDERAR_PAUSA_MS) {
+        await cancelarPausaServico(pausaAtiva.id)
+
+        despacho({ tipo: 'CANCELAR_PAUSA' })
+
+        return { registradaNoHistorico: false }
       }
 
       const pausaInterrompida = await interromperPausaServico(pausaAtiva.id, motivoEncerramento)
 
       despacho({ tipo: 'ENCERRAR_PAUSA', payload: pausaInterrompida })
+
+      return { registradaNoHistorico: true }
     },
-    [pausaAtiva, despacho],
+    [pausaAtiva, despacho, rastrearEvento],
   )
 
   return {
@@ -104,6 +122,6 @@ export const usePausa = () => {
     progresso,
     iniciar,
     encerrar,
-    interromper,
+    cancelar,
   }
 }

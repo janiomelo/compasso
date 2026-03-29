@@ -186,6 +186,7 @@ export type AcaoApp =
   | { tipo: 'DELETAR_REGISTRO'; payload: string }
   | { tipo: 'INICIAR_PAUSA'; payload: Pausa }
   | { tipo: 'ENCERRAR_PAUSA'; payload: Pausa }
+  | { tipo: 'CANCELAR_PAUSA' }
   | { tipo: 'DEFINIR_CONFIGURACAO'; payload: Partial<Configuracoes> }
   | { tipo: 'DEFINIR_CARREGANDO'; payload: boolean }
   | { tipo: 'REIDRATAR_ESTADO'; payload: EstadoApp }

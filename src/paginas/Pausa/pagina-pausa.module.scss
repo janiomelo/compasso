@@ -274,6 +274,12 @@
   margin: 0;
 }
 
+.aviso {
+  color: var(--cor-texto-secundaria);
+  font-size: $tamanho-pequeno;
+  margin: 0;
+}
+
 // ---- histórico ----
 .historico {
   display: flex;

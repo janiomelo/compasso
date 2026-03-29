@@ -868,9 +868,15 @@ O usuário pode escolher entre durações pré-definidas ou personalizadas, por 
 
 A pausa não deve ser tratada como algo “quebrado”. A linguagem sugerida é:
 
-- interromper pausa;
-- encerrar pausa;
+- concluir pausa;
+- cancelar pausa;
 - registrar momento durante a pausa.
+
+Regra operacional de MVP para evitar ambiguidade:
+
+- **Concluir pausa**: só fica disponível após 5 minutos de pausa ativa e registra como `concluida`.
+- **Cancelar pausa** com menos de 5 minutos: encerra e **não registra no histórico**.
+- **Cancelar pausa** com 5 minutos ou mais: encerra e registra no histórico como `interrompida`.
 
 A experiência precisa acolher a interrupção como parte do processo, sem culpabilização.
 

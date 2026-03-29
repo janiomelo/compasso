@@ -64,6 +64,16 @@ export async function interromperPausa(idPausa: string, motivoEncerramento?: str
   return consultasBD.salvarPausa(pausaAtualizada)
 }
 
+export async function cancelarPausa(idPausa: string): Promise<void> {
+  const pausa = await consultasBD.obterPausaPorId(idPausa)
+
+  if (!pausa) {
+    throw new Error('Pausa não encontrada')
+  }
+
+  await consultasBD.deletarPausa(idPausa)
+}
+
 export async function obterPausaAtiva(): Promise<Pausa | null> {
   return consultasBD.obterPausaAtiva()
 }

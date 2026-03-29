@@ -248,6 +248,10 @@ export const consultasBD = {
     return pausa
   },
 
+  async deletarPausa(id: string) {
+    await bd.pausas.delete(id)
+  },
+
   async salvarConfiguracoes(configuracoes: Configuracoes) {
     const registro: RegistroConfiguracao = { chave: 'principal', valor: configuracoes }
     await bd.configuracoes.put(registro)

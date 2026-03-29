@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { usePausa } from '../../ganchos'
 import { rotularStatusPausa } from '../../utilitarios/apresentacao/rotulos'
 import { formatarDuracao, formatarMoeda } from '../../utilitarios/dados/formatacao'
-import { DURACOES_PAUSA } from '../../utilitarios/constantes'
+import { DURACOES_PAUSA, TEMPO_MINIMO_CONSIDERAR_PAUSA_MS } from '../../utilitarios/constantes'
 import styles from './pagina-pausa.module.scss'
 
 const OPCOES_DURACAO = [
@@ -14,13 +14,15 @@ const OPCOES_DURACAO = [
 ] as const
 
 export const PaginaPausa = () => {
-  const { pausaAtiva, progresso, historico, iniciar, encerrar, interromper } = usePausa()
+  const { pausaAtiva, progresso, historico, iniciar, encerrar, cancelar } = usePausa()
   const [duracaoSelecionada, setDuracaoSelecionada] = useState(DURACOES_PAUSA.HORAS_24)
   const [aguardando, setAguardando] = useState(false)
   const [erro, setErro] = useState<string | null>(null)
+  const [mensagem, setMensagem] = useState<string | null>(null)
 
   const handleIniciar = async () => {
     setErro(null)
+    setMensagem(null)
     setAguardando(true)
 
     try {
@@ -33,6 +35,8 @@ export const PaginaPausa = () => {
   }
 
   const handleEncerrar = async () => {
+    setErro(null)
+    setMensagem(null)
     setAguardando(true)
 
     try {
@@ -42,11 +46,17 @@ export const PaginaPausa = () => {
     }
   }
 
-  const handleInterromper = async () => {
+  const handleCancelar = async () => {
+    setErro(null)
+    setMensagem(null)
     setAguardando(true)
 
     try {
-      await interromper('Interrompida pelo usuário')
+      const resultado = await cancelar('Cancelada pelo usuário')
+
+      if (!resultado.registradaNoHistorico) {
+        setMensagem('Pausa cancelada em menos de 5 minutos. Este ciclo não foi salvo no histórico.')
+      }
     } finally {
       setAguardando(false)
     }
@@ -70,7 +80,7 @@ export const PaginaPausa = () => {
 
           <div className={styles.hero__texto}>
             <h2 className={styles.hero__titulo}>Sua pausa está em andamento</h2>
-            <p className={styles.hero__descricao}>Concluir registra a pausa no histórico. Cancelar encerra sem considerar este ciclo.</p>
+            <p className={styles.hero__descricao}>Concluir fica disponível após 5 minutos. Cancelar antes de 5 minutos descarta este ciclo; após isso, registra como interrompida.</p>
           </div>
 
           <div className={styles.cronometro}>
@@ -107,21 +117,29 @@ export const PaginaPausa = () => {
           </div>
 
           <div className={styles.acoes}>
-            <button
-              className={styles.botaoPrimario}
-              onClick={handleEncerrar}
-              disabled={aguardando}
-            >
-              Concluir pausa
-            </button>
+            {progresso.decorridoMs >= TEMPO_MINIMO_CONSIDERAR_PAUSA_MS && (
+              <button
+                className={styles.botaoPrimario}
+                onClick={handleEncerrar}
+                disabled={aguardando}
+              >
+                Concluir pausa
+              </button>
+            )}
             <button
               className={styles.botaoSecundario}
-              onClick={handleInterromper}
+              onClick={handleCancelar}
               disabled={aguardando}
             >
               Cancelar pausa
             </button>
           </div>
+
+          {progresso.decorridoMs < TEMPO_MINIMO_CONSIDERAR_PAUSA_MS && (
+            <p className={styles.hero__nota}>
+              Concluir disponível em {formatarDuracao(TEMPO_MINIMO_CONSIDERAR_PAUSA_MS - progresso.decorridoMs)}.
+            </p>
+          )}
         </section>
       ) : (
         <section className={styles.hero}>
@@ -161,8 +179,10 @@ export const PaginaPausa = () => {
 
           <div className={styles.hero__nota}>
             <Sparkles size={16} />
-            <span>Você pode encerrar manualmente a qualquer momento.</span>
+            <span>Durante a pausa, você pode cancelar a qualquer momento. A opção de concluir aparece após 5 minutos.</span>
           </div>
+
+          {mensagem && <p className={styles.aviso}>{mensagem}</p>}
         </section>
       )}
 

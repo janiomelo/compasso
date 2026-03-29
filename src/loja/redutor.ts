@@ -78,6 +78,12 @@ export const redutor = (estado: EstadoApp, acao: AcaoApp): EstadoApp => {
         historicoPausa: [acao.payload, ...estado.historicoPausa],
       }
 
+    case 'CANCELAR_PAUSA':
+      return {
+        ...estado,
+        pausaAtiva: null,
+      }
+
     case 'DEFINIR_CONFIGURACAO':
       return {
         ...estado,

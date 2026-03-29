@@ -33,6 +33,9 @@ export const DURACOES_PAUSA = {
   DIAS_14: 14 * 24 * 60 * 60 * 1000,
 } as const
 
+// Tempo mínimo para considerar uma pausa no histórico (em ms)
+export const TEMPO_MINIMO_CONSIDERAR_PAUSA_MS = 5 * 60 * 1000
+
 // Moedas suportadas
 export const MOEDAS = {
   BRL: { codigo: 'BRL', simbolo: 'R$', localizacao: 'pt-BR' },

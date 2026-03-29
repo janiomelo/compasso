@@ -5,7 +5,8 @@ import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from 'vites
 import { BrowserRouter } from 'react-router-dom'
 import { ProvedorApp } from '../../src/loja/ContextoApp'
 import { PaginaPausa } from '../../src/paginas/Pausa/PaginaPausa'
-import { bd } from '../../src/utilitarios/armazenamento/bd'
+import { bd, consultasBD } from '../../src/utilitarios/armazenamento/bd'
+import { DURACOES_PAUSA } from '../../src/utilitarios/constantes'
 
 const envolverProvider = ({ children }: { children: React.ReactNode }) => (
   <BrowserRouter>
@@ -54,24 +55,44 @@ describe('Pausa — UI', () => {
     await waitFor(() => {
       expect(screen.getByText('Sua pausa está em andamento')).toBeDefined()
       expect(screen.getByRole('progressbar')).toBeDefined()
+      expect(screen.getByText('Cancelar pausa')).toBeDefined()
+      expect(screen.queryByText('Concluir pausa')).toBeNull()
+      expect(screen.getByText(/Concluir disponível em/i)).toBeDefined()
+    })
+  })
+
+  it('exibe concluir quando a pausa ativa já passou do tempo mínimo', async () => {
+    await consultasBD.salvarPausa({
+      id: 'pausa-ativa-antiga',
+      iniciadoEm: Date.now() - (6 * 60 * 1000),
+      duracaoPlanejada: DURACOES_PAUSA.HORAS_24,
+      status: 'ativa',
+      valorEconomia: 0,
+    })
+
+    render(<PaginaPausa />, { wrapper: envolverProvider })
+
+    await waitFor(() => {
       expect(screen.getByText('Concluir pausa')).toBeDefined()
       expect(screen.getByText('Cancelar pausa')).toBeDefined()
     })
   })
 
-  it('permite encerrar pausa manualmente', async () => {
+  it('cancela pausa curta sem registrar no histórico', async () => {
     render(<PaginaPausa />, { wrapper: envolverProvider })
 
     fireEvent.click(screen.getByText('Iniciar pausa'))
 
     await waitFor(() => {
-      expect(screen.getByText('Concluir pausa')).toBeDefined()
+      expect(screen.getByText('Cancelar pausa')).toBeDefined()
     })
 
-    fireEvent.click(screen.getByText('Concluir pausa'))
+    fireEvent.click(screen.getByText('Cancelar pausa'))
 
     await waitFor(() => {
       expect(screen.getByText('Começar uma pausa')).toBeDefined()
+      expect(screen.getByText('Pausa cancelada em menos de 5 minutos. Este ciclo não foi salvo no histórico.')).toBeDefined()
+      expect(screen.queryByText('Histórico recente')).toBeNull()
     })
   })
 })
