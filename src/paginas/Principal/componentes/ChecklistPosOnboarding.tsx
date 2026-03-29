@@ -49,7 +49,7 @@ export const ChecklistPosOnboarding = () => {
   const { estado, despacho } = useApp()
   const { salvarConfiguracoes, carregando } = useArmazenamento()
   const { rastrearEvento } = useTelemetria()
-  const [estaAberto, setEstaAberto] = useState(true)
+  const [estaAberto, setEstaAberto] = useState(false)
 
   const posOnboarding = estado.configuracoes.onboarding?.posOnboarding
   const jaFoiConcluido = !!posOnboarding?.concluidoEm

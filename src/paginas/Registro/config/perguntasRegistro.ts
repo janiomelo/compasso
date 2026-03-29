@@ -27,11 +27,11 @@ export const OPCOES_FORMA_USO: OpcaoPerguntaRegistro[] = [
 ]
 
 export const OPCOES_INTENCAO: OpcaoPerguntaRegistro[] = [
-  { id: 'paz', rotulo: 'Paz', valor: 'paz' },
-  { id: 'foco', rotulo: 'Foco', valor: 'foco' },
-  { id: 'social', rotulo: 'Social', valor: 'social' },
-  { id: 'descanso', rotulo: 'Relaxar', valor: 'descanso' },
-  { id: 'criatividade', rotulo: 'Criatividade', valor: 'criatividade' },
+  { id: 'paz', rotulo: 'Paz - acalmar', valor: 'paz' },
+  { id: 'descanso', rotulo: 'Relaxar - descansar', valor: 'descanso' },
+  { id: 'foco', rotulo: 'Foco - concentrar', valor: 'foco' },
+  { id: 'social', rotulo: 'Social - trocar', valor: 'social' },
+  { id: 'criatividade', rotulo: 'Criatividade - explorar', valor: 'criatividade' },
   { id: 'outro', rotulo: 'Outro', valor: 'outro' },
 ]
 
@@ -54,8 +54,8 @@ export const PERGUNTAS_REGISTRO: PerguntaRegistro[] = [
   {
     id: 'intencao',
     tipo: 'escolha-unica',
-    titulo: 'Qual era sua intenção?',
-    descricao: 'Escolha a intenção principal deste registro.',
+    titulo: 'Qual era sua intenção principal?',
+    descricao: 'Pense no que você queria encontrar naquele momento.',
     campo: 'intencao',
     obrigatoria: true,
     opcoes: OPCOES_INTENCAO,
@@ -73,7 +73,7 @@ export const PERGUNTAS_REGISTRO: PerguntaRegistro[] = [
     id: 'observacao',
     tipo: 'texto-opcional',
     titulo: 'Algo a mais para guardar deste momento?',
-    descricao: 'Opcional. Você pode seguir direto ou abrir um campo curto de observação.',
+    descricao: 'Se quiser, adicione um detalhe curto antes de concluir.',
     campo: 'notas',
     obrigatoria: false,
   },

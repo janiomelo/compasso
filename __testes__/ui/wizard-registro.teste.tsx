@@ -46,10 +46,10 @@ describe('Wizard de Registro — UI', () => {
     fireEvent.click(screen.getByText('Vaporizado'))
 
     await waitFor(() => {
-      expect(screen.getByText('Qual era sua intenção?')).toBeDefined()
+      expect(screen.getByText('Qual era sua intenção principal?')).toBeDefined()
     })
 
-    expect(screen.getByRole('button', { name: 'Foco' }).getAttribute('aria-pressed')).toBe('false')
+    expect(screen.getByRole('button', { name: 'Foco - concentrar' }).getAttribute('aria-pressed')).toBe('false')
   })
 
   it('volta da etapa de intenção para método', async () => {
@@ -58,7 +58,7 @@ describe('Wizard de Registro — UI', () => {
     fireEvent.click(screen.getByText('Vaporizado'))
 
     await waitFor(() => {
-      expect(screen.getByText('Qual era sua intenção?')).toBeDefined()
+      expect(screen.getByText('Qual era sua intenção principal?')).toBeDefined()
     })
 
     fireEvent.click(screen.getByText('Voltar'))
@@ -74,10 +74,10 @@ describe('Wizard de Registro — UI', () => {
     fireEvent.click(screen.getByText('Vaporizado'))
 
     await waitFor(() => {
-      expect(screen.getByText('Qual era sua intenção?')).toBeDefined()
+      expect(screen.getByText('Qual era sua intenção principal?')).toBeDefined()
     })
 
-    fireEvent.click(screen.getByText('Foco'))
+    fireEvent.click(screen.getByText('Foco - concentrar'))
 
     await waitFor(() => {
       expect(screen.getByText('Qual foi a intensidade?')).toBeDefined()
@@ -91,20 +91,20 @@ describe('Wizard de Registro — UI', () => {
 
     await waitFor(() => {
       expect(screen.getByText('Algo a mais para guardar deste momento?')).toBeDefined()
-      expect(screen.getByText('Adicionar observação')).toBeDefined()
+      expect(screen.getByPlaceholderText('Escreva algo, se quiser')).toBeDefined()
     })
   })
 
-  it('abre a observação sob demanda e permite concluir sem escrever nada', async () => {
+  it('mantém observação opcional visível e permite concluir sem escrever nada', async () => {
     render(<PaginaRegistro />, { wrapper: envolverProvider })
 
     fireEvent.click(screen.getByText('Vaporizado'))
 
     await waitFor(() => {
-      expect(screen.getByText('Qual era sua intenção?')).toBeDefined()
+      expect(screen.getByText('Qual era sua intenção principal?')).toBeDefined()
     })
 
-    fireEvent.click(screen.getByText('Foco'))
+    fireEvent.click(screen.getByText('Foco - concentrar'))
 
     await waitFor(() => {
       expect(screen.getByText('Qual foi a intensidade?')).toBeDefined()
@@ -113,21 +113,7 @@ describe('Wizard de Registro — UI', () => {
     fireEvent.click(screen.getByText('Alta'))
 
     await waitFor(() => {
-      expect(screen.getByText('Adicionar observação')).toBeDefined()
-    })
-
-    expect(screen.queryByPlaceholderText('Escreva algo, se quiser')).toBeNull()
-
-    fireEvent.click(screen.getByText('Adicionar observação'))
-
-    await waitFor(() => {
       expect(screen.getByPlaceholderText('Escreva algo, se quiser')).toBeDefined()
-    })
-
-    fireEvent.click(screen.getByText('Fechar observação'))
-
-    await waitFor(() => {
-      expect(screen.queryByPlaceholderText('Escreva algo, se quiser')).toBeNull()
     })
 
     fireEvent.click(screen.getByText('Concluir registro'))
@@ -145,10 +131,10 @@ describe('Wizard de Registro — UI', () => {
     fireEvent.click(screen.getByText('Vaporizado'))
 
     await waitFor(() => {
-      expect(screen.getByText('Qual era sua intenção?')).toBeDefined()
+      expect(screen.getByText('Qual era sua intenção principal?')).toBeDefined()
     })
 
-    fireEvent.click(screen.getByText('Relaxar'))
+    fireEvent.click(screen.getByText('Relaxar - descansar'))
 
     await waitFor(() => {
       expect(screen.getByText('Qual foi a intensidade?')).toBeDefined()
@@ -157,7 +143,7 @@ describe('Wizard de Registro — UI', () => {
     fireEvent.click(screen.getByText('Voltar'))
 
     await waitFor(() => {
-      expect(screen.getByText('Qual era sua intenção?')).toBeDefined()
+      expect(screen.getByText('Qual era sua intenção principal?')).toBeDefined()
     })
 
     fireEvent.click(screen.getByText('Voltar'))

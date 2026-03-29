@@ -22,9 +22,6 @@ interface RegistroEtapaRendererProps {
   form: EntradaRegistro
   atualizar: <K extends keyof EntradaRegistro>(campo: K, valor: EntradaRegistro[K]) => void
   atualizarComAutoAvanco: <K extends keyof EntradaRegistro>(campo: K, valor: EntradaRegistro[K]) => void
-  observacaoAberta: boolean
-  abrirObservacao: () => void
-  fecharObservacao: () => void
   registroConcluido: EntradaRegistro | null
 }
 
@@ -65,9 +62,6 @@ export const RegistroEtapaRenderer = ({
   form,
   atualizar,
   atualizarComAutoAvanco,
-  observacaoAberta,
-  abrirObservacao,
-  fecharObservacao,
   registroConcluido,
 }: RegistroEtapaRendererProps) => {
   if (pergunta.tipo === 'escolha-unica' && pergunta.id === 'forma-uso') {
@@ -146,38 +140,18 @@ export const RegistroEtapaRenderer = ({
   if (pergunta.tipo === 'texto-opcional') {
     return (
       <div className={styles.finalizacao}>
-        <div className={styles.finalizacao__topo}>
-          <div className={styles.finalizacao__texto}>
-            <strong>Observação opcional</strong>
-            <span>Se quiser, adicione um detalhe rápido antes de concluir.</span>
-          </div>
-
-          {!observacaoAberta ? (
-            <button type="button" className={styles.botaoSecundario} onClick={abrirObservacao}>
-              Adicionar observação
-            </button>
-          ) : (
-            <button type="button" className={styles.botaoSecundario} onClick={fecharObservacao}>
-              Fechar observação
-            </button>
-          )}
-        </div>
-
-        {observacaoAberta && (
-          <label className={styles.campoLabel}>
-            Observação opcional
-            <textarea
-              className={styles.textarea}
-              value={form.notas ?? ''}
-              onChange={(evento) => atualizar('notas', evento.target.value)}
-              maxLength={500}
-              rows={5}
-              placeholder="Escreva algo, se quiser"
-              autoFocus
-            />
-            <span className={styles.contador}>{(form.notas ?? '').length}/500</span>
-          </label>
-        )}
+        <label className={styles.campoLabel}>
+          Observação opcional
+          <textarea
+            className={styles.textarea}
+            value={form.notas ?? ''}
+            onChange={(evento) => atualizar('notas', evento.target.value)}
+            maxLength={500}
+            rows={4}
+            placeholder="Escreva algo, se quiser"
+          />
+          <span className={styles.contador}>{(form.notas ?? '').length}/500</span>
+        </label>
       </div>
     )
   }

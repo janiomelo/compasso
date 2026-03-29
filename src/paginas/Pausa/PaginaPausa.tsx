@@ -70,7 +70,7 @@ export const PaginaPausa = () => {
 
           <div className={styles.hero__texto}>
             <h2 className={styles.hero__titulo}>Sua pausa está em andamento</h2>
-            <p className={styles.hero__descricao}>Acompanhe o progresso e decida se quer concluir ou interromper manualmente.</p>
+            <p className={styles.hero__descricao}>Concluir registra a pausa no histórico. Cancelar encerra sem considerar este ciclo.</p>
           </div>
 
           <div className={styles.cronometro}>
@@ -112,14 +112,14 @@ export const PaginaPausa = () => {
               onClick={handleEncerrar}
               disabled={aguardando}
             >
-              Encerrar pausa
+              Concluir pausa
             </button>
             <button
               className={styles.botaoSecundario}
               onClick={handleInterromper}
               disabled={aguardando}
             >
-              Interromper
+              Cancelar pausa
             </button>
           </div>
         </section>

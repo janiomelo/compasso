@@ -208,6 +208,103 @@
   color: var(--cor-texto-secundaria);
 }
 
+.telemetriaPainel {
+  padding: 1rem;
+  border-radius: $raio-md;
+  border: 1px solid var(--borda-suave);
+  background: var(--superficie-sutil);
+}
+
+.telemetriaPainel__topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: $espaco-md;
+}
+
+.telemetriaPainel__titulo {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+  font-weight: $peso-semibold;
+  color: var(--cor-texto-primaria);
+}
+
+.telemetriaPainel__descricao {
+  margin: 0;
+  font-size: $tamanho-pequeno;
+  color: var(--cor-texto-secundaria);
+}
+
+.telemetriaPainel__meta {
+  margin: 0.75rem 0 0;
+  font-size: 0.8rem;
+  color: var(--cor-texto-terciaria);
+}
+
+.switchTelemetria {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.switchTelemetria--desativado {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.switchTelemetria__rotulo {
+  font-size: $tamanho-pequeno;
+  color: var(--cor-texto-secundaria);
+}
+
+.switchTelemetria__controle {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+.switchTelemetria__visual {
+  width: 2.15rem;
+  height: 1.2rem;
+  border-radius: 999px;
+  border: 1px solid var(--borda-suave);
+  background: var(--superficie-cartao);
+  position: relative;
+  transition: background-color $transicao-rapida, border-color $transicao-rapida;
+
+  &::after {
+    content: '';
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: 999px;
+    background: var(--cor-texto-secundaria);
+    position: absolute;
+    top: 50%;
+    left: 0.16rem;
+    transform: translateY(-50%);
+    transition: left $transicao-rapida, background-color $transicao-rapida;
+  }
+}
+
+.switchTelemetria__controle:checked + .switchTelemetria__visual {
+  border-color: rgba($cor-acento-principal, 0.5);
+  background: rgba($cor-acento-principal, 0.2);
+}
+
+.switchTelemetria__controle:checked + .switchTelemetria__visual::after {
+  left: calc(100% - 1.01rem);
+  background: $cor-acento-principal;
+}
+
+.switchTelemetria__estado {
+  font-size: $tamanho-pequeno;
+  font-weight: $peso-semibold;
+  color: var(--cor-texto-primaria);
+}
+
 .itemNavegacao {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -227,6 +324,10 @@
     border-color: rgba($cor-acento-principal, 0.4);
     background: var(--superficie-cartao-forte);
   }
+}
+
+.itemNavegacao__espacado {
+  margin-top: $espaco-sm;
 }
 
 .itemNavegacaoIcone {
@@ -273,4 +374,15 @@
   color: var(--feedback-erro-texto);
   background: var(--feedback-erro-fundo);
   border-color: var(--feedback-erro-borda);
+}
+
+@media (max-width: $ponto-corte-tablet - 1px) {
+  .telemetriaPainel__topo {
+    flex-direction: column;
+  }
+
+  .switchTelemetria {
+    width: 100%;
+    justify-content: space-between;
+  }
 }

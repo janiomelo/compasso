@@ -240,69 +240,6 @@ export const PaginaConfig = () => {
         </p>
       </section>
 
-      <section className={styles.painelLinks}>
-        <div className={styles.painelLinksTopo}>
-          <ShieldCheck size={18} />
-          <h2>Leitura e operação</h2>
-        </div>
-
-        <p className={styles.painelLinksResumo}>
-          Essas páginas explicam como o Compasso funciona hoje, o que fica salvo localmente e onde verificar as referências públicas do projeto.
-        </p>
-
-        <div className={styles.listaNavegacao}>
-        <Link to="/config/dados-locais-seguranca" className={styles.itemNavegacao}>
-          <span className={styles.itemNavegacaoIcone}>
-            <Database size={18} />
-          </span>
-          <span className={styles.itemNavegacaoTexto}>
-            <strong>Dados locais e segurança</strong>
-            <small>O que está salvo aqui e o que você pode fazer com esses dados.</small>
-          </span>
-        </Link>
-
-        <Link to="/config/privacidade-transparencia" className={styles.itemNavegacao}>
-          <span className={styles.itemNavegacaoIcone}>
-            <ShieldCheck size={18} />
-          </span>
-          <span className={styles.itemNavegacaoTexto}>
-            <strong>Privacidade e transparência</strong>
-            <small>O que o projeto faz hoje, como trata dados e onde ler mais.</small>
-          </span>
-        </Link>
-
-        <Link to="/config/licencas-creditos" className={styles.itemNavegacao}>
-          <span className={styles.itemNavegacaoIcone}>
-            <BookOpen size={18} />
-          </span>
-          <span className={styles.itemNavegacaoTexto}>
-            <strong>Licenças e créditos</strong>
-            <small>Origem visual, notices e bibliotecas relevantes desta fase.</small>
-          </span>
-        </Link>
-
-        <Link to="/config/sobre-projeto" className={styles.itemNavegacao}>
-          <span className={styles.itemNavegacaoIcone}>
-            <Info size={18} />
-          </span>
-          <span className={styles.itemNavegacaoTexto}>
-            <strong>Sobre o projeto</strong>
-            <small>Propósito, valores e responsabilidade pública do Compasso.</small>
-          </span>
-        </Link>
-
-        <Link to="/apoie" className={styles.itemNavegacao}>
-          <span className={styles.itemNavegacaoIcone}>
-            <Heart size={18} />
-          </span>
-          <span className={styles.itemNavegacaoTexto}>
-            <strong>Apoiar o Compasso</strong>
-            <small>Contribuição voluntária para manutenção e evolução do projeto.</small>
-          </span>
-        </Link>
-        </div>
-      </section>
-
       <section className={styles.painelProtecao}>
         <div className={styles.painelLinksTopo}>
           <ShieldCheck size={18} />
@@ -313,61 +250,37 @@ export const PaginaConfig = () => {
           Controle a coleta de dados de uso anônimos e entenda como funcionam.
         </p>
 
-        <div style={{
-          padding: '1rem',
-          borderRadius: '0.5rem',
-          border: '1px solid var(--cor-borda)',
-          backgroundColor: 'var(--cor-fundo-secundario)',
-        }}>
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'flex-start',
-            gap: '1rem',
-            marginBottom: '0.75rem',
-          }}>
+        <div className={styles.telemetriaPainel}>
+          <div className={styles.telemetriaPainel__topo}>
             <div>
-              <h3 style={{ margin: '0 0 0.25rem 0', fontSize: '1rem', fontWeight: '600' }}>
-                Telemetria anônima
-              </h3>
-              <p style={{ margin: '0', fontSize: '0.875rem', color: 'var(--cor-texto-secundario)' }}>
+              <h3 className={styles.telemetriaPainel__titulo}>Telemetria anônima</h3>
+              <p className={styles.telemetriaPainel__descricao}>
                 Contadores de uso agregados. Sem dados pessoais ou conteúdo.
               </p>
             </div>
-            <label style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.75rem',
-              cursor: consentimentoTelemetria === null ? 'not-allowed' : 'pointer',
-              opacity: carregandoConsentimentoTelemetria ? 0.5 : 1,
-            }}>
+
+            <label className={styles.switchTelemetria + (carregandoConsentimentoTelemetria ? ' ' + styles['switchTelemetria--desativado'] : '')}>
+              <span className={styles.switchTelemetria__rotulo}>Ativar telemetria anônima</span>
               <input
                 type="checkbox"
                 checked={consentimentoTelemetria === true}
                 onChange={(evento) => void alternarTelemetria(evento.target.checked)}
                 disabled={carregandoConsentimentoTelemetria}
-                style={{ cursor: 'pointer' }}
+                className={styles.switchTelemetria__controle}
               />
-              <span style={{
-                fontSize: '0.875rem',
-                fontWeight: '500',
-                color: consentimentoTelemetria === true
-                  ? 'var(--cor-sucesso, #22c55e)'
-                  : consentimentoTelemetria === false
-                  ? 'var(--cor-texto-secundario)'
-                  : 'var(--cor-texto-secundario)',
-              }}>
+              <span className={styles.switchTelemetria__visual} aria-hidden="true" />
+              <span className={styles.switchTelemetria__estado}>
                 {consentimentoTelemetria === true ? 'Ativada' : 'Desativada'}
               </span>
             </label>
           </div>
 
-          <p style={{ margin: '0.75rem 0 0 0', fontSize: '0.8rem', color: 'var(--cor-texto-terciario)' }}>
+          <p className={styles.telemetriaPainel__meta}>
             Coletado: páginas visitadas, pausas iniciadas, momentos registrados.
           </p>
         </div>
 
-        <Link to="/telemetria" className={styles.itemNavegacao} style={{ marginTop: '1rem' }} target="_blank" rel="noopener noreferrer">
+        <Link to="/telemetria" className={styles.itemNavegacao + ' ' + styles.itemNavegacao__espacado} target="_blank" rel="noopener noreferrer">
           <span className={styles.itemNavegacaoTexto}>
             <strong>Saiba mais sobre telemetria</strong>
             <small>O que coletamos, como funciona offline e como desativar.</small>
@@ -383,6 +296,10 @@ export const PaginaConfig = () => {
 
         <p className={styles.painelLinksResumo}>
           Defina uma senha local para bloquear o acesso ao app neste dispositivo.
+        </p>
+
+        <p className={styles.painelLinksResumo}>
+          Se você esquecer a senha local, não conseguimos recuperar os dados deste dispositivo.
         </p>
 
         {!estado.configuracoes.protecaoAtiva && (
@@ -497,6 +414,69 @@ export const PaginaConfig = () => {
             <small>Reabra o resumo de proposta, privacidade, maioridade e aceite.</small>
           </span>
         </Link>
+      </section>
+
+      <section className={styles.painelLinks}>
+        <div className={styles.painelLinksTopo}>
+          <ShieldCheck size={18} />
+          <h2>Referências e transparência</h2>
+        </div>
+
+        <p className={styles.painelLinksResumo}>
+          Páginas de consulta sobre funcionamento, privacidade local e referências públicas do projeto.
+        </p>
+
+        <div className={styles.listaNavegacao}>
+          <Link to="/config/dados-locais-seguranca" className={styles.itemNavegacao}>
+            <span className={styles.itemNavegacaoIcone}>
+              <Database size={18} />
+            </span>
+            <span className={styles.itemNavegacaoTexto}>
+              <strong>Dados locais e segurança</strong>
+              <small>O que está salvo aqui e o que você pode fazer com esses dados.</small>
+            </span>
+          </Link>
+
+          <Link to="/config/privacidade-transparencia" className={styles.itemNavegacao}>
+            <span className={styles.itemNavegacaoIcone}>
+              <ShieldCheck size={18} />
+            </span>
+            <span className={styles.itemNavegacaoTexto}>
+              <strong>Privacidade e transparência</strong>
+              <small>O que o projeto faz hoje, como trata dados e onde ler mais.</small>
+            </span>
+          </Link>
+
+          <Link to="/config/licencas-creditos" className={styles.itemNavegacao}>
+            <span className={styles.itemNavegacaoIcone}>
+              <BookOpen size={18} />
+            </span>
+            <span className={styles.itemNavegacaoTexto}>
+              <strong>Licenças e créditos</strong>
+              <small>Origem visual, notices e bibliotecas relevantes desta fase.</small>
+            </span>
+          </Link>
+
+          <Link to="/config/sobre-projeto" className={styles.itemNavegacao}>
+            <span className={styles.itemNavegacaoIcone}>
+              <Info size={18} />
+            </span>
+            <span className={styles.itemNavegacaoTexto}>
+              <strong>Sobre o projeto</strong>
+              <small>Propósito, valores e responsabilidade pública do Compasso.</small>
+            </span>
+          </Link>
+
+          <Link to="/apoie" className={styles.itemNavegacao}>
+            <span className={styles.itemNavegacaoIcone}>
+              <Heart size={18} />
+            </span>
+            <span className={styles.itemNavegacaoTexto}>
+              <strong>Apoiar o Compasso</strong>
+              <small>Contribuição voluntária para manutenção e evolução do projeto.</small>
+            </span>
+          </Link>
+        </div>
       </section>
 
       {mensagem && <p className={styles.mensagemSucesso}>{mensagem}</p>}

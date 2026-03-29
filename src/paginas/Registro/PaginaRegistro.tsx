@@ -12,12 +12,9 @@ export const PaginaRegistro = () => {
     atualizar,
     atualizarComAutoAvanco,
     etapaAtual,
-    observacaoAberta,
     registroConcluido,
     avancar,
     voltar,
-    abrirObservacao,
-    fecharObservacao,
     registrarOutro,
     handleSubmit,
     aguardando,
@@ -62,9 +59,6 @@ export const PaginaRegistro = () => {
             form={form}
             atualizar={atualizar}
             atualizarComAutoAvanco={atualizarComAutoAvanco}
-            observacaoAberta={observacaoAberta}
-            abrirObservacao={abrirObservacao}
-            fecharObservacao={fecharObservacao}
             registroConcluido={registroConcluido}
           />
         </section>
