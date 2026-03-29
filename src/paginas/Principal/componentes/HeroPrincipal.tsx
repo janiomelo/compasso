@@ -29,7 +29,9 @@ export const HeroPrincipal = () => {
               </div>
 
               <div className={styles.hero__metricas}>
-                <span>{formatarMoeda(pausaAtiva.valorEconomia)} em ganho estimado</span>
+                {economiaConfigurada && (
+                  <span>{formatarMoeda(pausaAtiva.valorEconomia)} em ganho estimado</span>
+                )}
                 <span>{formatarDuracao(pausaAtiva.duracaoPlanejada)} de meta total</span>
               </div>
             </>
