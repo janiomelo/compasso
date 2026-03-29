@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor, within } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import App from '../../src/App'
 import { estadoInicial } from '../../src/loja/redutor'
@@ -86,22 +86,15 @@ describe('Onboarding — fluxo inicial', () => {
       expect(screen.getByText('Seu compasso recente')).toBeDefined()
     })
 
-    // Verificar elementos do checklist em sequência
-    expect(await screen.findByText('Próximos passos')).toBeDefined()
-    expect(screen.getByText('Entender seus dados')).toBeDefined()
-    expect(screen.getAllByText('Telemetria anônima')).toHaveLength(2) // ChecklistPosOnboarding + SecaoEntendaCompasso
+    // Verificar elementos do onboarding pos-conclusão
+      expect(screen.getByText('Como seus dados ficam salvos')).toBeDefined()
+    expect(screen.getAllByText('Telemetria anônima')).toHaveLength(1) // SecaoEntendaCompasso
 
     const configuracoesSalvas = await bd.configuracoes.get('principal')
     expect(configuracoesSalvas?.valor.telemetria?.consentido).toBe(true)
 
-    const secaoChecklist = screen.getByText('Próximos passos').closest('section')
-    expect(secaoChecklist).toBeDefined()
-
-    fireEvent.click(within(secaoChecklist as HTMLElement).getByRole('link', { name: 'Registrar' }))
-
-    await waitFor(() => {
-      expect(screen.getByText('Registrar momento')).toBeDefined()
-    })
+      // Verificar que onboarding foi completado
+      expect(configuracoesSalvas?.valor.onboarding?.concluidoEm).toBeGreaterThan(0)
   })
 
   it('deve permitir revisar onboarding sem bloquear uso quando já concluído', async () => {
