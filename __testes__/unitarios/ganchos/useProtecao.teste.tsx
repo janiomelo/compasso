@@ -105,6 +105,7 @@ describe('useProtecao.tsx — Hook de proteção e segurança', () => {
       } as any)
 
       vi.mocked(consultasBD.salvarMetadadosProtecao).mockResolvedValue(undefined)
+      vi.mocked(consultasBD.migrarParaCifrado).mockResolvedValue(undefined)
 
       const { result } = renderHook(() => useProtecao())
 
@@ -115,6 +116,7 @@ describe('useProtecao.tsx — Hook de proteção e segurança', () => {
       expect(kdf.derivarChavePBKDF2).toHaveBeenCalledWith(senha)
       expect(criptografia.gerarChaveDEK).toHaveBeenCalled()
       expect(consultasBD.salvarMetadadosProtecao).toHaveBeenCalled()
+      expect(consultasBD.migrarParaCifrado).toHaveBeenCalled()
       expect(gerenciadorChaves.guardarDEK).toHaveBeenCalledWith(dekMock, 5 * 60 * 1000)
     })
   })
@@ -169,16 +171,32 @@ describe('useProtecao.tsx — Hook de proteção e segurança', () => {
   })
 
   describe('Método: desativarProtecao', () => {
-    it('limpa dados de proteção e desativa', async () => {
+    it('descriptografa dados, limpa proteção e desativa', async () => {
+      const dekMock = { type: 'dek' }
+      vi.mocked(gerenciadorChaves.obterDEK).mockReturnValue(dekMock as any)
+      vi.mocked(consultasBD.migrarParaTextoPlano).mockResolvedValue(undefined)
       vi.mocked(consultasBD.limparMetadadosProtecao).mockResolvedValue(undefined)
 
       const { result } = renderHook(() => useProtecao())
 
       await result.current.desativarProtecao()
 
+      expect(gerenciadorChaves.obterDEK).toHaveBeenCalled()
+      expect(consultasBD.migrarParaTextoPlano).toHaveBeenCalledWith(dekMock)
       expect(gerenciadorChaves.limparDEK).toHaveBeenCalled()
       expect(consultasBD.limparMetadadosProtecao).toHaveBeenCalled()
       expect(despacho).toHaveBeenCalledWith({ tipo: 'DESATIVAR_PROTECAO' })
+    })
+
+    it('lança erro se usuário não estiver desbloqueado', async () => {
+      vi.mocked(gerenciadorChaves.obterDEK).mockImplementation(() => {
+        throw new Error('DEK não disponível — app bloqueado')
+      })
+
+      const { result } = renderHook(() => useProtecao())
+
+      await expect(result.current.desativarProtecao()).rejects.toThrow('DEK não disponível')
+      expect(consultasBD.migrarParaTextoPlano).not.toHaveBeenCalled()
     })
   })
 

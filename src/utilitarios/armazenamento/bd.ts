@@ -278,6 +278,54 @@ export const consultasBD = {
     await bd.protecao.delete('principal')
   },
 
+  /**
+   * Cifra todos os registros e pausas que estão em texto plano.
+   * Chamado ao ATIVAR proteção para garantir banco homogêneo.
+   * Lê → cifra (fora da tx por limitação do Web Crypto + IDB) → salva em bulk.
+   */
+  async migrarParaCifrado(dek: CryptoKey) {
+    const todosPersistidos = await bd.registros.toArray()
+    const todasPausas = await bd.pausas.toArray()
+
+    const aoCifrar = todosPersistidos.filter((r): r is Registro => !ehRegistroCifrado(r))
+    const pausasAoCifrar = todasPausas.filter((p): p is Pausa => !ehPausaCifrada(p))
+
+    const registrosCifrados = await Promise.all(aoCifrar.map((r) => cifrarRegistro(r, dek)))
+    const pausasCifradas = await Promise.all(pausasAoCifrar.map((p) => cifrarPausa(p, dek)))
+
+    if (registrosCifrados.length === 0 && pausasCifradas.length === 0) return
+
+    await bd.transaction('rw', bd.registros, bd.pausas, async () => {
+      if (registrosCifrados.length > 0) await bd.registros.bulkPut(registrosCifrados)
+      if (pausasCifradas.length > 0) await bd.pausas.bulkPut(pausasCifradas)
+    })
+  },
+
+  /**
+   * Descriptografa todos os registros e pausas cifradas para texto plano.
+   * Chamado ao DESATIVAR proteção para não perder dados.
+   * Lê → descifra (fora da tx) → salva em bulk.
+   */
+  async migrarParaTextoPlano(dek: CryptoKey) {
+    const todosPersistidos = await bd.registros.toArray()
+    const todasPausas = await bd.pausas.toArray()
+
+    const cifrados = todosPersistidos.filter(ehRegistroCifrado)
+    const pausasCifradas = todasPausas.filter(ehPausaCifrada)
+
+    const registrosDecifrados = await Promise.all(cifrados.map((r) => descifrarRegistro(r, dek)))
+    const pausasDecifradas = await Promise.all(pausasCifradas.map((p) => descifrarPausa(p, dek)))
+
+    if (registrosDecifrados.length === 0 && pausasDecifradas.length === 0) return
+
+    await bd.transaction('rw', bd.registros, bd.pausas, async () => {
+      if (registrosDecifrados.length > 0)
+        await bd.registros.bulkPut(registrosDecifrados as RegistroPersistido[])
+      if (pausasDecifradas.length > 0)
+        await bd.pausas.bulkPut(pausasDecifradas as PausaPersistida[])
+    })
+  },
+
   async salvarBackup(dados: PersistenciaApp, origem: OrigemBackup = 'automatico') {
     const backup: BackupLocal = {
       criadoEm: Date.now(),

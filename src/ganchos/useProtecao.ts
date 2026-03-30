@@ -49,6 +49,9 @@ export const useProtecao = () => {
         ativoDesdeEm: Date.now(),
       })
 
+      // Cifra todos os registros e pausas existentes em texto plano
+      await consultasBD.migrarParaCifrado(dek)
+
       const timeout = estado.configuracoes.timeoutBloqueio
       gerenciadorChaves.guardarDEK(dek, timeout)
 
@@ -101,6 +104,12 @@ export const useProtecao = () => {
   )
 
   const desativarProtecao = useCallback(async () => {
+    // DEK precisa estar disponível — usuário deve estar desbloqueado
+    const dek = gerenciadorChaves.obterDEK()
+
+    // Descriptografa todos os registros e pausas antes de apagar os metadados
+    await consultasBD.migrarParaTextoPlano(dek)
+
     gerenciadorChaves.limparDEK()
     await consultasBD.limparMetadadosProtecao()
 
