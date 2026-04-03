@@ -38,3 +38,19 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Instalar Chromium para E2E
+        run: npx playwright install --with-deps chromium
+
+      - name: Testes E2E (Playwright)
+        run: npm run test:e2e
+
+      - name: Publicar artefatos E2E
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorio-e2e-playwright
+          path: |
+            playwright-report/
+            test-results/
+          if-no-files-found: ignore
