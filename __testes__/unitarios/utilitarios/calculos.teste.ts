@@ -4,6 +4,7 @@ import {
   calcularEconomiaAcumulada,
   calcularEconomiaDiaria,
   calcularEconomiaEstimadaPorDuracao,
+  calcularEconomiaAteAgora,
   calcularTendencia,
   calcularEstatisticas,
   calcularPercentualReducao,
@@ -135,6 +136,23 @@ describe('Cálculos', () => {
       expect(calcularEconomiaEstimadaPorDuracao(0, 20)).toBe(0)
       expect(calcularEconomiaEstimadaPorDuracao(1000, 0)).toBe(0)
       expect(calcularEconomiaEstimadaPorDuracao(-1, 20)).toBe(0)
+    })
+  })
+
+  describe('calcularEconomiaAteAgora', () => {
+    it('deve calcular a economia parcial com base no percentual', () => {
+      const valor = calcularEconomiaAteAgora(10, 50)
+      expect(valor).toBe(5)
+    })
+
+    it('deve limitar percentual abaixo de 0 e acima de 100', () => {
+      expect(calcularEconomiaAteAgora(10, -20)).toBe(0)
+      expect(calcularEconomiaAteAgora(10, 150)).toBe(10)
+    })
+
+    it('deve retornar zero para entradas inválidas', () => {
+      expect(calcularEconomiaAteAgora(0, 20)).toBe(0)
+      expect(calcularEconomiaAteAgora(10, Number.NaN)).toBe(0)
     })
   })
 

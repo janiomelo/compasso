@@ -110,6 +110,27 @@ export const calcularEconomiaEstimadaPorDuracao = (
 }
 
 /**
+ * Calcula a economia parcial de uma pausa ativa conforme o progresso.
+ */
+export const calcularEconomiaAteAgora = (
+  valorEconomiaTotal: number,
+  percentualConclusao: number,
+): number => {
+  if (!Number.isFinite(valorEconomiaTotal) || valorEconomiaTotal <= 0) {
+    return 0
+  }
+
+  if (!Number.isFinite(percentualConclusao)) {
+    return 0
+  }
+
+  const percentualNormalizado = Math.min(Math.max(percentualConclusao, 0), 100)
+  const valorParcial = valorEconomiaTotal * (percentualNormalizado / 100)
+
+  return parseFloat(valorParcial.toFixed(2))
+}
+
+/**
  * Calcula economia diaria media
  */
 export const calcularEconomiaDiaria = (

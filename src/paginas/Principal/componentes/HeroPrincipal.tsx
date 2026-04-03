@@ -5,11 +5,15 @@ import { Link } from 'react-router-dom'
 import { PauseCircle } from 'lucide-react'
 import { usePausa, useEconomia } from '../../../ganchos'
 import { formatarDuracao, formatarMoeda } from '../../../utilitarios/dados/formatacao'
+import { calcularEconomiaAteAgora } from '../../../utilitarios/dados/calculos'
 import styles from '../pagina-principal.module.scss'
 
 export const HeroPrincipal = () => {
   const { pausaAtiva, progresso } = usePausa()
   const { totalAcumulado, economiaConfigurada, moedaEconomia } = useEconomia()
+  const economiaAteAgora = pausaAtiva && progresso
+    ? calcularEconomiaAteAgora(pausaAtiva.valorEconomia, progresso.percentualConclusao)
+    : 0
 
   return (
     <section className={styles.hero}>
@@ -30,7 +34,7 @@ export const HeroPrincipal = () => {
 
               <div className={styles.hero__metricas}>
                 {economiaConfigurada && (
-                  <span>{formatarMoeda(pausaAtiva.valorEconomia, moedaEconomia)} em ganho estimado</span>
+                  <span>{formatarMoeda(economiaAteAgora, moedaEconomia)} em ganho estimado (até agora)</span>
                 )}
                 <span>{formatarDuracao(pausaAtiva.duracaoPlanejada)} de meta total</span>
               </div>

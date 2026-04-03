@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useApp, usePausa } from '../../ganchos'
 import { rotularStatusPausa } from '../../utilitarios/apresentacao/rotulos'
 import { formatarDuracao, formatarMoeda } from '../../utilitarios/dados/formatacao'
+import { calcularEconomiaAteAgora } from '../../utilitarios/dados/calculos'
 import { DURACOES_PAUSA, TEMPO_MINIMO_CONSIDERAR_PAUSA_MS } from '../../utilitarios/constantes'
 import styles from './pagina-pausa.module.scss'
 
@@ -67,7 +68,7 @@ export const PaginaPausa = () => {
 
   const ultimasCinco = historico.slice(0, 5)
   const economiaAteAgora = pausaAtiva && progresso
-    ? pausaAtiva.valorEconomia * Math.min(progresso.percentualConclusao / 100, 1)
+    ? calcularEconomiaAteAgora(pausaAtiva.valorEconomia, progresso.percentualConclusao)
     : 0
 
   return (

@@ -25,7 +25,7 @@ describe('HeroPrincipal — ganho estimado', () => {
         iniciadoEm: Date.now(),
         duracaoPlanejada: 60 * 60 * 1000,
         status: 'ativa',
-        valorEconomia: 0,
+        valorEconomia: 10,
       },
       progresso: {
         percentualConclusao: 50,
@@ -73,5 +73,6 @@ describe('HeroPrincipal — ganho estimado', () => {
     render(<HeroPrincipal />, { wrapper })
 
     expect(screen.getByText(/ganho estimado/i)).toBeDefined()
+    expect(screen.getByText(/R\$\s?5,00/)).toBeDefined()
   })
 })
