@@ -44,23 +44,11 @@ export const useEconomia = () => {
     [configuracoes.moedaEconomia],
   )
 
-  // economia potencial da pausa ativa (calculado com o valorEconomia configurado)
-  const economiaPotencialPausaAtiva = useMemo(() => {
-    if (!estado.pausaAtiva) {
-      return 0
-    }
-
-    return estado.pausaAtiva.valorEconomia > 0
-      ? estado.pausaAtiva.valorEconomia
-      : configuracoes.valorEconomia
-  }, [estado.pausaAtiva, configuracoes.valorEconomia])
-
   return {
     totalAcumulado,
     taxaDiaria,
     economiaUltimaPausa,
     projecao30Dias,
-    economiaPotencialPausaAtiva,
     possuiHistoricoEconomia,
     economiaConfigurada,
     moedaEconomia,

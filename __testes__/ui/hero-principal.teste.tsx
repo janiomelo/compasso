@@ -37,6 +37,7 @@ describe('HeroPrincipal — ganho estimado', () => {
       iniciar: vi.fn(),
       encerrar: vi.fn(),
       interromper: vi.fn(),
+      cancelar: vi.fn(),
     })
   })
 
@@ -47,7 +48,6 @@ describe('HeroPrincipal — ganho estimado', () => {
       economiaUltimaPausa: 0,
       projecao30Dias: 0,
       possuiHistoricoEconomia: false,
-      economiaPotencialPausaAtiva: 0,
       economiaConfigurada: false,
       moedaEconomia: 'BRL',
     })
@@ -65,7 +65,6 @@ describe('HeroPrincipal — ganho estimado', () => {
       economiaUltimaPausa: 5,
       projecao30Dias: 30,
       possuiHistoricoEconomia: true,
-      economiaPotencialPausaAtiva: 2,
       economiaConfigurada: true,
       moedaEconomia: 'BRL',
     })
