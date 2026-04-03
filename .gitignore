@@ -30,3 +30,5 @@ Thumbs.db
 
 # Testes
 vitest-report/
+playwright-report/
+test-results/

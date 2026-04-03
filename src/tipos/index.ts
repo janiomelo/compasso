@@ -184,6 +184,7 @@ export type AcaoApp =
   | { tipo: 'ADICIONAR_REGISTRO'; payload: Registro }
   | { tipo: 'ATUALIZAR_REGISTRO'; payload: Registro }
   | { tipo: 'DELETAR_REGISTRO'; payload: string }
+  | { tipo: 'SINCRONIZAR_DADOS_DESBLOQUEIO'; payload: { registros: Registro[]; historicoPausa: Pausa[]; pausaAtiva: Pausa | null } }
   | { tipo: 'INICIAR_PAUSA'; payload: Pausa }
   | { tipo: 'ENCERRAR_PAUSA'; payload: Pausa }
   | { tipo: 'CANCELAR_PAUSA' }

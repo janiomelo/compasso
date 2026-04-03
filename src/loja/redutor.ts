@@ -65,6 +65,14 @@ export const redutor = (estado: EstadoApp, acao: AcaoApp): EstadoApp => {
         registros: estado.registros.filter((r) => r.id !== acao.payload),
       }
 
+    case 'SINCRONIZAR_DADOS_DESBLOQUEIO':
+      return {
+        ...estado,
+        registros: acao.payload.registros,
+        historicoPausa: acao.payload.historicoPausa,
+        pausaAtiva: acao.payload.pausaAtiva,
+      }
+
     case 'INICIAR_PAUSA':
       return {
         ...estado,

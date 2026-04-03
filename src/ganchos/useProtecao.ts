@@ -98,6 +98,24 @@ export const useProtecao = () => {
       const dek = await importarChave(dekRaw)
 
       gerenciadorChaves.guardarDEK(dek, estado.configuracoes.timeoutBloqueio)
+
+      const [registrosCarregados, historicoPausaCarregado] = await Promise.all([
+        consultasBD.obterRegistros(),
+        consultasBD.obterHistoricoPausa(),
+      ])
+
+      const registros = registrosCarregados ?? []
+      const historicoPausa = historicoPausaCarregado ?? []
+
+      despacho({
+        tipo: 'SINCRONIZAR_DADOS_DESBLOQUEIO',
+        payload: {
+          registros,
+          historicoPausa,
+          pausaAtiva: historicoPausa.find((pausa) => pausa.status === 'ativa') ?? null,
+        },
+      })
+
       despacho({ tipo: 'DESBLOQUEAR_APP' })
     },
     [despacho, estado.configuracoes.timeoutBloqueio],

@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [react()],
   test: {
     include: ['**/*.{test,spec,teste}.?(c|m)[jt]s?(x)'],
+    exclude: ['__testes__/e2e/**', '**/node_modules/**', '**/dist/**', '**/coverage/**'],
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./__testes__/setup/indexeddb.ts'],
